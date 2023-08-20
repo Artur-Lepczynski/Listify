@@ -1,0 +1,10 @@
+:root{
+  /* --theme-what-number */
+  /* midnight */
+  --midnight-bgcolor-1: black; 
+  --midnight-textcolor-1: white; 
+
+  /* pearlShores */
+  --pearlShores-bgcolor-1: white; 
+  --pearlShores-textcolor-1: rgb(0, 0, 0); 
+}
