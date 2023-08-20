@@ -1,0 +1,31 @@
+.page{
+  min-height: 100vh;
+  width: 100%;
+  padding-top: var(--header-height);
+  box-sizing: border-box;
+}
+
+.page-midnight{
+  background-color: var(--midnight-bg-5);
+  color: var(--midnight-text-1);
+}
+
+.page-pearlShores{
+  background-color: var(--pearlShores-bg-5);
+  color: var(--pearlShores-text-1);
+}
+
+.page-bubblegum{
+  background-color: var(--bubblegum-bg-5);
+  color: var(--bubblegum-text-1);
+}
+
+.page-blueLagoon{
+  background-color: var(--blueLagoon-bg-5);
+  color: var(--blueLagoon-text-1);
+}
+
+.page-deepOcean{
+  background-color: var(--deepOcean-bg-5);
+  color: var(--deepOcean-text-1);
+}

@@ -15,7 +15,6 @@ export default function RootLayout() {
       }}
     >
       <div>
-        <h1>Root layout placeholder h1</h1>
         <Outlet />
       </div>
     </CSSTransition>

@@ -12,7 +12,7 @@ import GlobalContext from "./store/GlobalContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 //pages & loaders
-import RootLayout, { rootLayoutLoader } from "./pages/RootLayout";
+import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
 import { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
 
 //Themes: pearlShores, midnight, bubblegum, blueLagoon, deepOcean
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   //check signed in user, get settings
   useEffect(() => {
@@ -45,17 +45,17 @@ function App() {
         const uid = user.uid;
         console.log("user is signed in, id:", uid);
         //get & set settings in context
-        setLoading(false);
+        setIsLoading(false);
       } else {
         console.log("user is NOT signed in");
-        setLoading(false);
+        setIsLoading(false);
       }
     });
   }, []);
 
   return (
     <GlobalContext>
-      {loading ? <LoaderFullPage /> : <RouterProvider router={router} />}
+      {isLoading ? <LoaderFullPage /> : <RouterProvider router={router} />}
     </GlobalContext>
   );
 }

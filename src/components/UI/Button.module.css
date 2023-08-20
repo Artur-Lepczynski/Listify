@@ -1,0 +1,126 @@
+.button{
+  min-width: 10px;
+  padding: 6px 10px;
+  border-radius: var(--border-radius-1);
+  box-sizing: border-box;
+  font-family: Montserrat;
+  cursor: pointer;
+  transition: transform var(--button-scale-duration);
+}
+
+.button:active{
+  transform: scale(0.95);
+}
+
+.button-primary-midnight{
+  border: 2px solid var(--midnight-accent-1);
+  background-color: var(--midnight-accent-1);
+  color: var(--midnight-text-1)
+}
+
+.button-primary-midnight:hover{
+  background-color: var(--midnight-accent-2);
+}
+
+.button-secondary-midnight{
+  border: 2px solid var(--midnight-accent-1);
+  background-color: transparent;
+  color: var(--midnight-text-1);
+}
+
+.button-secondary-midnight:hover{
+  background-color: var(--midnight-accent-2);
+}
+
+.button-primary-pearlShores{
+  border: 2px solid var(--pearlShores-accent-1);
+  background-color: var(--pearlShores-accent-1);
+  color: var(--pearlShores-text-1)
+}
+
+.button-primary-pearlShores:hover{
+  background-color: var(--pearlShores-accent-2);
+}
+
+.button-secondary-pearlShores{
+  border: 2px solid var(--pearlShores-accent-1);
+  background-color: transparent;
+  color: var(--pearlShores-text-1);
+}
+
+.button-secondary-pearlShores:hover{
+  background-color: var(--pearlShores-accent-2);
+}
+
+.button-primary-bubblegum{
+  border: 2px solid var(--bubblegum-accent-1);
+  background-color: var(--bubblegum-accent-1);
+  color: var(--bubblegum-text-1)
+}
+
+.button-primary-bubblegum:hover{
+  background-color: var(--bubblegum-accent-2);
+}
+
+.button-secondary-bubblegum{
+  border: 2px solid var(--bubblegum-accent-1);
+  background-color: transparent;
+  color: var(--bubblegum-text-1);
+}
+
+.button-secondary-bubblegum:hover{
+  background-color: var(--bubblegum-accent-2);
+}
+
+.button-primary-blueLagoon{
+  border: 2px solid var(--blueLagoon-accent-1);
+  background-color: var(--blueLagoon-accent-1);
+  color: var(--blueLagoon-text-1)
+}
+
+.button-primary-blueLagoon:hover{
+  background-color: var(--blueLagoon-accent-2);
+}
+
+.button-secondary-blueLagoon{
+  border: 2px solid var(--blueLagoon-accent-1);
+  background-color: transparent;
+  color: var(--blueLagoon-text-1);
+}
+
+.button-secondary-blueLagoon:hover{
+  background-color: var(--blueLagoon-accent-2);
+}
+
+.button-primary-deepOcean{
+  border: 2px solid var(--deepOcean-accent-1);
+  background-color: var(--deepOcean-accent-1);
+  color: var(--deepOcean-text-1)
+}
+
+.button-primary-deepOcean:hover{
+  background-color: var(--deepOcean-accent-2);
+}
+
+.button-secondary-deepOcean{
+  border: 2px solid var(--deepOcean-accent-1);
+  background-color: transparent;
+  color: var(--deepOcean-text-1);
+}
+
+.button-secondary-pearlShores:hover{
+  background-color: var(--deepOcean-accent-2);
+}
+
+.button-disabled{
+  color: rgb(52, 52, 52); 
+  border: 2px solid rgb(170, 170, 170); 
+}
+
+.button-disabled:hover{
+  cursor: not-allowed;
+}
+
+.button-disabled:active{
+  transform: none;
+}

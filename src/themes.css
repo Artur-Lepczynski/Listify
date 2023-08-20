@@ -5,7 +5,8 @@
 
   --initial-fadein-duration: 150ms;
   --prompt-fade-duration: 150ms; 
-  --modal-fade-duration: 150ms; 
+  --modal-fade-duration: 150ms;
+  --button-scale-duration: 50ms; 
 
   --border-radius-1: 5px; 
   --border-radius-2: 10px;
@@ -26,8 +27,8 @@
   --midnight-accent-2: #046fa5; 
   --midnight-accent-3: #044b91;
 
-  --midnight-text-1: #f1f1f1; 
-  --midnight-text-1: #b8bdc2; 
+  --midnight-text-1: #ebebeb; 
+  --midnight-text-2: #dbdbdb; 
 
   --midnight-text-error-1: rgb(40, 40, 40); 
   --midnight-text-error-2: rgb(12, 12, 12); 
@@ -48,8 +49,8 @@
   --pearlShores-accent-2: #83C5BE; 
   --pearlShores-accent-3: #9FB9B9;
 
-  --pearlShores-text-1: #5F6B70; 
-  --pearlShores-text-2: #2C3942;
+  --pearlShores-text-1: #2C3942; 
+  --pearlShores-text-2: #1c252c;
 
   --pearlShores-text-error-1: #FDFDFD; 
   --pearlShores-text-error-2: #F6ECEC;
@@ -114,8 +115,8 @@
   --blueLagoon-accent-2: #5B9CA7; 
   --blueLagoon-accent-3: #48718F;
 
-  --blueLagoon-text-1: #42535f; 
-  --blueLagoon-text-2: #2C3942;
+  --blueLagoon-text-1: #1b2639; 
+  --blueLagoon-text-2: #141e2e;
 
   --blueLagoon-text-error-1: #FDFDFD; 
   --blueLagoon-text-error-2: #c6c6c6;

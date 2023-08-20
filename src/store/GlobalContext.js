@@ -6,7 +6,7 @@ export default function GlobalContext(props) {
   //Themes: pearlShores, midnight, bubblegum, blueLagoon, deepOcean
   const [theme, setTheme] = useState("midnight");
 
-  //TODO: add reducer for other settings, download in loader and set (rootLayout), add def values?
+  //TODO: add reducer for other settings, download and set (app.js), add def values?
 
   //Notifications:
   const [notifications, setNotifications] = useState([]);
