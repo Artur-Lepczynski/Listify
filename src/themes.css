@@ -1,4 +1,9 @@
 :root{
+  /* global */
+  --header-height:60px; 
+  --footer-height: 60px; 
+  --fadein-duration-1: 150ms; 
+
   /* --theme-what-number */
   /* midnight */
   --midnight-bgcolor-1: black; 
