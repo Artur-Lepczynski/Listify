@@ -4,5 +4,5 @@
 
 .root-layout-appear-active{
   opacity: 1;
-  transition: opacity var(--fadein-duration-1);
+  transition: opacity var(--initial-fadein-duration);
 }
