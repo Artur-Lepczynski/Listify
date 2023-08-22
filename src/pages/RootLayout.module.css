@@ -1,8 +1,0 @@
-.root-layout-appear{
-  opacity: 0;
-}
-
-.root-layout-appear-active{
-  opacity: 1;
-  transition: opacity var(--initial-fadein-duration);
-}

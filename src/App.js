@@ -55,7 +55,8 @@ function App() {
 
   return (
     <GlobalContext>
-      {isLoading ? <LoaderFullPage /> : <RouterProvider router={router} />}
+      <LoaderFullPage in={isLoading}/>
+      <RouterProvider router={router} />
     </GlobalContext>
   );
 }

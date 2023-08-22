@@ -8,9 +8,22 @@
 
   background-color: rgb(255, 255, 255);
 
+  position: absolute;
+  top: 0;
+  left: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.wrapper-exit{
+  opacity: 1;
+}
+
+.wrapper-exit-active{
+  opacity: 0;
+  transition: opacity var(--initial-fade-duration);
 }
 
 .loader {

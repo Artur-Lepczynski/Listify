@@ -3,7 +3,7 @@
   --header-height:60px; 
   --footer-height: 60px; 
 
-  --initial-fadein-duration: 150ms;
+  --initial-fade-duration: 150ms;
   --prompt-fade-duration: 150ms; 
   --modal-fade-duration: 150ms;
   --button-scale-duration: 50ms; 
