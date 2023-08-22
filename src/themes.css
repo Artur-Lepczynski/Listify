@@ -4,6 +4,8 @@
   --footer-height: 60px; 
 
   --initial-fade-duration: 150ms;
+  --header-transition-duration: 100ms; 
+  --header-color-fade-duration: 100ms; 
   --prompt-fade-duration: 150ms; 
   --modal-fade-duration: 150ms;
   --button-scale-duration: 50ms; 

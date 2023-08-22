@@ -1,0 +1,114 @@
+.header{
+  height: var(--header-height);
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.header-button{
+  width: 80px;
+  margin-right: 20px;
+}
+
+.header-pearlShores{
+  background-color: var(--pearlShores-bg-4);
+  color: var(--pearlShores-text-1);
+}
+
+.header-midnight{
+  background-color: var(--midnight-bg-4);
+  color: var(--midnight-text-2);
+}
+
+.header-bubblegum{
+  background-color: var(--bubblegum-bg-4);
+  color: var(--bubblegum-text-1);
+}
+
+.header-blueLagoon{
+  background-color: var(--blueLagoon-bg-4);
+  color: var(--blueLagoon-text-1);
+}
+
+.header-deepOcean{
+  background-color: var(--deepOcean-bg-4);
+  color: var(--deepOcean-text-1);
+}
+
+.header-not-logged-in{
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+}
+
+.header-not-logged-in img{
+  height: 80%;
+  margin-left: 5px;
+}
+
+.header-not-logged-in-enter{
+  opacity: 0;
+}
+
+.header-not-logged-in-enter-active{
+  opacity: 1;
+  transition: opacity var(--header-transition-duration);
+}
+
+.header-not-logged-in-exit{
+  opacity: 1;
+}
+
+.header-not-logged-in-exit-active{
+  opacity: 0;
+  transition: opacity var(--header-transition-duration);
+}
+
+.header-logged-in{
+  height: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.header-logged-in-pearlShores{
+  background-color: var(--pearlShores-bg-3);
+}
+
+.header-logged-in-midnight{
+  background-color: var(--midnight-bg-3);
+}
+
+.header-logged-in-bubblegum{
+  background-color: var(--bubblegum-bg-3);
+}
+
+.header-logged-in-blueLagoon{
+  background-color: var(--blueLagoon-bg-3);
+}
+
+.header-logged-in-deepOcean{
+  background-color: var(--deepOcean-bg-3);
+}
+
+.header-logged-in-enter{
+  transform: translateY(calc(var(--header-height) * -1));
+}
+
+.header-logged-in-enter-active{
+  transform: translateY(0px);
+  transition: transform var(--header-transition-duration);
+}
+
+.header-logged-in-exit{
+  transform: translateY(0px);
+}
+
+.header-logged-in-exit-active{
+  transform: translateY(calc(var(--header-height) * -1));
+  transition: transform var(--header-transition-duration);
+}
