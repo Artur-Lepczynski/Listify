@@ -2,13 +2,22 @@
   min-width: 10px;
   padding: 6px 10px;
   border-radius: var(--border-radius-1);
-  box-sizing: border-box;
   font-family: Montserrat;
   cursor: pointer;
   transition: transform var(--button-scale-duration);
 }
 
 .button:active{
+  transform: scale(0.95);
+}
+
+.link{
+  font-size: 0.85em;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link:active{
   transform: scale(0.95);
 }
 
