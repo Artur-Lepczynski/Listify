@@ -1,4 +1,5 @@
 import Button from "../UI/Button";
+import Card from "../UI/Card";
 import Page from "../UI/Page";
 import style from "./Home.module.css"; 
 
@@ -16,6 +17,9 @@ export default function Home(){
       <br></br>
       <hr></hr>
       <Button type="link" look="primary">Button text</Button>
+      <Card>
+        <p>card test</p>
+      </Card>
     </Page>
   )
 }

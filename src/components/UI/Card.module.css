@@ -1,0 +1,28 @@
+.card{
+  width: 97.5%;
+  max-width: 1200px;
+  margin: 20px auto; 
+  padding: 5px;
+  border-radius: var(--border-radius-2);
+  box-sizing: border-box;
+}
+
+.card-pearlShores{
+  background-color: var(--pearlShores-bg-4);
+}
+
+.card-midnight{
+  background-color: var(--midnight-bg-4);
+}
+
+.card-bubblegum{
+  background-color: var(--bubblegum-bg-4);
+}
+
+.card-blueLagoon{
+  background-color: var(--blueLagoon-bg-4);
+}
+
+.card-deepOcean{
+  background-color: var(--deepOcean-bg-4);
+}
