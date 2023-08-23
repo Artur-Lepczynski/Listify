@@ -7,6 +7,10 @@
   transition: transform var(--button-scale-duration);
 }
 
+.button div{
+  margin: auto; 
+}
+
 .button:active{
   transform: scale(0.95);
 }

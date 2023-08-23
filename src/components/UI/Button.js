@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme";
 import style from "./Button.module.css";
+import Loader from "./Loader";
 
 export default function Button(props) {
   //look: primary/secondary
@@ -26,7 +27,7 @@ export default function Button(props) {
           disabled={props.disabled}
           onClick={props.onClick}
         >
-          {props.children}
+          {props.loading ? <Loader size="small"/> : props.children}
         </button>
       )}
       {props.type === "link" && (
@@ -34,7 +35,7 @@ export default function Button(props) {
           to={props.to}
           className={`${style.button} ${style.link} ${className} ${props.className}`}
         >
-          {props.children}
+          {props.loading ? <Loader size="small"/> : props.children}
         </Link>
       )}
     </>

@@ -17,6 +17,8 @@ export default function Auth() {
 
   const mode = searchParams.get("mode");
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const modes = ["login", "signup", "reset"];
     if (!modes.includes(mode)) {
@@ -81,14 +83,17 @@ export default function Auth() {
 
   function submitHandler(event) {
     event.preventDefault();
-    if (mode === "signup" && formIsValid) {
+    if (!isLoading && mode === "signup" && formIsValid) {
+      setIsLoading(true); 
       console.log("submitted:", enteredEmail, enteredPassword);
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then(() => {
+          setIsLoading(false); 
           navigate("/dash");
         })
         .catch((error) => {
+          setIsLoading(false); 
           console.log("epic fail:", error);
           //TODO: display error notification & reset fields?
         });
@@ -132,6 +137,7 @@ export default function Auth() {
                 buttonType="submit"
                 look="primary"
                 className={style["action-button"]}
+                loading={isLoading}
                 disabled={!formIsValid}
               >
                 Sign up

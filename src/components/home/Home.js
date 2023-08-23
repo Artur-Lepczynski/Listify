@@ -1,5 +1,6 @@
 import Button from "../UI/Button";
 import Card from "../UI/Card";
+import Loader from "../UI/Loader";
 import Page from "../UI/Page";
 import style from "./Home.module.css"; 
 
@@ -17,9 +18,13 @@ export default function Home(){
       <br></br>
       <hr></hr>
       <Button type="link" look="primary">Button text</Button>
-      <Card>
-        <p>card test</p>
-      </Card>
+      <br></br>
+      <hr></hr>
+      <Button type="button" look="primary" loading={true}>Button text</Button>
+      <br></br>
+      <hr></hr>
+      <Button type="link" look="primary" loading={true}>Button text</Button>
+
     </Page>
   )
 }
