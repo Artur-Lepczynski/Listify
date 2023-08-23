@@ -38,6 +38,7 @@ export default function Header() {
             <Button
               type="link"
               look="primary"
+              to="/auth?mode=signup"
               className={style["header-button"]}
             >
               Sign up
@@ -45,6 +46,7 @@ export default function Header() {
             <Button
               type="link"
               look="secondary"
+              to="/auth?mode=login"
               className={style["header-button"]}
             >
               Log in

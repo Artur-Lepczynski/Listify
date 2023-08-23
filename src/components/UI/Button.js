@@ -5,6 +5,8 @@ import style from "./Button.module.css";
 export default function Button(props) {
   //look: primary/secondary
   //type: button/link
+  //buttonType: button/submit
+  //loading = bool 
 
   const getClassName = useTheme(style);
 
@@ -20,7 +22,7 @@ export default function Button(props) {
       {props.type === "button" && (
         <button
           className={`${style.button} ${className} ${props.className}`}
-          type="button"
+          type={props.buttonType}
           disabled={props.disabled}
           onClick={props.onClick}
         >

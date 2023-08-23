@@ -1,0 +1,73 @@
+.form-item{
+  margin: 15px 10px;
+}
+
+.label{
+  font-size: 0.9em;
+}
+
+.input{
+  width: 100%;
+  height: 30px;
+  margin-top: 5px;
+  padding: 0px 7px;
+  display: block;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  border-radius: var(--border-radius-1);
+}
+
+.input-pearlShores{
+  border: 1px solid var(--pearlShores-bg-2);
+  color: var(--pearlShores-text-2);
+  background-color: var(--pearlShores-bg-5);
+}
+
+.input-midnight{
+  border: 1px solid var(--midnight-bg-2);
+  color: var(--midnight-text-2);
+  background-color: var(--midnight-bg-5);
+}
+
+.input-bubblegum{
+  border: 1px solid var(--bubblegum-bg-2);
+  color: var(--bubblegum-text-2);
+  background-color: var(--bubblegum-bg-5);
+}
+
+.input-blueLagoon{
+  border: 1px solid var(--blueLagoon-bg-2);
+  color: var(--blueLagoon-text-2);
+  background-color: var(--blueLagoon-bg-5);
+}
+
+.input-deepOcean{
+  border: 1px solid var(--deepOcean-bg-2);
+  color: var(--deepOcean-text-2);
+  background-color: var(--deepOcean-bg-5);
+}
+
+.input-invalid-text{
+  font-size: 0.73em;
+}
+
+.input-invalid-text-pearlShores{
+  color: var(--pearlShores-text-error-1);
+}
+
+.input-invalid-text-midnight{
+  color: var(--midnight-text-error-1);
+}
+
+.input-invalid-text-bubblegum{
+  color: var(--bubblegum-text-error-1);
+}
+
+.input-invalid-text-blueLagoon{
+  color: var(--blueLagoon-text-error-1);
+}
+
+.input-invalid-text-deepOcean{
+  color: var(--deepOcean-text-error-1);
+}
+

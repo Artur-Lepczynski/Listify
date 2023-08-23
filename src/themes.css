@@ -32,7 +32,7 @@
   --midnight-text-1: #ebebeb; 
   --midnight-text-2: #dbdbdb; 
 
-  --midnight-text-error-1: rgb(40, 40, 40); 
+  --midnight-text-error-1: rgb(196, 26, 26); 
   --midnight-text-error-2: rgb(12, 12, 12); 
 
   --midnight-text-success-1: rgb(7, 139, 7); 
@@ -53,8 +53,8 @@
 
   --pearlShores-text-1: #2C3942; 
   --pearlShores-text-2: #1c252c;
-
-  --pearlShores-text-error-1: #FDFDFD; 
+  
+  --pearlShores-text-error-1: rgb(130, 15, 15); 
   --pearlShores-text-error-2: #F6ECEC;
 
   --pearlShores-text-success-1: rgb(7, 139, 7); 
@@ -76,7 +76,7 @@
   --bubblegum-text-1: #2C3942; 
   --bubblegum-text-2: #212b33;
 
-  --bubblegum-text-error-1: #2C3942; 
+  --bubblegum-text-error-1: rgb(130, 15, 15); 
   --bubblegum-text-error-2: #212b33;
 
   --bubblegum-text-success-1: rgb(7, 139, 7); 
@@ -98,7 +98,7 @@
   --deepOcean-text-1: #ececec; 
   --deepOcean-text-2: #cbcbcb;
 
-  --deepOcean-text-error-1: #FDFDFD; 
+  --deepOcean-text-error-1: rgb(196, 26, 26);  
   --deepOcean-text-error-2: #F6ECEC;
 
   --deepOcean-text-success-1: rgb(7, 139, 7); 
@@ -120,7 +120,7 @@
   --blueLagoon-text-1: #1b2639; 
   --blueLagoon-text-2: #141e2e;
 
-  --blueLagoon-text-error-1: #FDFDFD; 
+  --blueLagoon-text-error-1: rgb(189, 28, 28); 
   --blueLagoon-text-error-2: #c6c6c6;
 
   --blueLagoon-text-success-1: rgb(7, 139, 7); 

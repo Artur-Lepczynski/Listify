@@ -1,0 +1,61 @@
+.outer-card{
+  background-color: transparent;
+  max-width: 400px;
+}
+
+.outer-card img{
+  width: 60px;
+  display: block;
+  margin: 5px auto;
+}
+
+.title{
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.inner-card{
+  margin: 10px auto; 
+  max-width: 300px;
+}
+
+.action-button{
+  width: 270px;
+  height: 30px;
+  margin: 12px auto; 
+  display: block;
+}
+
+.nav-text{
+  margin: 20px auto; 
+  text-align: center;
+}
+
+.nav-action{
+  text-decoration: none;
+}
+
+.nav-action:hover{
+  text-decoration: underline;
+}
+
+.nav-action-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.nav-action-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.nav-action-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.nav-action-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.nav-action-deepOcean{
+  color: var(--deepOcean-accent-1);
+}

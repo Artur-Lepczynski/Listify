@@ -25,6 +25,7 @@ import EditSingleListPage from "./pages/EditSingleListPage";
 import LoaderFullPage from "./components/UI/LoaderFullPage";
 import { useEffect, useState } from "react";
 import EditShopsPage from "./pages/EditShopsPage";
+import AuthPage from "./pages/AuthPage";
 
 initializeApp(firebaseConfig);
 
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "/auth", element: <AuthPage/>}, 
       { path: "/dash", element: <DashboardPage /> },
       { path: "/lists", element: <ListsPage/>}, 
       { path: "/lists/:listId", element: <ViewSingleListPage/>},

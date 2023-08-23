@@ -23,7 +23,7 @@ export default function GlobalContext(props) {
     setTimeout(() => {
       setNotifications((prev) => {
         let copy = [...prev];
-        copy.pop();
+        copy.shift();
         return copy;
       });
     }, NOTIFICATION_SHOW_TIME_MS);
