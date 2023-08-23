@@ -25,7 +25,7 @@ import EditSingleListPage from "./pages/EditSingleListPage";
 import LoaderFullPage from "./components/UI/LoaderFullPage";
 import { useEffect, useState } from "react";
 import EditShopsPage from "./pages/EditShopsPage";
-import AuthPage from "./pages/AuthPage";
+import AuthPage, { AuthPageLoader } from "./pages/AuthPage";
 
 initializeApp(firebaseConfig);
 
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/auth", element: <AuthPage/>}, 
+      { path: "/auth", element: <AuthPage/>, loader: AuthPageLoader}, 
       { path: "/dash", element: <DashboardPage /> },
       { path: "/lists", element: <ListsPage/>}, 
       { path: "/lists/:listId", element: <ViewSingleListPage/>},
@@ -60,6 +60,7 @@ const router = createBrowserRouter([
 //x: <i class="fa-solid fa-xmark"></i>
 //trash <i class="fa-solid fa-trash"></i>
 //dots vert: <i class="fa-solid fa-ellipsis-vertical"></i>
+//eye: <i class="fa-solid fa-eye"></i>
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 

@@ -1,5 +1,6 @@
 .form-item{
   margin: 15px 10px;
+  position: relative; 
 }
 
 .label{
@@ -10,7 +11,7 @@
   width: 100%;
   height: 30px;
   margin-top: 5px;
-  padding: 0px 7px;
+  padding: 0px 33px 0px 7px;
   display: block;
   box-sizing: border-box;
   font-family: Montserrat;
@@ -71,3 +72,30 @@
   color: var(--deepOcean-text-error-1);
 }
 
+.eye{
+  position: absolute;
+  right: 10px;
+  top: 32px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.eye-active-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.eye-active-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.eye-active-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.eye-active-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.eye-active-deepOcean{
+  color: var(--deepOcean-accent-1);
+}

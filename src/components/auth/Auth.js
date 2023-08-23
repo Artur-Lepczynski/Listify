@@ -1,7 +1,11 @@
 import style from "./Auth.module.css";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useTheme } from "../../hooks/useTheme";
 import Page from "../UI/Page";
 import Card from "../UI/Card";
@@ -30,8 +34,10 @@ export default function Auth() {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredEmailValid, setEnteredEmailValid] = useState(false);
 
-  function validateEmail(email) {
-    return email.includes("@");
+  function validateEmail() {
+    const regex =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(enteredEmail);
   }
 
   function onEmailChange(email) {
@@ -79,23 +85,45 @@ export default function Auth() {
   if (mode === "signup") {
     formIsValid =
       enteredEmailValid && enteredPasswordValid && enteredPassword2Valid;
+  } else if (mode === "login") {
+    formIsValid = enteredEmailValid && enteredPasswordValid;
   }
 
   function submitHandler(event) {
     event.preventDefault();
     if (!isLoading && mode === "signup" && formIsValid) {
-      setIsLoading(true); 
-      console.log("submitted:", enteredEmail, enteredPassword);
+      setIsLoading(true);
+      console.log("signing up:", enteredEmail, enteredPassword);
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then(() => {
-          setIsLoading(false); 
+          setIsLoading(false);
           navigate("/dash");
+          //show success notification?
         })
         .catch((error) => {
-          setIsLoading(false); 
-          console.log("epic fail:", error);
-          //TODO: display error notification & reset fields?
+          //TODO: display error notification
+          setIsLoading(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("Sign in fail\n", errorCode, "\n", errorMessage);
+        });
+    } else if (!isLoading && mode === "login" && formIsValid) {
+      setIsLoading(true);
+      console.log("logging in:", enteredEmail, enteredPassword);
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
+        .then(() => {
+          setIsLoading(false);
+          navigate("/dash");
+          //show success notification?
+        })
+        .catch((error) => {
+          //TODO: display error notification
+          setIsLoading(false);
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("Log in fail\n", errorCode, "\n", errorMessage);
         });
     }
   }
@@ -147,8 +175,8 @@ export default function Auth() {
           <p className={style["nav-text"]}>
             Already got an account?{" "}
             <Link
-              className={`${style["nav-action"]} ${getClassNames(
-                "nav-action"
+              className={`${style["auth-link"]} ${getClassNames(
+                "auth-link"
               )}`}
               to={"/auth?mode=login"}
             >
@@ -158,8 +186,58 @@ export default function Auth() {
         </Card>
       )}
       {mode === "login" && (
-        <Card className={style.card}>
-          <h3>Log in</h3>
+        <Card className={style["outer-card"]}>
+          <img alt="logo" src={logo}></img>
+          <p className={style.title}>Log in to Listify</p>
+          <Card className={style["inner-card"]}>
+            <form onSubmit={submitHandler}>
+              <AuthFormItem
+                type="email"
+                name="Email"
+                validateFunction={validateEmail}
+                onChangeFunction={onEmailChange}
+                onValidChangeFunction={onEmailValidChange}
+                invalidText="Email is invalid"
+              />
+              <Link
+                className={`${style["auth-link"]} ${style["forgot-link"]} ${getClassNames(
+                  "auth-link"
+                )}`}
+                to={"/auth?mode=reset"}
+              >
+                Forgot password?
+              </Link>
+              <AuthFormItem
+                type="password"
+                name="Password"
+                validateFunction={validatePassword}
+                onChangeFunction={onPasswordChange}
+                onValidChangeFunction={onPasswordValidChange}
+                invalidText="Password should be at least 7 characters long"
+              />
+              <Button
+                type="button"
+                buttonType="submit"
+                look="primary"
+                className={style["action-button"]}
+                loading={isLoading}
+                disabled={!formIsValid}
+              >
+                Log in
+              </Button>
+            </form>
+          </Card>
+          <p className={style["nav-text"]}>
+            New to Listify?{" "}
+            <Link
+              className={`${style["auth-link"]} ${getClassNames(
+                "auth-link"
+              )}`}
+              to={"/auth?mode=signup"}
+            >
+              Sign up.
+            </Link>
+          </p>
         </Card>
       )}
       {mode === "reset" && (

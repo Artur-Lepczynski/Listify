@@ -18,6 +18,15 @@
 .inner-card{
   margin: 10px auto; 
   max-width: 300px;
+  position: relative;
+}
+
+.forgot-link{
+  font-size: 0.8em;
+  position: absolute;
+  right: 18px;
+  bottom: 98px;
+  z-index: 10;
 }
 
 .action-button{
@@ -32,30 +41,30 @@
   text-align: center;
 }
 
-.nav-action{
+.auth-link{
   text-decoration: none;
 }
 
-.nav-action:hover{
+.auth-link:hover{
   text-decoration: underline;
 }
 
-.nav-action-pearlShores{
+.auth-link-pearlShores{
   color: var(--pearlShores-accent-1);
 }
 
-.nav-action-midnight{
+.auth-link-midnight{
   color: var(--midnight-accent-1);
 }
 
-.nav-action-bubblegum{
+.auth-link-bubblegum{
   color: var(--bubblegum-accent-1);
 }
 
-.nav-action-blueLagoon{
+.auth-link-blueLagoon{
   color: var(--blueLagoon-accent-1);
 }
 
-.nav-action-deepOcean{
+.auth-link-deepOcean{
   color: var(--deepOcean-accent-1);
 }

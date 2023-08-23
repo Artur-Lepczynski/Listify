@@ -1,12 +1,29 @@
 import style from "./AuthFormItem.module.css";
 import { useInput } from "../../hooks/useInput";
 import { useTheme } from "../../hooks/useTheme";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AuthInput(props) {
   //props.type = email/password/ invalidText validateFunction onChangeFunc onChangeValidFunc name
 
-  const getClassNames = useTheme(style); 
+  const getClassNames = useTheme(style);
+
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  let type = props.type;
+  if(type === "password"){
+    if(passwordShown){
+      type = "text"; 
+    }
+  }
+
+  function eyeMouseDownHandler(){
+    setPasswordShown(true);
+  }
+
+  function eyeMouseUpHandler(){
+    setPasswordShown(false);
+  }
 
   const {
     enteredValue,
@@ -17,14 +34,14 @@ export default function AuthInput(props) {
     reset,
   } = useInput(props.validateFunction, "");
 
-  useEffect(()=>{
+  useEffect(() => {
     props.onChangeFunction(enteredValue);
-  }, [enteredValue])
+  }, [enteredValue]);
 
-  useEffect(()=>{
+  useEffect(() => {
     props.onValidChangeFunction(enteredValueisValid);
   }, [enteredValueisValid]);
-    
+
   return (
     <div className={style["form-item"]}>
       <label
@@ -36,13 +53,22 @@ export default function AuthInput(props) {
       <input
         id={props.type}
         className={`${style.input} ${getClassNames("input")}`}
-        type={props.type}
+        type={type}
         name="email"
         value={enteredValue}
         onChange={inputChangeHandler}
         onBlur={inputBlurHandler}
         required
       ></input>
+      {props.type === "password" && (
+        <i
+          className={`fa-solid fa-eye ${style.eye} ${passwordShown && getClassNames(
+            "eye-active"
+          )}`}
+          onMouseDown={eyeMouseDownHandler}
+          onMouseUp={eyeMouseUpHandler}
+        ></i>
+      )}
       {!inputIsValid && (
         <p
           className={`${style["input-invalid-text"]} ${getClassNames(

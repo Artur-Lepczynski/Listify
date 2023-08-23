@@ -24,6 +24,7 @@ export default function Home(){
       <br></br>
       <hr></hr>
       <Button type="link" look="primary" loading={true}>Button text</Button>
+      <hr></hr>
 
     </Page>
   )
