@@ -12,6 +12,7 @@ import Card from "../UI/Card";
 import logo from "../../images/logo512.png";
 import AuthFormItem from "./AuthFormItem";
 import Button from "../UI/Button";
+import TextLink from "../UI/TextLink";
 
 export default function Auth() {
   const getClassNames = useTheme(style);
@@ -174,14 +175,7 @@ export default function Auth() {
           </Card>
           <p className={style["nav-text"]}>
             Already got an account?{" "}
-            <Link
-              className={`${style["auth-link"]} ${getClassNames(
-                "auth-link"
-              )}`}
-              to={"/auth?mode=login"}
-            >
-              Log in.
-            </Link>
+            <TextLink to="/auth?mode=login">Log in.</TextLink>
           </p>
         </Card>
       )}
@@ -199,14 +193,9 @@ export default function Auth() {
                 onValidChangeFunction={onEmailValidChange}
                 invalidText="Email is invalid"
               />
-              <Link
-                className={`${style["auth-link"]} ${style["forgot-link"]} ${getClassNames(
-                  "auth-link"
-                )}`}
-                to={"/auth?mode=reset"}
-              >
+              <TextLink to="/auth?mode=reset" className={style["forgot-link"]}>
                 Forgot password?
-              </Link>
+              </TextLink>
               <AuthFormItem
                 type="password"
                 name="Password"
@@ -228,15 +217,7 @@ export default function Auth() {
             </form>
           </Card>
           <p className={style["nav-text"]}>
-            New to Listify?{" "}
-            <Link
-              className={`${style["auth-link"]} ${getClassNames(
-                "auth-link"
-              )}`}
-              to={"/auth?mode=signup"}
-            >
-              Sign up.
-            </Link>
+            New to Listify? <TextLink to="/auth?mode=signup">Sign up.</TextLink>
           </p>
         </Card>
       )}

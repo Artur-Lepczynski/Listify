@@ -1,0 +1,27 @@
+.link{
+  text-decoration: none;
+}
+
+.link:hover{
+  text-decoration: underline;
+}
+
+.link-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.link-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.link-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.link-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.link-deepOcean{
+  color: var(--deepOcean-accent-1);
+}

@@ -40,31 +40,3 @@
   margin: 20px auto; 
   text-align: center;
 }
-
-.auth-link{
-  text-decoration: none;
-}
-
-.auth-link:hover{
-  text-decoration: underline;
-}
-
-.auth-link-pearlShores{
-  color: var(--pearlShores-accent-1);
-}
-
-.auth-link-midnight{
-  color: var(--midnight-accent-1);
-}
-
-.auth-link-bubblegum{
-  color: var(--bubblegum-accent-1);
-}
-
-.auth-link-blueLagoon{
-  color: var(--blueLagoon-accent-1);
-}
-
-.auth-link-deepOcean{
-  color: var(--deepOcean-accent-1);
-}
