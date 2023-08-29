@@ -1,0 +1,47 @@
+.text{
+  display: inline-block;
+}
+
+.text-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.text-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.text-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.text-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.text-deepOcean{
+  color: var(--deepOcean-accent-1);
+}
+
+.text-enter{
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.text-enter-active{
+  opacity: 1;
+  transform: translateY(0px);
+  transition-property: opacity, transform;
+  transition-duration: 100ms;
+}
+
+.text-exit{
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.text-exit-active{
+  opacity: 0;
+  transform: translateY(-10px);
+  transition-property: opacity, transform;
+  transition-duration: 100ms;
+}

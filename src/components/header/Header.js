@@ -6,6 +6,7 @@ import logo from "../../images/logo512.png";
 import Button from "../UI/Button";
 import { CSSTransition } from "react-transition-group";
 import HeaderButton from "./HeaderButton";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -33,7 +34,9 @@ export default function Header() {
         }}
       >
         <div className={style["header-not-logged-in"]}>
-          <img alt="Listyfy logo" src={logo}></img>
+          <Link to="/">
+            <img alt="Listyfy logo" src={logo}></img>
+          </Link>
           <nav>
             <Button
               type="link"

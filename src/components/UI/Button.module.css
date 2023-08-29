@@ -18,9 +18,10 @@
 .link{
   font-size: 0.85em;
   text-decoration: none;
-  text-align: center;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .link:active{

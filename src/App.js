@@ -61,6 +61,7 @@ const router = createBrowserRouter([
 //trash <i class="fa-solid fa-trash"></i>
 //dots vert: <i class="fa-solid fa-ellipsis-vertical"></i>
 //eye: <i class="fa-solid fa-eye"></i>
+//arrow-right: <i class="fa-solid fa-arrow-right"></i>
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 
