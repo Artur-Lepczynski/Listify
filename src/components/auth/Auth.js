@@ -5,6 +5,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { useTheme } from "../../hooks/useTheme";
 import Page from "../UI/Page";
@@ -20,14 +21,19 @@ export default function Auth() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const mode = searchParams.get("mode");
+  const action = searchParams.get("action");
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const modes = ["login", "signup", "reset"];
-    if (!modes.includes(mode)) {
-      navigate("/auth?mode=signup");
+    const actions = [
+      "login",
+      "signup",
+      "reset-password-request",
+      "reset-password",
+    ];
+    if (!actions.includes(action)) {
+      navigate("/auth?action=signup");
     }
   }, []);
 
@@ -83,16 +89,18 @@ export default function Auth() {
 
   //form validity:
   let formIsValid = false;
-  if (mode === "signup") {
+  if (action === "signup") {
     formIsValid =
       enteredEmailValid && enteredPasswordValid && enteredPassword2Valid;
-  } else if (mode === "login") {
+  } else if (action === "login") {
     formIsValid = enteredEmailValid && enteredPasswordValid;
+  } else if (action === "reset-password-request") {
+    formIsValid = enteredEmailValid;
   }
 
   function submitHandler(event) {
     event.preventDefault();
-    if (!isLoading && mode === "signup" && formIsValid) {
+    if (!isLoading && action === "signup" && formIsValid) {
       setIsLoading(true);
       console.log("signing up:", enteredEmail, enteredPassword);
       const auth = getAuth();
@@ -109,7 +117,7 @@ export default function Auth() {
           const errorMessage = error.message;
           console.log("Sign in fail\n", errorCode, "\n", errorMessage);
         });
-    } else if (!isLoading && mode === "login" && formIsValid) {
+    } else if (!isLoading && action === "login" && formIsValid) {
       setIsLoading(true);
       console.log("logging in:", enteredEmail, enteredPassword);
       const auth = getAuth();
@@ -126,12 +134,33 @@ export default function Auth() {
           const errorMessage = error.message;
           console.log("Log in fail\n", errorCode, "\n", errorMessage);
         });
+    } else if (
+      !isLoading &&
+      action === "reset-password-request" &&
+      formIsValid
+    ) {
+      setIsLoading(true);
+      console.log("sending reset to:", enteredEmail);
+      const auth = getAuth();
+      sendPasswordResetEmail(auth, enteredEmail)
+        .then(() => {
+          setIsLoading(false);
+          //TODO: show success notification
+          console.log("SENT!"); 
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          //TODO: show error notification
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log("sending fail\n", errorCode, "\n", errorMessage);
+        });
     }
   }
 
   return (
     <Page className={style.page}>
-      {mode === "signup" && (
+      {action === "signup" && (
         <Card className={style["outer-card"]}>
           <img alt="logo" src={logo}></img>
           <p className={style.title}>Join Listify</p>
@@ -175,11 +204,11 @@ export default function Auth() {
           </Card>
           <p className={style["nav-text"]}>
             Already got an account?{" "}
-            <TextLink to="/auth?mode=login">Log in.</TextLink>
+            <TextLink to="/auth?action=login">Log in.</TextLink>
           </p>
         </Card>
       )}
-      {mode === "login" && (
+      {action === "login" && (
         <Card className={style["outer-card"]}>
           <img alt="logo" src={logo}></img>
           <p className={style.title}>Log in to Listify</p>
@@ -193,7 +222,10 @@ export default function Auth() {
                 onValidChangeFunction={onEmailValidChange}
                 invalidText="Email is invalid"
               />
-              <TextLink to="/auth?mode=reset" className={style["forgot-link"]}>
+              <TextLink
+                to="/auth?action=reset-password-request"
+                className={style["forgot-link"]}
+              >
                 Forgot password?
               </TextLink>
               <AuthFormItem
@@ -217,13 +249,45 @@ export default function Auth() {
             </form>
           </Card>
           <p className={style["nav-text"]}>
-            New to Listify? <TextLink to="/auth?mode=signup">Sign up.</TextLink>
+            New to Listify?{" "}
+            <TextLink to="/auth?action=signup">Sign up.</TextLink>
           </p>
         </Card>
       )}
-      {mode === "reset" && (
-        <Card className={style.card}>
-          <h3>Reset password</h3>
+      {action === "reset-password-request" && (
+        <Card className={style["outer-card"]}>
+          <img alt="logo" src={logo}></img>
+          <p className={style.title}>Password reset</p>
+          <p className={style["nav-text"]}>
+            Enter your account's email address and we will send you a password
+            reset link
+          </p>
+          <Card className={style["inner-card"]}>
+            <form onSubmit={submitHandler}>
+              <AuthFormItem
+                type="email"
+                name="Email"
+                validateFunction={validateEmail}
+                onChangeFunction={onEmailChange}
+                onValidChangeFunction={onEmailValidChange}
+                invalidText="Email is invalid"
+              />
+              <Button
+                type="button"
+                buttonType="submit"
+                look="primary"
+                className={style["action-button"]}
+                loading={isLoading}
+                disabled={!formIsValid}
+              >
+                Send
+              </Button>
+            </form>
+          </Card>
+          <p className={style["nav-text"]}>
+            Remembered your password?{" "}
+            <TextLink to="/auth?action=login">Log in.</TextLink>
+          </p>
         </Card>
       )}
     </Page>

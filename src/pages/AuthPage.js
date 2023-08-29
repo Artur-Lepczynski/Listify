@@ -8,7 +8,6 @@ export default function AuthPage() {
 
 export async function AuthPageLoader() {
   let loggedIn = await getUserStatus(); 
-  console.log(loggedIn); 
   if(loggedIn) return redirect("/dash");
   return null;
 }
