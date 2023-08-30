@@ -12,10 +12,10 @@ export default function ListItem(props) {
   //props.data -> done, #total, #done, #notDone, date - full/hour, mode - edit/delete, name
   //props.id
 
-  const getClassNames = useTheme(style); 
+  const getClassNames = useTheme(style);
 
-  const [hover, setHover] = useState(false); 
-  const navigate = useNavigate(); 
+  const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
 
   let options = { hour: "2-digit", minute: "2-digit" };
   if (props.date === "full")
@@ -31,11 +31,11 @@ export default function ListItem(props) {
   }
 
   function handleMouseLeave() {
-    setHover(false); 
+    setHover(false);
   }
 
-  function handleListClick(){
-    navigate("/lists/"+props.id);
+  function handleListClick() {
+    navigate("/lists/" + props.id);
   }
 
   function handleListStatusChange() {
@@ -45,15 +45,26 @@ export default function ListItem(props) {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
-    update(ref(db, "users/" + userId + "/lists/" + props.id), { done: !done });
+    update(ref(db, "users/" + userId + "/lists/" + props.id), {
+      done: !done,
+    }).catch((error) => {
+      //TODO: show error notification
+    });
   }
 
   function handleListDelete() {
+    //TODO: check settings to display confirm modal
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
-    remove(ref(db, "users/" + userId + "/lists/" + props.id));
+    remove(ref(db, "users/" + userId + "/lists/" + props.id))
+      .then(() => {
+        //TODO: show successful list removal notification
+      })
+      .catch((error) => {
+        //TODO: show error notification
+      });
   }
 
   return (
@@ -65,7 +76,9 @@ export default function ListItem(props) {
         onClick={handleListClick}
       >
         <div className={style["list-item-name-time"]}>
-          <p className={`${hover && getClassNames("hover")}`}>{props.data.name}</p>
+          <p className={`${hover && getClassNames("hover")}`}>
+            {props.data.name}
+          </p>
           <p>{dateString}</p>
         </div>
         <ProductCounter done={props.data.done} items={props.data.items} />

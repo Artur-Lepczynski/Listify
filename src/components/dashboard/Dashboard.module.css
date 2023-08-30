@@ -1,3 +1,48 @@
+.header{
+  margin: 10px auto; 
+  text-align: center;
+  font-weight: 400;
+}
+
+.header + p{
+  text-align: center;
+}
+
+.list-counters-wrapper{
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.lists-wrapper > p{
+  text-align: center;
+}
+
 .loader{
   margin: 20px auto; 
+}
+
+.actions{
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.actions a {
+  width: 150px;
+  margin: 10px auto; 
+
+}
+
+@media (max-width: 450px) {
+  .actions{
+    flex-direction: column;
+  }
+
+  .actions a {
+    width: 95%;
+  }
 }

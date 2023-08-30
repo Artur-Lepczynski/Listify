@@ -20,12 +20,13 @@ import ViewSingleListPage from "./pages/ViewSingleListPage"
 import AddPage from "./pages/AddPage"
 import EditListsPage from "./pages/EditListsPage";
 import EditSingleListPage from "./pages/EditSingleListPage";
+import EditShopsPage from "./pages/EditShopsPage";
+import AuthPage, { AuthPageLoader } from "./pages/AuthPage";
+import AccountPage from "./pages/AccountPage";
 
 //other
 import LoaderFullPage from "./components/UI/LoaderFullPage";
 import { useEffect, useState } from "react";
-import EditShopsPage from "./pages/EditShopsPage";
-import AuthPage, { AuthPageLoader } from "./pages/AuthPage";
 
 initializeApp(firebaseConfig);
 
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: "/edit/lists", element: <EditListsPage/>}, 
       { path: "/edit/lists/:listId", element: <EditSingleListPage/>}, 
       { path: "/edit/shops", element: <EditShopsPage/>},
+      { path: "/account", element: <AccountPage/>}
     ],
   },
 ]);

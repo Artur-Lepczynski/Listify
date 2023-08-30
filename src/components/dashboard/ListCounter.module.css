@@ -1,0 +1,48 @@
+.wrapper{
+  width: 120px;
+}
+
+.number{
+  margin: 10px auto; 
+  font-size: 3em;
+}
+
+.number-open-pearlShores{
+  color: var(--pearlShores-text-success-1);
+}
+
+.number-closed-pearlShores{
+  color: var(--pearlShores-text-error-1);
+}
+
+.number-open-midnight{
+  color: var(--midnight-text-success-1);
+}
+
+.number-closed-midnight{
+  color: var(--midnight-text-error-1);
+}
+
+.number-open-bubblegum{
+  color: var(--bubblegum-text-success-1);
+}
+
+.number-closed-bubblegum{
+  color: var(--bubblegum-text-error-1);
+}
+
+.number-open-blueLagoon{
+  color: var(--blueLagoon-text-success-1);
+}
+
+.number-closed-blueLagoon{
+  color: var(--blueLagoon-text-error-1);
+}
+
+.number-open-deepOcean{
+  color: var(--deepOcean-text-success-1);
+}
+
+.number-closed-deepOcean{
+  color: var(--deepOcean-text-error-1);
+}

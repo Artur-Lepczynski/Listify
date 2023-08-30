@@ -6,7 +6,6 @@ import {
   getDatabase,
   ref,
   onValue,
-  set,
   update,
   push,
   child,
@@ -16,11 +15,14 @@ import { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import Loader from "../UI/Loader";
 import ListItem from "../lists/ListItem";
+import ListCounter from "./ListCounter";
 
 export default function Dashboard() {
+  //TODO: fix flash when there are lists? 
   const getClassNames = useTheme(style);
 
-  const [lists, setLists] = useState("");
+  const [lists, setLists] = useState([]);
+  const [listNumbers, setListNumbers] = useState({});
   const [listsLoading, setListsLoading] = useState(true);
   const NO_RECENT_LISTS_SHOWN = 3; //make this a setting?
 
@@ -29,10 +31,26 @@ export default function Dashboard() {
     const userId = auth.currentUser.uid;
     const db = getDatabase();
     const listsRef = ref(db, "users/" + userId + "/lists");
+
     onValue(listsRef, (snapshot) => {
       const data = snapshot.val();
-      let result = Object.entries(data).slice(-NO_RECENT_LISTS_SHOWN).reverse();
-      setLists(result);
+      if (data) {
+        const shortList = Object.entries(data)
+          .slice(-NO_RECENT_LISTS_SHOWN)
+          .reverse();
+        setLists(shortList);
+
+        const list = Object.values(data);
+        const doneNumber = list.reduce((acc, item) => {
+          return acc + +item.done;
+        }, 0);
+
+        setListNumbers({
+          total: list.length,
+          done: doneNumber,
+          pending: list.length - doneNumber,
+        });
+      }
       setListsLoading(false);
     });
   }, []);
@@ -43,7 +61,7 @@ export default function Dashboard() {
     const db = getDatabase();
 
     const dummy = {
-      name: "Test list 4",
+      name: "Test list 3",
       achievementProgress: true,
       done: false,
       createDate: new Date(),
@@ -70,39 +88,65 @@ export default function Dashboard() {
   return (
     <Page>
       <Card>
-        <h2>Dashboard</h2>
-        <p>You have X shopping lists</p>
+        <h2 className={style.header}>Dashboard</h2>
+        {lists.length === 0 ? (
+          <p>You don't have any shopping lists!</p>
+        ) : (
+          <p>You have {listNumbers.total} shopping lists</p>
+        )}
         <hr></hr>
         <div className={style["list-counters-wrapper"]}>
-          <div className={style["list-counters-wrapper"]}>
-            <p className={style["list-counter-done"]}>X</p>
-            <p>Open</p>
-          </div>
-          <div className={style["list-counters-wrapper"]}>
-            <p className={style["list-counter-done"]}>X</p>
-            <p>Closed</p>
-          </div>
+          {listsLoading && <Loader className={style["loader"]} />}
+          {!listsLoading && lists.length === 0 && (
+            <p>
+              Once you've added some, more information about them will be
+              displayed here...
+            </p>
+          )}
+          {!listsLoading && lists.length > 0 && 
+            <>
+              <ListCounter type="open" number={listNumbers.pending}/>
+              <ListCounter type="closed" number={listNumbers.done}/>
+            </>
+          }
+
         </div>
         <hr></hr>
         <div className={style["lists-wrapper"]}>
           {listsLoading && <Loader className={style["loader"]} />}
-          {!listsLoading && !lists && (
+          {!listsLoading && lists.length === 0 && (
             <p>
-              Once you've added some lists, the three most recent will be
-              displayed here
+              ...and the {NO_RECENT_LISTS_SHOWN} most recent will be displayed
+              here!
             </p>
           )}
-          {!listsLoading && lists && lists.map((item)=>{
-            return <ListItem key={item[0]} id={item[0]} data={item[1]} date="full" mode="edit"/>
-          })}
+          {!listsLoading && lists.length > 0 && (
+            <>
+              <p>Your {NO_RECENT_LISTS_SHOWN} most recent lists:</p>
+              {lists.map((item) => {
+                return (
+                  <ListItem
+                    key={item[0]}
+                    id={item[0]}
+                    data={item[1]}
+                    date="full"
+                    mode="edit"
+                  />
+                );
+              })}
+            </>
+          )}
         </div>
         <hr></hr>
-        <Button type="link" look="primary">
+        <nav className={style.actions}>
+        <Button type="link" look="primary" to="/lists">
           See all lists
         </Button>
-        <Button type="link" look="primary">
-          Create a new list
+        <Button type="link" look="primary" to="/add">
+          Add a new list
         </Button>
+
+        </nav>
       </Card>
       {/* <button onClick={sendDummyData}>add</button> */}
     </Page>
