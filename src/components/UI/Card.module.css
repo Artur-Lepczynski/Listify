@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 20px auto; 
   padding: 5px;
-  border-radius: var(--border-radius-2);
+  border-radius: var(--border-radius-1);
   box-sizing: border-box;
 }
 
@@ -25,4 +25,24 @@
 
 .card-deepOcean{
   background-color: var(--deepOcean-bg-4);
+}
+
+.card-nested-pearlShores{
+  background-color: var(--pearlShores-bg-3);
+}
+
+.card-nested-midnight{
+  background-color: var(--midnight-bg-3);
+}
+
+.card-nested-bubblegum{
+  background-color: var(--bubblegum-bg-3);
+}
+
+.card-nested-blueLagoon{
+  background-color: var(--blueLagoon-bg-3);
+}
+
+.card-nested-deepOcean{
+  background-color: var(--deepOcean-bg-3);
 }

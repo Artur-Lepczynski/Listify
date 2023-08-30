@@ -1,0 +1,54 @@
+.list-item{
+  min-height: 80px;
+  display: flex;
+}
+
+.list-item-text{
+  flex: 1 1 10%; 
+  padding-left: 10px;
+  cursor: pointer;
+  /* background-color: rgba(240, 255, 255, 0.16); */
+}
+
+.list-item-name-time p{
+  margin: 10px 5px 10px 0px; 
+}
+
+.list-item-name-time{
+  display: flex;
+  justify-content: space-between;
+}
+
+.hover-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.hover-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.hover-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.hover-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.hover-deepOcean{
+  color: var(--deepOcean-accent-1);
+}
+
+.list-item-controls{
+  flex: 0 0 40px; 
+  max-height: 66px;
+  padding: 2px 0px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item-controls-icon{
+  font-size: 1.8em;
+}

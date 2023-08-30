@@ -5,7 +5,7 @@ export default function Loader(props) {
     <div
       className={`${style.loader} ${
         props.size === "large" ? style["loader-large"] : style["loader-small"]
-      }`}
+      } ${props.className}`}
     ></div>
   );
 }

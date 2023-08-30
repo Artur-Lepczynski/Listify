@@ -1,0 +1,58 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  /* background-color: rgba(24, 150, 150, 0.247); */
+}
+
+.wrapper p {
+  margin: 5px 0px;
+}
+
+.done-icon {
+  font-size: 1.2em;
+}
+
+.done-icon-true-pearlShores, .done-number-pearlShores {
+  color: var(--pearlShores-text-success-1);
+}
+
+.done-icon-false-pearlShores, .pending-number-pearlShores {
+  color: var(--pearlShores-text-error-1);
+}
+
+.done-icon-true-midnight, .done-number-midnight {
+  color: var(--midnight-text-success-1);
+}
+
+.done-icon-false-midnight, .pending-number-midnight {
+  color: var(--midnight-text-error-1);
+}
+
+.done-icon-true-bubblegum, .done-number-bubblegum {
+  color: var(--bubblegum-text-success-1);
+}
+
+.done-icon-false-bubblegum, .pending-number-bubblegum {
+  color: var(--bubblegum-text-error-1);
+}
+
+.done-icon-true-blueLagoon, .done-number-blueLagoon {
+  color: var(--blueLagoon-text-success-1);
+}
+
+.done-icon-false-blueLagoon, .pending-number-blueLagoon {
+  color: var(--blueLagoon-text-error-1);
+}
+
+.done-icon-true-deepOcean, .done-number-deepOcean {
+  color: var(--deepOcean-text-success-1);
+}
+
+.done-icon-false-deepOcean, .pending-number-deepOcean {
+  color: var(--deepOcean-text-error-1);
+}
+
+.separator-icon {
+  margin: 0px 10px;
+  font-size: 0.3em;
+}

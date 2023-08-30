@@ -14,7 +14,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 //pages & loaders
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
-import DashboardPage from "./pages/DashboardPage";
+import DashboardPage, { DashboardPageLoader } from "./pages/DashboardPage";
 import ListsPage from "./pages/ListsPage"
 import ViewSingleListPage from "./pages/ViewSingleListPage"
 import AddPage from "./pages/AddPage"
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "/auth", element: <AuthPage/>, loader: AuthPageLoader}, 
-      { path: "/dash", element: <DashboardPage /> },
+      { path: "/dash", element: <DashboardPage />, loader: DashboardPageLoader},
       { path: "/lists", element: <ListsPage/>}, 
       { path: "/lists/:listId", element: <ViewSingleListPage/>},
       { path: "/add", element: <AddPage/>},
@@ -58,10 +58,13 @@ const router = createBrowserRouter([
 //settings: <i class="fa-solid fa-gear"></i>
 //check: <i class="fa-solid fa-check"></i>
 //x: <i class="fa-solid fa-xmark"></i>
-//trash <i class="fa-solid fa-trash"></i>
+//trash <i class="fa-solid fa-trash-can"></i>
 //dots vert: <i class="fa-solid fa-ellipsis-vertical"></i>
+//dot: <i className="fa-solid fa-circle"></i>
 //eye: <i class="fa-solid fa-eye"></i>
 //arrow-right: <i class="fa-solid fa-arrow-right"></i>
+//square: <i class="fa-regular fa-square"></i>
+//checkbox: <i class="fa-regular fa-square-check"></i>
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 

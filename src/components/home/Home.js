@@ -1,6 +1,5 @@
 import style from "./Home.module.css";
 import Button from "../UI/Button";
-import Card from "../UI/Card";
 import Page from "../UI/Page";
 import logo from "../../images/logo512.png";
 import TextCarousel from "./TextCarousel";
