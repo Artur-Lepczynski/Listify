@@ -1,0 +1,32 @@
+.shop-container{
+  position: relative;
+}
+
+.shop-name{
+  margin: 0px auto;
+  padding: 8px 0px;
+  text-align: center;
+  font-weight: 400;
+  position: sticky;
+  top: calc(var(--header-height));
+}
+
+.shop-name-pearlShores{
+  background-color: var(--pearlShores-bg-4);
+}
+
+.shop-name-midnight{
+  background-color: var(--midnight-bg-4);
+}
+
+.shop-name-bubblegum{
+  background-color: var(--bubblegum-bg-4);
+}
+
+.shop-name-blueLagoon{
+  background-color: var(--blueLagoon-bg-4);
+}
+
+.shop-name-deepOcean{
+  background-color: var(--deepOcean-bg-4);
+}

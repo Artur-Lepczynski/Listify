@@ -7,8 +7,12 @@ export default function ProductCounter(props) {
   const getClassNames = useTheme(style);
 
   const itemsArray = [].concat(...Object.values(props.items));
+  let total = 0;
   const done = itemsArray.reduce((acc, item) => {
-    return acc + +item.done;
+    return acc + Object.values(item).reduce((acc2, item2)=>{
+      total++;
+      return acc2 + +item2.done;
+    }, 0);
   }, 0);
 
   return (
@@ -31,7 +35,7 @@ export default function ProductCounter(props) {
           style["separator-icon"]
         } ${getClassNames("separator-icon")}`}
       ></i>
-      <p className={getClassNames("total-number")}>{itemsArray.length}</p>
+      <p className={getClassNames("total-number")}>{total}</p>
       <i
         className={`fa-solid fa-circle ${
           style["separator-icon"]
@@ -44,7 +48,7 @@ export default function ProductCounter(props) {
         } ${getClassNames("separator-icon")}`}
       ></i>
       <p className={getClassNames("pending-number")}>
-        {itemsArray.length - done}
+        {total - done}
       </p>
     </div>
   );

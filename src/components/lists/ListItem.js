@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ListItem(props) {
-  //props.data -> done, #total, #done, #notDone, date - full/hour, mode - edit/delete, name
+  //props.data -> done, #total, #done, #notDone, date - full/hour, mode - select/edit, name
   //props.id
 
   const getClassNames = useTheme(style);
@@ -35,7 +35,11 @@ export default function ListItem(props) {
   }
 
   function handleListClick() {
-    navigate("/lists/" + props.id);
+    if(props.mode === "select"){
+      navigate("/lists/" + props.id);
+    }else if(props.mode === "edit"){
+      navigate("/edit/lists/" + props.id);
+    }
   }
 
   function handleListStatusChange() {
@@ -99,7 +103,7 @@ export default function ListItem(props) {
             onClick={handleListStatusChange}
           />
         )}
-        {props.mode === "edit" && (
+        {props.mode === "select" && (
           <Icon
             type="link"
             to={"/edit/lists/" + props.id}
@@ -107,7 +111,7 @@ export default function ListItem(props) {
             className={style["list-item-controls-icon"]}
           />
         )}
-        {props.mode === "delete" && (
+        {props.mode === "edit" && (
           <Icon
             type="button"
             icon="fa-solid fa-trash-can"

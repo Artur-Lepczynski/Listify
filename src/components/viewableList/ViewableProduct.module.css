@@ -1,0 +1,53 @@
+.product-container{
+  width: 99%;
+  height: 50px;
+  margin: 5px auto; 
+  border-radius: var(--border-radius-1);
+  background-color: rgba(245, 245, 220, 0.099);
+
+  display: flex;
+  justify-content: center;
+}
+
+.qty{
+  margin: auto 10px; 
+  flex-shrink: 0;
+}
+
+.name{
+  flex: 1 1 100%;
+}
+
+.name-done-pearlShores{
+  text-decoration: line-through;
+  color: var(--pearlShores-text-success-1);
+}
+
+.name-done-midnight{
+  text-decoration: line-through;
+  color: var(--midnight-text-success-1);
+}
+
+.name-done-bubblegum{
+  text-decoration: line-through;
+  color: var(--bubblegum-text-success-1);
+}
+
+.name-done-blueLagoon{
+  text-decoration: line-through;
+  color: var(--blueLagoon-text-success-1);
+}
+
+.name-done-deepOcean{
+  text-decoration: line-through;
+  color: var(--deepOcean-text-success-1);
+}
+
+.icon{
+  flex-basis: 30px;
+  margin: 0px 10px;
+  padding: 0px;
+  font-size: 1.8em;
+  flex-shrink: 0;
+  align-self: center;
+}

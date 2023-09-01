@@ -1,3 +1,24 @@
+.loader-wrapper{
+  width: 100%;
+  height: calc(100vh - var(--header-height) - 10px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader{
+  margin: 20px auto;
+}
+
+.fade-appear{
+  opacity: 0;
+}
+
+.fade-appear-active{
+  opacity: 1;
+  transition: opacity var(--card-fade-duration);
+}
+
 .header{
   margin: 10px auto; 
   text-align: center;
@@ -17,10 +38,6 @@
 
 .lists-wrapper > p{
   text-align: center;
-}
-
-.loader{
-  margin: 20px auto; 
 }
 
 .actions{

@@ -1,0 +1,81 @@
+.loader-wrapper{
+  width: 100%;
+  height: calc(100vh - var(--header-height) - 10px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader{
+  margin: 20px auto;
+}
+
+.fade-appear{
+  opacity: 0;
+}
+
+.fade-appear-active{
+  opacity: 1;
+  transition: opacity var(--card-fade-duration);
+}
+
+.error-text{
+  text-align: center;
+  margin: 20px auto;
+  font-size: 1.2em;
+}
+
+.list-header{
+  margin: 15px 0px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header{
+  margin: 10px auto; 
+  text-align: center;
+  font-weight: 400;
+}
+
+.button{
+  margin: 20px auto;
+  width: 100%;
+  max-width: 200px;
+  display: block;
+}
+
+.note-header{
+  text-align: center;
+  font-weight: 400;
+  border-bottom: 2px dotted; 
+}
+
+.note-text-wrapper{
+  width: 99%;
+  margin: 10px auto;
+  padding: 5px 15px;
+  border-radius: var(--border-radius-1);
+  box-sizing: border-box;
+}
+
+.note-text-wrapper-pearlShores{
+  background-color: var(--pearlShores-bg-3);
+}
+
+.note-text-wrapper-midnight{
+  background-color: var(--midnight-bg-3);
+}
+
+.note-text-wrapper-bubblegum{
+  background-color: var(--bubblegum-bg-3);
+}
+
+.note-text-wrapper-blueLagoon{
+  background-color: var(--blueLagoon-bg-3);
+}
+
+.note-text-wrapper-deepOcean{
+  background-color: var(--deepOcean-bg-3);
+}

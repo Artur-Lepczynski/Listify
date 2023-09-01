@@ -15,8 +15,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import RootLayout from "./pages/RootLayout";
 import HomePage from "./pages/HomePage";
 import DashboardPage, { DashboardPageLoader } from "./pages/DashboardPage";
-import ListsPage from "./pages/ListsPage"
-import ViewSingleListPage from "./pages/ViewSingleListPage"
+import ListsPage, { ListsPageLoader } from "./pages/ListsPage"
+import ViewSingleListPage, { viewSingleListPageLoader } from "./pages/ViewSingleListPage"
 import AddPage from "./pages/AddPage"
 import EditListsPage from "./pages/EditListsPage";
 import EditSingleListPage from "./pages/EditSingleListPage";
@@ -38,8 +38,8 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "/auth", element: <AuthPage/>, loader: AuthPageLoader}, 
       { path: "/dash", element: <DashboardPage />, loader: DashboardPageLoader},
-      { path: "/lists", element: <ListsPage/>}, 
-      { path: "/lists/:listId", element: <ViewSingleListPage/>},
+      { path: "/lists", element: <ListsPage/>, loader: ListsPageLoader}, 
+      { path: "/lists/:listId", element: <ViewSingleListPage/>, loader: viewSingleListPageLoader},
       { path: "/add", element: <AddPage/>},
       { path: "/edit", element: <Navigate to={"/edit/lists"}/>}, 
       { path: "/edit/lists", element: <EditListsPage/>}, 
