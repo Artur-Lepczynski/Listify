@@ -1,0 +1,160 @@
+.notifications-wrapper {
+  max-width: 800px;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  left: 50%; 
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.notification {
+  width: 100%;
+  margin: 10px 0px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notification-enter{
+  opacity: 0;
+}
+
+.notification-enter-active{
+  opacity: 1;
+  transition: opacity var(--notification-fade-duration) ease-in;
+}
+
+.notification-exit{
+  opacity: 1;
+}
+
+.notification-exit-active{
+  opacity: 0;
+  transition: opacity var(--notification-fade-duration) ease-in;
+}
+
+.notification-pearlShores{
+  border: 2px solid var(--pearlShores-bg-1);
+  color: var(--pearlShores-text-1);
+}
+
+.notification-midnight{
+  border: 2px solid var(--midnight-bg-1);
+  color: var(--midnight-text-1);
+}
+
+.notification-bubblegum{
+  border: 2px solid var(--bubblegum-bg-1);
+  color: var(--bubblegum-text-1);
+}
+
+.notification-blueLagoon{
+  border: 2px solid var(--blueLagoon-bg-1);
+  color: var(--blueLagoon-text-1);
+}
+
+.notification-deepOcean{
+  border: 2px solid var(--deepOcean-bg-1);
+  color: var(--deepOcean-text-1);
+}
+
+.icon-wrapper{
+  width: 50px;
+  flex-shrink: 0;
+  height: 100%;
+  margin: 0px 5px 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.3em;
+}
+
+.icon{
+  width: 100%;
+}
+
+.icon-pearlShores{
+  color: var(--pearlShores-accent-1);
+}
+
+.icon-midnight{
+  color: var(--midnight-accent-1);
+}
+
+.icon-bubblegum{
+  color: var(--bubblegum-accent-1);
+}
+
+.icon-blueLagoon{
+  color: var(--blueLagoon-accent-1);
+}
+
+.icon-deepOcean{
+  color: var(--deepOcean-accent-1);
+}
+
+.notification-info{
+  flex-grow: 1;
+}
+
+.notification-title{
+  margin: 0px auto 5px; 
+  padding: 3px 0px 5px;
+  font-weight: 400;
+  border-bottom: 1px dotted;
+}
+
+.notification-message{
+  margin: 5px auto;
+  padding: 5px 0px;
+}
+
+.close-button{
+  height: 25px;
+  width: 25px;
+  font-size: 0.65em;
+  padding: 0px;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+
+.duration-bar{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--pearlShores-bg-1);
+  animation: duration-bar 4s linear forwards;
+}
+
+@keyframes duration-bar {
+  from{
+    width: 100%;
+  }
+  to{
+    width: 0%;
+  }
+}
+
+.duration-bar-pearlShores{
+  background-color: var(--pearlShores-accent-1);
+}
+
+.duration-bar-midnight{
+  background-color: var(--midnight-accent-1);
+}
+
+.duration-bar-bubblegum{
+  background-color: var(--bubblegum-accent-1);
+}
+
+.duration-bar-blueLagoon{
+  background-color: var(--blueLagoon-accent-1);
+}
+
+.duration-bar-deepOcean{
+  background-color: var(--deepOcean-accent-1);
+}

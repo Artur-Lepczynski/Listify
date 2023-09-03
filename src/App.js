@@ -67,6 +67,8 @@ const router = createBrowserRouter([
 //arrow-right: <i class="fa-solid fa-arrow-right"></i>
 //square: <i class="fa-regular fa-square"></i>
 //checkbox: <i class="fa-regular fa-square-check"></i>
+//info: <i class="fa-solid fa-circle-info"></i>
+//error: <i class="fa-solid fa-triangle-exclamation"></i>
 function App() {
   const [isLoading, setIsLoading] = useState(true);
 

@@ -11,18 +11,21 @@ import {
   child,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../UI/Button";
 import Loader from "../UI/Loader";
 import ListItem from "../lists/ListItem";
 import ListCounter from "./ListCounter";
 import { CSSTransition } from "react-transition-group";
+import { context } from "../../store/GlobalContext";
 
 export default function Dashboard() {
   const [lists, setLists] = useState([]);
   const [listNumbers, setListNumbers] = useState({});
   const [listsLoading, setListsLoading] = useState(true);
   const NO_RECENT_LISTS_SHOWN = 3; //make this a setting?
+
+  const { showNotification } = useContext(context);
 
   useEffect(() => {
     const auth = getAuth();
@@ -96,6 +99,14 @@ export default function Dashboard() {
       .catch((err) => {
         console.log("fail?", err);
       });
+  }
+
+  function sendDummyNotification(){
+    //{type: information/error, title: "...", message: "..."}
+    showNotification("information", "test title", "test message");
+    setTimeout(()=>{
+      showNotification("error", "test 2", "test 2");
+    }, 1000)
   }
 
   return (
@@ -176,6 +187,7 @@ export default function Dashboard() {
       </CSSTransition>
 
       {/* <button onClick={sendDummyData}>add</button> */}
+      {/* <button onClick={sendDummyNotification}>show notif</button> */}
     </Page>
   );
 }
