@@ -143,6 +143,8 @@ export default function Auth() {
             showNotification("error", "Account not found", "There is no account with this email address.");
           }else if(error.code === "auth/wrong-password") {
             showNotification("error", "Wrong password", "The password is incorrect.");
+          }else if(error.code === "auth/too-many-requests") {
+            showNotification("error", "Too many requests", "Too many unsuccessful login attempts. Please try again later.");
           }else{
             showNotification("error", "Log in failed", "An unknown error occurred. Code: " + error.code);
           }
