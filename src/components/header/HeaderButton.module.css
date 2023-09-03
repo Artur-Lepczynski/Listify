@@ -1,3 +1,10 @@
+.button-wrapper{
+  width: 20%;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+}
+
 .element{
   height: 100%;
   width: 20%;
@@ -11,6 +18,10 @@
   background-color: transparent;
   transition-property: color background-color;
   transition-duration: var(--header-color-fade-duration);
+}
+
+.button{
+  width: 100%; 
 }
 
 .link-pearlShores{

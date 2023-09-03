@@ -1,0 +1,82 @@
+.dropdown{
+  min-height: 100px;
+  width: 150px;
+  position: absolute;
+  top: 100%;
+  left: calc(((150px - 100%) / 2) * -1);
+  z-index: -1;
+}
+
+.dropdown-enter{
+  transform: translateY(-100px);
+}
+
+.dropdown-enter-active{
+  transform: translateY(0px);
+  transition: transform 150ms ease-out; 
+}
+
+.dropdown-exit{
+  transform: translateY(0px);
+}
+
+.dropdown-exit-active{
+  transform: translateY(-100px);
+  transition: transform 150ms ease-out; 
+}
+
+.dropdown-pearlShores{
+  background-color: var(--pearlShores-bg-3);
+}
+
+.dropdown-midnight{
+  background-color: var(--midnight-bg-3);
+}
+
+.dropdown-bubblegum{
+  background-color: var(--bubblegum-bg-3);
+}
+
+.dropdown-blueLagoon{
+  background-color: var(--blueLagoon-bg-3);
+}
+
+.dropdown-deepOcean{
+  background-color: var(--deepOcean-bg-3);
+}
+
+.dropdown-item{
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.dropdown-item-pearlShores:hover{
+  background-color: var(--pearlShores-bg-4);
+  color: var(--pearlShores-accent-1)
+}
+
+.dropdown-item-midnight:hover{
+  background-color: var(--midnight-bg-4);
+  color: var(--midnight-accent-1)
+}
+
+.dropdown-item-bubblegum:hover{
+  background-color: var(--bubblegum-bg-4);
+  color: var(--bubblegum-accent-1)
+}
+
+.dropdown-item-blueLagoon:hover{
+  background-color: var(--blueLagoon-bg-4);
+  color: var(--blueLagoon-accent-1)
+}
+
+.dropdown-item-deepOcean:hover{
+  background-color: var(--deepOcean-bg-4);
+  color: var(--deepOcean-accent-1)
+}

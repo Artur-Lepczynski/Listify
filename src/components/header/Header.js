@@ -80,11 +80,10 @@ export default function Header() {
           <HeaderButton type="link" to="/add" icon="fa-plus" />
           <HeaderButton
             type="menu"
-            to="/edit"
             icon="fa-pen-to-square"
             menu={[
-              { to: "/edit/lists", name: "Edit lists" },
-              { to: "/edit/shops", name: "Edit shops" },
+              { to: "/edit/lists", name: "Manage lists" },
+              { to: "/edit/shops", name: "Manage shops" },
             ]}
           />
           <HeaderButton type="link" to="/account" icon="fa-user" />
