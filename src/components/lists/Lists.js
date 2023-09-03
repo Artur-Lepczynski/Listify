@@ -40,8 +40,8 @@ export default function Lists(props) {
           lastDate = currentDate;
         })
         setLists(result);
-        setListsLoading(false);
       }
+        setListsLoading(false);
     });
   }, []);
 

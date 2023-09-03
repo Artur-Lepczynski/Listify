@@ -1,5 +1,5 @@
 import style from "./Auth.module.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   getAuth,
@@ -14,9 +14,11 @@ import logo from "../../images/logo512.png";
 import AuthFormItem from "./AuthFormItem";
 import Button from "../UI/Button";
 import TextLink from "../UI/TextLink";
+import { context } from "../../store/GlobalContext";
 
 export default function Auth() {
   const getClassNames = useTheme(style);
+  const { showNotification } = useContext(context);
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -108,14 +110,19 @@ export default function Auth() {
         .then(() => {
           setIsLoading(false);
           navigate("/dash");
-          //show success notification?
+          showNotification("information", "Sign up successful!", "You have successfully signed up. Welcome to Listify!");
         })
         .catch((error) => {
-          //TODO: display error notification
           setIsLoading(false);
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("Sign in fail\n", errorCode, "\n", errorMessage);
+          if(error.code === "auth/email-already-in-use") {
+            showNotification("error", "Email already in use", "This email is already in use by another account.");
+          }else if(error.code === "auth/invalid-email") {
+            showNotification("error", "Invalid email", "The email address is badly formatted.");
+          }else if(error.code === "auth/weak-password") {
+            showNotification("error", "Weak password", "The password must be at least 6 characters long.");
+          }else{
+            showNotification("error", "Sign up failed", "An unknown error occurred. Code: " + error.code);
+          }
         });
     } else if (!isLoading && action === "login" && formIsValid) {
       setIsLoading(true);
@@ -125,14 +132,20 @@ export default function Auth() {
         .then(() => {
           setIsLoading(false);
           navigate("/dash");
-          //show success notification?
         })
         .catch((error) => {
-          //TODO: display error notification
           setIsLoading(false);
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("Log in fail\n", errorCode, "\n", errorMessage);
+          if(error.code === "auth/invalid-email") {
+            showNotification("error", "Invalid email", "The email address is badly formatted.");
+          }else if(error.code === "auth/user-disabled") {
+            showNotification("error", "Account disabled", "This account has been disabled.");
+          }else if(error.code === "auth/user-not-found") {
+            showNotification("error", "Account not found", "There is no account with this email address.");
+          }else if(error.code === "auth/wrong-password") {
+            showNotification("error", "Wrong password", "The password is incorrect.");
+          }else{
+            showNotification("error", "Log in failed", "An unknown error occurred. Code: " + error.code);
+          }
         });
     } else if (
       !isLoading &&
@@ -146,14 +159,18 @@ export default function Auth() {
         .then(() => {
           setIsLoading(false);
           //TODO: show success notification
+          showNotification("information", "Email sent!", "We have sent you an email with a link to reset your password.");
           console.log("SENT!"); 
         })
         .catch((error) => {
           setIsLoading(false);
-          //TODO: show error notification
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log("sending fail\n", errorCode, "\n", errorMessage);
+          if(error.code === "auth/invalid-email") {
+            showNotification("error", "Invalid email", "The email address is badly formatted.");
+          }else if(error.code === "auth/user-not-found") {
+            showNotification("error", "Account not found", "There is no account with this email address.");
+          }else{
+            showNotification("error", "Sending failed", "An unknown error occurred. Code: " + error.code);
+          }
         });
     }
   }
