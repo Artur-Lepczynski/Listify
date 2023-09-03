@@ -32,8 +32,7 @@ export default function Notifications(props) {
             <Card
               className={`${style.notification} ${getClassNames(
                 "notification"
-              )}`}
-              nested={true}
+              )}`}             
             >
               <div className={style["icon-wrapper"]}>
                 {item.type === "information" && (
