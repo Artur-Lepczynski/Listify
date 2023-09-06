@@ -1,0 +1,24 @@
+.shop-name-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shop-name{
+  margin-left: 10px;
+  font-weight: 400;
+}
+
+.icons-wrapper{
+  display: flex;
+  align-items: center;
+}
+
+.shop-name-icon{
+  font-size: 1.5em;
+}
+
+.add-product-button{
+  display: block;
+  margin: 10px auto; 
+}

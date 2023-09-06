@@ -1,6 +1,6 @@
 .product-container{
   width: 99%;
-  height: 50px;
+  min-height: 50px;
   margin: 5px auto; 
   border-radius: var(--border-radius-1);
   background-color: rgba(245, 245, 220, 0.099);

@@ -1,0 +1,143 @@
+.product{
+  width: 100%;
+  min-height: 60px;
+  margin: 10px 0px;
+  border-radius: var(--border-radius-1);
+}
+
+.product-pearlShores{
+  background-color: var(--pearlShores-bg-2);
+  color: var(--pearlShores-text-1); 
+}
+
+.product-midnight{
+  background-color: var(--midnight-bg-2);
+  color: var(--midnight-text-1); 
+}
+
+.product-bubblegum{
+  background-color: var(--bubblegum-bg-2);
+  color: var(--bubblegum-text-1); 
+}
+
+.product-blueLagoon{
+  background-color: var(--blueLagoon-bg-2);
+  color: var(--blueLagoon-text-1); 
+}
+
+.product-deepOcean{
+  background-color: var(--deepOcean-bg-2);
+  color: var(--deepOcean-text-1); 
+}
+
+.top-wrapper{
+  /* min-height: 55px; */
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 10px 10px;
+  border-bottom: 2px dotted;
+  /* background-color: rgba(127, 255, 212, 0.236); */
+}
+
+.product-name-input{
+  height: 30px;
+  padding-left: 7px;
+}
+
+.input{
+  box-sizing: border-box;
+  font-family: Montserrat;
+  border-radius: var(--border-radius-1);
+}
+
+.input-pearlShores{
+  border: 1px solid var(--pearlShores-bg-1);
+  color: var(--pearlShores-text-2);
+  background-color: var(--pearlShores-bg-5);
+}
+
+.input-midnight{
+  border: 1px solid var(--midnight-bg-1);
+  color: var(--midnight-text-2);
+  background-color: var(--midnight-bg-5);
+}
+
+.input-bubblegum{
+  border: 1px solid var(--bubblegum-bg-1);
+  color: var(--bubblegum-text-2);
+  background-color: var(--bubblegum-bg-5);
+}
+
+.input-blueLagoon{
+  border: 1px solid var(--blueLagoon-bg-1);
+  color: var(--blueLagoon-text-2);
+  background-color: var(--blueLagoon-bg-5);
+}
+
+.input-deepOcean{
+  border: 1px solid var(--deepOcean-bg-1);
+  color: var(--deepOcean-text-2);
+  background-color: var(--deepOcean-bg-5);
+}
+
+.icon{
+  font-size: 1.5em;
+}
+
+.product-name{
+  margin: 6px 0px 5px 5px;
+}
+
+.input-invalid-text{
+  margin: 10px 3px 0px;
+  font-size: 0.73em;
+}
+
+.input-invalid-text-pearlShores{
+  color: var(--pearlShores-text-error-1);
+}
+
+.input-invalid-text-midnight{
+  color: var(--midnight-text-error-1);
+}
+
+.input-invalid-text-bubblegum{
+  color: var(--bubblegum-text-error-1);
+}
+
+.input-invalid-text-blueLagoon{
+  color: var(--blueLagoon-text-error-1);
+}
+
+.input-invalid-text-deepOcean{
+  color: var(--deepOcean-text-error-1);
+}
+
+.bottom-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px;
+}
+
+.bottom-controls{
+  width: 165px;
+  /* background-color: rgba(0, 255, 255, 0.187); */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-qty-input{
+  height: 30px;
+  width: 55px;
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.product-qty-button{
+  padding: 0px;
+  height: 30px;
+  width: 30px;
+}

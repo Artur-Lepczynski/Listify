@@ -1,0 +1,117 @@
+.prompt-wrapper {
+  width: 100%; 
+  height: 100%; 
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1100;
+}
+
+.prompt-entering{
+  animation: prompt-fade-in var(--prompt-fade-duration) ease-in;
+}
+
+@keyframes prompt-fade-in{
+  from{
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to{
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.prompt-exiting{
+  animation: prompt-fade-out var(--prompt-fade-duration) ease-in forwards;
+}
+
+@keyframes prompt-fade-out{
+  from{
+    transform: scaleY(1);
+  }
+  to{
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}
+
+.prompt{
+  width: 200px;
+  max-height: 250px;
+  border-radius: var(--border-radius-1);
+  box-sizing: border-box;
+  position: absolute;
+  overflow-y: auto;
+}
+
+.prompt-pearlShores{
+  background-color: var(--pearlShores-bg-5);
+  color: var(--pearlShores-text-1);
+  border: 2px solid var(--pearlShores-bg-4);
+}
+
+.prompt-midnight{
+  background-color: var(--midnight-bg-5);
+  color: var(--midnight-text-1);
+  border: 2px solid var(--midnight-bg-4);
+}
+
+.prompt-bubblegum{
+  background-color: var(--bubblegum-bg-5);
+  color: var(--bubblegum-text-1);
+  border: 2px solid var(--bubblegum-bg-4);
+}
+
+.prompt-blueLagoon{
+  background-color: var(--blueLagoon-bg-5);
+  color: var(--blueLagoon-text-1);
+  border: 2px solid var(--blueLagoon-bg-4);
+}
+
+.prompt-deepOcean{
+  background-color: var(--deepOcean-bg-5);
+  color: var(--deepOcean-text-1);
+  border: 2px solid var(--deepOcean-bg-4);
+}
+
+.prompt-option{
+  width: 100%;
+  min-height: 45px;
+  padding: 0px 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.prompt-option-pearlShores:hover{
+  background-color: var(--pearlShores-bg-4);
+  color: var(--pearlShores-accent-1);
+}
+
+.prompt-option-midnight:hover{
+  background-color: var(--midnight-bg-4);
+  color: var(--midnight-accent-1);
+}
+
+.prompt-option-bubblegum:hover{
+  background-color: var(--bubblegum-bg-4);
+  color: var(--bubblegum-accent-1);
+}
+
+.prompt-option-blueLagoon:hover{
+  background-color: var(--blueLagoon-bg-4);
+  color: var(--blueLagoon-accent-1);
+}
+
+.prompt-option-deepOcean:hover{
+  background-color: var(--deepOcean-bg-4);
+  color: var(--deepOcean-accent-1);
+}
+
+.no-options-text{
+  text-align: center;
+}

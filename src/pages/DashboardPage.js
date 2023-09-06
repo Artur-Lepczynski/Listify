@@ -1,6 +1,6 @@
 import Dashboard from "../components/dashboard/Dashboard";
 import { redirect } from "react-router-dom";
-import { getUserLoggedInStatus } from "../util/getUserLoggedInStatus";
+import { getUser } from "../util/getUserLoggedInStatus";
 
 
 export default function DashboardPage(){
@@ -8,7 +8,7 @@ export default function DashboardPage(){
 }
 
 export async function DashboardPageLoader() {
-  let loggedIn = await getUserLoggedInStatus(); 
-  if(!loggedIn) return redirect("/");
+  let user = await getUser(); 
+  if(!user) return redirect("/");
   return null;
 }

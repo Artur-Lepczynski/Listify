@@ -17,9 +17,9 @@ import HomePage from "./pages/HomePage";
 import DashboardPage, { DashboardPageLoader } from "./pages/DashboardPage";
 import ListsPage, { ListsPageLoader } from "./pages/ListsPage"
 import ViewSingleListPage, { viewSingleListPageLoader } from "./pages/ViewSingleListPage"
-import AddPage from "./pages/AddPage"
+import AddPage, { AddPageLoader } from "./pages/AddPage"
 import EditListsPage from "./pages/EditListsPage";
-import EditSingleListPage from "./pages/EditSingleListPage";
+import EditSingleListPage, { EditListPageLoader } from "./pages/EditSingleListPage";
 import EditShopsPage from "./pages/EditShopsPage";
 import AuthPage, { AuthPageLoader } from "./pages/AuthPage";
 import AccountPage from "./pages/AccountPage";
@@ -40,10 +40,10 @@ const router = createBrowserRouter([
       { path: "/dash", element: <DashboardPage />, loader: DashboardPageLoader},
       { path: "/lists", element: <ListsPage/>, loader: ListsPageLoader}, 
       { path: "/lists/:listId", element: <ViewSingleListPage/>, loader: viewSingleListPageLoader},
-      { path: "/add", element: <AddPage/>},
+      { path: "/add", element: <AddPage/>, loader: AddPageLoader},
       { path: "/edit", element: <Navigate to={"/edit/lists"}/>}, 
       { path: "/edit/lists", element: <EditListsPage/>}, 
-      { path: "/edit/lists/:listId", element: <EditSingleListPage/>}, 
+      { path: "/edit/lists/:listId", element: <EditSingleListPage/>, loader: EditListPageLoader}, 
       { path: "/edit/shops", element: <EditShopsPage/>},
       { path: "/account", element: <AccountPage/>}
     ],
@@ -55,6 +55,7 @@ const router = createBrowserRouter([
 //house: <i class="fa-solid fa-house-chimney-window"></i>
 //list: <i class="fa-solid fa-list-ul"></i>
 //plus: <i class="fa-solid fa-plus"></i>
+//minus: <i class="fa-solid fa-minus"></i>
 //edit: <i class="fa-solid fa-pen-to-square"></i>
 //user: <i class="fa-solid fa-user"></i>
 //settings: <i class="fa-solid fa-gear"></i>

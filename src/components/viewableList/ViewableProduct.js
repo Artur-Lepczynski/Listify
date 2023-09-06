@@ -3,7 +3,6 @@ import Icon from "../UI/Icon";
 import style from "./ViewableProduct.module.css";
 
 export default function ViewableProduct(props) {
-  console.log("props:", props);
 
   const getClassNames = useTheme(style);
 

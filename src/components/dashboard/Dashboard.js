@@ -101,12 +101,21 @@ export default function Dashboard() {
       });
   }
 
-  function sendDummyNotification(){
-    //{type: information/error, title: "...", message: "..."}
-    showNotification("information", "test title", "test message");
-    setTimeout(()=>{
-      showNotification("error", "test 2", "test 2");
-    }, 1000)
+  function sendDummyShop(){
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const db = getDatabase();
+
+    const dummy = {name: "Piekarnia"}; 
+    const newShopKey = push(child(ref(db), "users/" + userId + "/shops/")).key;
+
+    update(ref(db, "users/" + userId + "/shops/" + newShopKey), dummy)
+      .then(() => {
+        console.log("success?");
+      })
+      .catch((err) => {
+        console.log("fail?", err);
+      });
   }
 
   return (
@@ -187,7 +196,7 @@ export default function Dashboard() {
       </CSSTransition>
 
       {/* <button onClick={sendDummyData}>add</button> */}
-      {/* <button onClick={sendDummyNotification}>show notif</button> */}
+      <button onClick={sendDummyShop}>send shop</button>
     </Page>
   );
 }

@@ -22,7 +22,6 @@ export default function HeaderButton(props) {
   }
 
   function handleDropdownClick() {
-    console.log("drawer clicked");
     setMenuShown(false);
   }
 
@@ -43,8 +42,12 @@ export default function HeaderButton(props) {
   const location = useLocation();
 
   useEffect(() => {
-    if (props.type === "menu")
-      setButtonActive(location.pathname.startsWith(props.to));
+    if (props.type === "menu"){
+      const visiting = props.menu.some((item)=>{
+        return location.pathname.startsWith(item.to);
+      });
+      setButtonActive(visiting);
+    }
   }, [location]);
 
   function getLinkClassNames({ isActive }) {
