@@ -7,7 +7,7 @@ export default function EditSingleListPage() {
   return <EditableList mode="edit"/>;
 }
 
-export async function EditListPageLoader({ params }) {
+export async function EditSingleListPageLoader({ params }) {
   const user = await getUser();
   if (!user) return redirect("/");
 

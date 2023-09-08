@@ -1,0 +1,183 @@
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1200;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(255, 255, 255, 0); */
+  backdrop-filter: blur(2.5px);
+}
+
+.modal {
+  max-width: 700px;
+  width: 95%;
+  border-radius: var(--border-radius-1);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.modal-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity var(--modal-fade-duration) ease-in-out, transform var(--modal-fade-duration) ease-in-out;
+}
+
+.modal-exit{
+  opacity: 1;
+  transform: scale(1);
+}
+
+.modal-exit-active{
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity var(--modal-fade-duration) ease-in-out, transform var(--modal-fade-duration) ease-in-out;
+}
+
+.modal-pearlShores{
+  background-color: var(--pearlShores-bg-4);
+  color: var(--pearlShores-text-1);
+  border: 2px solid var(--pearlShores-bg-3);
+}
+
+.modal-midnight{
+  background-color: var(--midnight-bg-4);
+  color: var(--midnight-text-1);
+  border: 2px solid var(--midnight-bg-3);
+}
+
+.modal-bubblegum{
+  background-color: var(--bubblegum-bg-4);
+  color: var(--bubblegum-text-1);
+  border: 2px solid var(--bubblegum-bg-3);
+}
+
+.modal-blueLagoon{
+  background-color: var(--blueLagoon-bg-4);
+  color: var(--blueLagoon-text-1);
+  border: 2px solid var(--blueLagoon-bg-3);
+}
+
+.modal-deepOcean{
+  background-color: var(--deepOcean-bg-4);
+  color: var(--deepOcean-text-1);
+  border: 2px solid var(--deepOcean-bg-3);
+}
+
+hr{
+  width: 100%;
+}
+
+.title{
+  margin: 15px 0px 5px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.modal-body{
+  flex-grow: 1;
+  padding: 5px 10px;
+}
+
+.message{
+  margin: 5px;
+  text-align: center;
+}
+
+.input{
+  height: 30px;
+  width: 95%;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin: 15px auto 10px;
+  display: block;
+  text-align: center;
+  font-family: Montserrat;
+  border-radius: var(--border-radius-1);
+}
+
+.input-pearlShores{
+  border: 1px solid var(--pearlShores-bg-2);
+  color: var(--pearlShores-text-2);
+  background-color: var(--pearlShores-bg-5);
+}
+
+.input-midnight{
+  border: 1px solid var(--midnight-bg-2);
+  color: var(--midnight-text-2);
+  background-color: var(--midnight-bg-5);
+}
+
+.input-bubblegum{
+  border: 1px solid var(--bubblegum-bg-2);
+  color: var(--bubblegum-text-2);
+  background-color: var(--bubblegum-bg-5);
+}
+
+.input-blueLagoon{
+  border: 1px solid var(--blueLagoon-bg-2);
+  color: var(--blueLagoon-text-2);
+  background-color: var(--blueLagoon-bg-5);
+}
+
+.input-deepOcean{
+  border: 1px solid var(--deepOcean-bg-2);
+  color: var(--deepOcean-text-2);
+  background-color: var(--deepOcean-bg-5);
+}
+
+.input-invalid-text{
+  margin: 0px;
+  text-align: center;
+  font-size: 0.73em;
+}
+
+.input-invalid-text-pearlShores{
+  color: var(--pearlShores-text-error-1);
+}
+
+.input-invalid-text-midnight{
+  color: var(--midnight-text-error-1);
+}
+
+.input-invalid-text-bubblegum{
+  color: var(--bubblegum-text-error-1);
+}
+
+.input-invalid-text-blueLagoon{
+  color: var(--blueLagoon-text-error-1);
+}
+
+.input-invalid-text-deepOcean{
+  color: var(--deepOcean-text-error-1);
+}
+
+.modal-buttons{
+  margin: -5px 10px 0px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-buttons button{
+  min-width: 100px;
+  margin: 10px 5px;
+}
+
+@media (max-width: 450px){
+  .modal-buttons{
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .modal-buttons button{
+    width: 95%;
+    margin: 5px 0px;
+  }
+}

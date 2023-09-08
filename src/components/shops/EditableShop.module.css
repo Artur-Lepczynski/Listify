@@ -1,0 +1,83 @@
+.shop{
+  min-height: 60px;
+  margin: 15px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content{
+  flex-grow: 1;
+  position: relative;
+}
+
+.name{
+  margin: 10px;
+}
+
+.input{
+  height: 30px;
+  margin: 10px 10px;
+  box-sizing: border-box;
+  font-family: Montserrat;
+  border-radius: var(--border-radius-1);
+}
+
+.input-pearlShores{
+  border: 1px solid var(--pearlShores-bg-2);
+  color: var(--pearlShores-text-2);
+  background-color: var(--pearlShores-bg-5);
+}
+
+.input-midnight{
+  border: 1px solid var(--midnight-bg-2);
+  color: var(--midnight-text-2);
+  background-color: var(--midnight-bg-5);
+}
+
+.input-bubblegum{
+  border: 1px solid var(--bubblegum-bg-2);
+  color: var(--bubblegum-text-2);
+  background-color: var(--bubblegum-bg-5);
+}
+
+.input-blueLagoon{
+  border: 1px solid var(--blueLagoon-bg-2);
+  color: var(--blueLagoon-text-2);
+  background-color: var(--blueLagoon-bg-5);
+}
+
+.input-deepOcean{
+  border: 1px solid var(--deepOcean-bg-2);
+  color: var(--deepOcean-text-2);
+  background-color: var(--deepOcean-bg-5);
+}
+
+.input-invalid-text{
+  margin: -5px 0px 0px 11px;
+  font-size: 0.73em;
+}
+
+.input-invalid-text-pearlShores{
+  color: var(--pearlShores-text-error-1);
+}
+
+.input-invalid-text-midnight{
+  color: var(--midnight-text-error-1);
+}
+
+.input-invalid-text-bubblegum{
+  color: var(--bubblegum-text-error-1);
+}
+
+.input-invalid-text-blueLagoon{
+  color: var(--blueLagoon-text-error-1);
+}
+
+.input-invalid-text-deepOcean{
+  color: var(--deepOcean-text-error-1);
+}
+
+.shop-icon{
+  font-size: 1.5em;
+}

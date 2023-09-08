@@ -18,9 +18,9 @@ import DashboardPage, { DashboardPageLoader } from "./pages/DashboardPage";
 import ListsPage, { ListsPageLoader } from "./pages/ListsPage"
 import ViewSingleListPage, { viewSingleListPageLoader } from "./pages/ViewSingleListPage"
 import AddPage, { AddPageLoader } from "./pages/AddPage"
-import EditListsPage from "./pages/EditListsPage";
-import EditSingleListPage, { EditListPageLoader } from "./pages/EditSingleListPage";
-import EditShopsPage from "./pages/EditShopsPage";
+import EditListsPage, { EditListPageLoader } from "./pages/EditListsPage";
+import EditSingleListPage, { EditSingleListPageLoader } from "./pages/EditSingleListPage";
+import EditShopsPage, { EditShopsPageLoader } from "./pages/EditShopsPage";
 import AuthPage, { AuthPageLoader } from "./pages/AuthPage";
 import AccountPage from "./pages/AccountPage";
 
@@ -42,9 +42,9 @@ const router = createBrowserRouter([
       { path: "/lists/:listId", element: <ViewSingleListPage/>, loader: viewSingleListPageLoader},
       { path: "/add", element: <AddPage/>, loader: AddPageLoader},
       { path: "/edit", element: <Navigate to={"/edit/lists"}/>}, 
-      { path: "/edit/lists", element: <EditListsPage/>}, 
-      { path: "/edit/lists/:listId", element: <EditSingleListPage/>, loader: EditListPageLoader}, 
-      { path: "/edit/shops", element: <EditShopsPage/>},
+      { path: "/edit/lists", element: <EditListsPage/>, loader: EditListPageLoader}, 
+      { path: "/edit/lists/:listId", element: <EditSingleListPage/>, loader: EditSingleListPageLoader}, 
+      { path: "/edit/shops", element: <EditShopsPage/>, loader: EditShopsPageLoader},
       { path: "/account", element: <AccountPage/>}
     ],
   },
