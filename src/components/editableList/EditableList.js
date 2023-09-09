@@ -20,6 +20,7 @@ import Button from "../UI/Button";
 import Prompt from "../UI/Prompt";
 import EditableShop from "./EditableShop";
 import { context } from "../../store/GlobalContext";
+import Modal from "../UI/Modal";
 
 export default function EditableList(props) {
   //props.mode = "add" or "edit";
@@ -353,6 +354,14 @@ export default function EditableList(props) {
     }
   }
 
+  function handleModalConfirm(){
+    navigate("/edit/shops");
+  }
+
+  function handleModalCancel(){
+    navigate("/dash");
+  }
+
   return (
     <Page>
       {loading && (
@@ -360,9 +369,16 @@ export default function EditableList(props) {
           <Loader className={style.loader} />
         </div>
       )}
-      {!loading && shopsError && (
-        <p>TODO: show no shops in add mode modal here</p>
-      )}
+      <Modal
+        in={!loading && shopsError}
+        type="choice"
+        title="No shops registered"
+        message="You don't have any shops registered. You need at least one shop in order to add products to it when creating a list. Do you want to add a shop now?"
+        confirmText="Manage shops"
+        cancelText="Cancel"
+        onConfirm={handleModalConfirm}
+        onCancel={handleModalCancel}
+      />
       <CSSTransition
         in={!loading}
         appear={!loading}
