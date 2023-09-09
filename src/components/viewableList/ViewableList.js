@@ -38,6 +38,7 @@ export default function ViewableList() {
           return { ...prev, list: false };
         });
       } else {
+        setList({});
         setError(true);
         setLoading((prev) => {
           return { ...prev, list: false };
@@ -111,8 +112,11 @@ export default function ViewableList() {
       <CSSTransition
         in={!error && !(loading.list || loading.shops)}
         appear={!error && !(loading.list || loading.shops)}
-        timeout={150}
+        timeout={{
+          appear: 150,
+        }}
         mountOnEnter
+        unmountOnExit
         classNames={{
           enter: style["fade-appear"],
           enterActive: style["fade-appear-active"],
@@ -123,8 +127,8 @@ export default function ViewableList() {
             <h2 className={style.header}>{list.name}</h2>
             <ProductCounter
               className={style["header-counter"]}
-              done={list.done}
-              items={list.items}
+              done={list.done || false}
+              items={list.items || {}}
             />
           </div>
           <Card>
