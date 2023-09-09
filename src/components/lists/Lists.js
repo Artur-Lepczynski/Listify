@@ -40,6 +40,8 @@ export default function Lists(props) {
           lastDate = currentDate;
         })
         setLists(result);
+      }else{
+        setLists([]);
       }
         setListsLoading(false);
     });
@@ -69,8 +71,11 @@ export default function Lists(props) {
       <CSSTransition
         in={!listsLoading && lists.length > 0}
         appear={!listsLoading && lists.length > 0}
-        timeout={150}
+        timeout={{
+          appear: 150
+        }}
         mountOnEnter
+        unmountOnExit
         classNames={{
           enter: style["fade-appear"],
           enterActive: style["fade-appear-active"],
