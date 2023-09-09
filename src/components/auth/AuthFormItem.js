@@ -2,6 +2,7 @@ import style from "./AuthFormItem.module.css";
 import { useInput } from "../../hooks/useInput";
 import { useTheme } from "../../hooks/useTheme";
 import { useEffect, useState } from "react";
+import TextLink from "../UI/TextLink";
 
 export default function AuthInput(props) {
   //props.type = email/password/ invalidText validateFunction onChangeFunc onChangeValidFunc name
@@ -11,17 +12,17 @@ export default function AuthInput(props) {
   const [passwordShown, setPasswordShown] = useState(false);
 
   let type = props.type;
-  if(type === "password"){
-    if(passwordShown){
-      type = "text"; 
+  if (type === "password") {
+    if (passwordShown) {
+      type = "text";
     }
   }
 
-  function eyeMouseDownHandler(){
+  function eyeMouseDownHandler() {
     setPasswordShown(true);
   }
 
-  function eyeMouseUpHandler(){
+  function eyeMouseUpHandler() {
     setPasswordShown(false);
   }
 
@@ -50,6 +51,14 @@ export default function AuthInput(props) {
       >
         {props.name}
       </label>
+      {props.type === "password" && props.forgotLink && (
+        <TextLink
+          to="/auth?action=reset-password-request"
+          className={style["forgot-link"]}
+        >
+          Forgot password?
+        </TextLink>
+      )}
       <input
         id={props.type}
         className={`${style.input} ${getClassNames("input")}`}
@@ -62,9 +71,9 @@ export default function AuthInput(props) {
       ></input>
       {props.type === "password" && (
         <i
-          className={`fa-solid fa-eye ${style.eye} ${passwordShown && getClassNames(
-            "eye-active"
-          )}`}
+          className={`fa-solid fa-eye ${style.eye} ${
+            passwordShown && getClassNames("eye-active")
+          }`}
           onMouseDown={eyeMouseDownHandler}
           onMouseUp={eyeMouseUpHandler}
         ></i>

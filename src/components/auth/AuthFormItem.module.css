@@ -7,6 +7,14 @@
   font-size: 0.9em;
 }
 
+.forgot-link{
+  font-size: 0.8em;
+  position: absolute;
+  top: 3px;
+  right: 0px;
+  z-index: 10;
+}
+
 .input{
   width: 100%;
   height: 30px;
