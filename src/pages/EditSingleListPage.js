@@ -26,9 +26,10 @@ export async function EditSingleListPageLoader({ params }) {
       const list = snapshot.val();
       const itemsNew = [];
       Object.entries(list.items).forEach((item)=>{
-        let newObj = {};
-        newObj.products = item[1]; 
-        newObj.name = item[0];
+        let newObj = {
+          shopId: item[0],
+          products: item[1],
+        };
         itemsNew.push(newObj);
       });
       list.items = itemsNew;

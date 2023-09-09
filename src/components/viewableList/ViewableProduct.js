@@ -7,7 +7,7 @@ export default function ViewableProduct(props) {
   const getClassNames = useTheme(style);
 
   function handleProductStatusChange(){
-    props.onStatusChange(props.id, props.shopName, !props.product.done);
+    props.onStatusChange(props.id, !props.product.done);
   }
 
   return (

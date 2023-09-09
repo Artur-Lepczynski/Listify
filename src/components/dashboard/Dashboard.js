@@ -196,7 +196,7 @@ export default function Dashboard() {
       </CSSTransition>
 
       {/* <button onClick={sendDummyData}>add</button> */}
-      <button onClick={sendDummyShop}>send shop</button>
+      {/* <button onClick={sendDummyShop}>send shop</button> */}
     </Page>
   );
 }

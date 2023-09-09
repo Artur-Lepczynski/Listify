@@ -6,6 +6,10 @@ export default function ViewableShop(props) {
 
   const getClassNames = useTheme(style);
 
+  function handleStatusChange(productId, status){
+    props.onStatusChange(props.id, productId, status);
+  }
+
   return (
     <div className={style["shop-container"]}>
       <h3 className={`${style["shop-name"]} ${getClassNames("shop-name")}`}>{props.name}</h3>
@@ -17,7 +21,7 @@ export default function ViewableShop(props) {
               id={item[0]}
               shopName={props.name}
               product={item[1]}
-              onStatusChange={props.onStatusChange}
+              onStatusChange={handleStatusChange}
             />
           );
         })}

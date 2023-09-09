@@ -53,8 +53,6 @@ export default function EditableProduct(props) {
     const value = Number.parseInt(event.target.value);
     if (value >= 1 && value <= 99 && !Number.isNaN(value)) {
       props.onQtyChange(props.id, value);
-    } else {
-      console.log("invalid qty");
     }
   }
 

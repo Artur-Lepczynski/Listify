@@ -24,37 +24,37 @@ export default function EditableShop(props) {
 
   function handleChangeShopName(shop) {
     setShopPromptShown(false);
-    props.onShopNameEdit(props.name, shop);
+    props.onShopNameEdit(props.id, shop);
   }
 
   //shop delete
   function handleShopDelete() {
-    props.onShopDelete(props.name);
+    props.onShopDelete(props.id);
   }
 
   //add product
   function handleAddProduct() {
-    props.onAddProduct(props.name);
+    props.onAddProduct(props.id);
   }
 
   //change product name 
   function handleProductNameChange(productId, name) {
-    props.onProductNameChange(props.name, productId, name);
+    props.onProductNameChange(props.id, productId, name);
   }
 
   //delete product
   function handleProductDelete(productId) {
-    props.onProductDelete(props.name, productId);
+    props.onProductDelete(props.id, productId);
   }
 
   //change product qty in input
   function handleQtyChange(productId, qty){
-    props.onQtyChange(props.name, productId, qty);
+    props.onQtyChange(props.id, productId, qty);
   }
 
   //change done status 
   function handleDoneStatusChange(productId){
-    props.onDoneStatusChange(props.name, productId);
+    props.onDoneStatusChange(props.id, productId);
   }
 
 
@@ -107,7 +107,7 @@ export default function EditableShop(props) {
         shown={shopPromptShown}
         setShown={setShopPromptShown}
         coordinates={coordinates}
-        options={props.shops}
+        options={props.shops.map((item)=>item.shopName)}
         noOptionsText="There are no more shops to add"
         onBackgroundClick={handlePromptBackgroundClick}
         onSelect={handleChangeShopName}

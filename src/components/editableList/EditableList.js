@@ -33,6 +33,7 @@ export default function EditableList(props) {
 
   const [loading, setLoading] = useState(true);
   const [shops, setShops] = useState([]);
+  const [allShops, setAllShops] = useState([]);
   const [shopsError, setShopsError] = useState(false);
   const [list, dispatchList] = useReducer(
     listReducer,
@@ -45,7 +46,6 @@ export default function EditableList(props) {
       items: [],
     }
   );
-  // console.log(data);
 
   function listReducer(prevState, action) {
     const copy = { ...prevState };
@@ -55,19 +55,18 @@ export default function EditableList(props) {
         name: action.value,
       };
     } else if (action.type === "ADD_SHOP") {
-      copy.items.push({ name: action.value, products: {} });
+      copy.items.push({ shopId: action.value, products: {} });
       setTimeout(() => {
         setShops((prev) => {
-          return prev.filter((shop) => shop !== action.value);
+          return prev.filter((shop) => shop.shopId !== action.value);
         });
       }, 150);
       return copy;
     } else if (action.type === "CHANGE_SHOP_NAME") {
       const index = copy.items.findIndex((item) => {
-        return item.name === action.value.oldName;
+        return item.shopId === action.value.oldShopId;
       });
-      copy.items[index].name = action.value.name;
-      console.log(copy.items[index]);
+      copy.items[index].shopId = action.value.shopId;
       Object.values(copy.items[index].products).forEach((item) => {
         if (item.name !== "") {
           item.edit = false;
@@ -76,47 +75,53 @@ export default function EditableList(props) {
       setTimeout(() => {
         setShops((prev) => {
           let copy = [...prev];
-          copy.push(action.value.oldName);
+          const shop = findShopById(action.value.oldShopId);
+          //shop can not exist, (when changing from removed shop to new shop)
+          if (shop) copy.push(shop);
           return copy.filter((item) => {
-            return item !== action.value.name;
+            return item.shopId !== action.value.shopId;
           });
         });
       }, 150);
       return copy;
     } else if (action.type === "DELETE_SHOP") {
       copy.items = copy.items.filter((item) => {
-        return item.name !== action.value;
+        return item.shopId !== action.value;
       });
       setShops((prev) => {
-        return [...prev, action.value];
+        let copy = [...prev];
+        const shop = findShopById(action.value);
+        //shop can not exist, (when removing removed shop)
+        if (shop) copy.push(shop);
+        return copy;
       });
       return copy;
     } else if (action.type === "ADD_PRODUCT") {
       const product = { edit: true, name: "", qty: 1, done: false };
       const productKey = getRandomProductKey();
       const shop = copy.items.find((item) => {
-        return item.name === action.value;
+        return item.shopId === action.value;
       });
       shop.products[productKey] = product;
       return copy;
     } else if (action.type === "CHANGE_PRODUCT_NAME") {
       const product = findProduct(
         copy,
-        action.value.shopName,
+        action.value.shopId,
         action.value.productId
       );
       product.name = action.value.name;
       return copy;
     } else if (action.type === "DELETE_PRODUCT") {
       const shop = copy.items.find((item) => {
-        return item.name === action.value.shopName;
+        return item.shopId === action.value.shopId;
       });
       delete shop.products[action.value.productId];
       return copy;
     } else if (action.type === "CHANGE_PRODUCT_QTY") {
       const product = findProduct(
         copy,
-        action.value.shopName,
+        action.value.shopId,
         action.value.productId
       );
       product.qty = action.value.qty;
@@ -124,7 +129,7 @@ export default function EditableList(props) {
     } else if (action.type === "CHANGE_DONE_STATUS") {
       const product = findProduct(
         copy,
-        action.value.shopName,
+        action.value.shopId,
         action.value.productId
       );
       product.done = !product.done;
@@ -135,18 +140,24 @@ export default function EditableList(props) {
     }
   }
 
-  function findProduct(copy, shopName, productId) {
+  function findProduct(copy, shopId, productId) {
     const shop = copy.items.find((item) => {
-      return item.name === shopName;
+      return item.shopId === shopId;
     });
     return shop.products[productId];
+  }
+
+  function findShopByName(name) {
+    return allShops.find((item) => item.shopName === name);
+  }
+
+  function findShopById(id) {
+    return allShops.find((item) => item.shopId === id);
   }
 
   function getRandomProductKey() {
     return (Math.random() + "").slice(2);
   }
-
-  // console.log(list);
 
   //get shops from db
   useEffect(() => {
@@ -158,11 +169,14 @@ export default function EditableList(props) {
     onValue(shopsRef, (snapshot) => {
       if (snapshot.exists()) {
         const shops = snapshot.val();
-        //transform into array of strings
-        let shopsArray = Object.values(shops).map((item) => item.name);
+        //transform into array of objects with shopId and shopName
+        let shopsArray = Object.entries(shops).map((item) => {
+          return { shopId: item[0], shopName: item[1].name };
+        });
+        setAllShops(shopsArray);
         // remove used shops from list
         shopsArray = shopsArray.filter((shop) => {
-          return !list.items.some((item) => item.name === shop);
+          return !list.items.some((item) => item.shopId === shop.shopId);
         });
         setShops(shopsArray);
       } else if (!snapshot.exists() && props.mode === "add") {
@@ -209,52 +223,57 @@ export default function EditableList(props) {
 
   function handleAddShop(shop) {
     setShopPromptShown(false);
-    dispatchList({ type: "ADD_SHOP", value: shop });
+    const selectedShop = findShopByName(shop);
+    dispatchList({ type: "ADD_SHOP", value: selectedShop.shopId });
   }
 
   //edit shop name
-  function handleShopNameEdit(oldName, name) {
-    dispatchList({ type: "CHANGE_SHOP_NAME", value: { oldName, name } });
+  function handleShopNameEdit(shopId, name) {
+    const selectedShop = findShopByName(name);
+    dispatchList({
+      type: "CHANGE_SHOP_NAME",
+      value: { oldShopId: shopId, shopId: selectedShop.shopId },
+    });
   }
 
   //delete shop
-  function handleShopDelete(shopName) {
+  function handleShopDelete(shopId) {
     //TODO: check setting to see if prompt is needed
-    dispatchList({ type: "DELETE_SHOP", value: shopName });
+    dispatchList({ type: "DELETE_SHOP", value: shopId });
   }
 
   //add product to shop
-  function handleAddProduct(shopName) {
-    dispatchList({ type: "ADD_PRODUCT", value: shopName });
+  function handleAddProduct(shopId) {
+    dispatchList({ type: "ADD_PRODUCT", value: shopId });
   }
 
   //change product name
-  function handleProductNameChange(shopName, productId, name) {
+  function handleProductNameChange(shopId, productId, name) {
     dispatchList({
       type: "CHANGE_PRODUCT_NAME",
-      value: { shopName, productId, name },
+      value: { shopId, productId, name },
     });
   }
 
   //delete product
-  function handleProductDelete(shopName, productId) {
+  function handleProductDelete(shopId, productId) {
     //TODO: check setting to see if prompt is needed
-    dispatchList({ type: "DELETE_PRODUCT", value: { shopName, productId } });
+    dispatchList({ type: "DELETE_PRODUCT", value: { shopId, productId } });
   }
 
   //change product qty in input
-  function handleQtyChange(shopName, productId, qty) {
+  function handleQtyChange(shopId, productId, qty) {
     dispatchList({
       type: "CHANGE_PRODUCT_QTY",
-      value: { shopName, productId, qty },
+      value: { shopId, productId, qty },
     });
   }
 
   //change done status
-  function handleDoneStatusChange(shopName, productId) {
+  function handleDoneStatusChange(shopId, productId) {
     dispatchList({
       type: "CHANGE_DONE_STATUS",
-      value: { shopName, productId },
+      value: { shopId, productId },
     });
   }
 
@@ -291,20 +310,16 @@ export default function EditableList(props) {
   //add the list
   function handleAddOrUpdateList() {
     if (listValid) {
-      // console.log("before:", list);
       const copy = { ...list };
-      //TODO: remove the edit property from all products and transform into
-      //object with shop name as key
       const result = {};
 
       copy.items.forEach((item) => {
         Object.values(item.products).forEach((item) => {
           delete item.edit;
         });
-        result[item.name] = item.products;
+        result[item.shopId] = item.products;
       });
       copy.items = result;
-      // console.log("after:", copy);
 
       const auth = getAuth();
       const userId = auth.currentUser.uid;
@@ -317,24 +332,23 @@ export default function EditableList(props) {
         listKey = params.listId;
       }
 
-      console.log("updating, key:", listKey);
-
       update(ref(db, "users/" + userId + "/lists/" + listKey), copy)
         .then(() => {
           showNotification(
             "information",
-            "List saved",
-            'Your list "' + list.name + '" was saved successfully!'
+            props.mode === "add" ? "List saved" : "List updated",
+            props.mode === "add"
+              ? 'Your list "' + list.name + '" was saved successfully!'
+              : 'Your list "' + list.name + '" was updated successfully!'
           );
           navigate("/dash");
         })
-        .catch((err) => {
+        .catch(() => {
           showNotification(
             "error",
             "Error saving list",
             "There was an error saving your list. Please try again."
           );
-          console.log(err);
         });
     }
   }
@@ -414,10 +428,16 @@ export default function EditableList(props) {
                 </div>
 
                 {list.items.map((shop) => {
+                  const currentShop = allShops.find((item) => {
+                    return item.shopId === shop.shopId;
+                  });
+                  let shopName = "Removed shop";
+                  if (currentShop) shopName = currentShop.shopName;
                   return (
                     <EditableShop
-                      key={shop.name}
-                      name={shop.name}
+                      key={shop.shopId}
+                      id={shop.shopId}
+                      name={shopName}
                       products={shop.products}
                       shops={shops}
                       onShopNameEdit={handleShopNameEdit}
@@ -465,7 +485,7 @@ export default function EditableList(props) {
                   shown={shopPromptShown}
                   setShown={setShopPromptShown}
                   coordinates={coordinates}
-                  options={shops}
+                  options={shops.map((item) => item.shopName)}
                   noOptionsText="There are no more shops to add"
                   onBackgroundClick={handlePromptBackgroundClick}
                   onSelect={handleAddShop}
