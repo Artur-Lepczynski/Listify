@@ -1,0 +1,98 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  min-width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  width: 50px;
+  height: 26px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 26px;
+  cursor: pointer;
+  transition: background-color var(--switch-toggle-duration);
+}
+
+.slider-pearlShores{
+  background-color: var(--pearlShores-bg-5);
+}
+
+.slider-midnight{
+  background-color: var(--midnight-bg-5);
+}
+
+.slider-bubblegum{
+  background-color: var(--bubblegum-bg-5);
+}
+
+.slider-blueLagoon{
+  background-color: var(--blueLagoon-bg-5);
+}
+
+.slider-deepOcean{
+  background-color: var(--deepOcean-bg-5);
+}
+
+.slider::before {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%; 
+  transition: transform var(--switch-toggle-duration);
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(24px); 
+}
+
+.slider-pearlShores::before{
+  background-color: var(--pearlShores-text-1);
+}
+
+.switch input:checked + .slider-pearlShores {
+  background-color: var(--pearlShores-accent-1); 
+}
+
+.slider-midnight::before{
+  background-color: var(--midnight-text-1);
+}
+
+.switch input:checked + .slider-midnight {
+  background-color: var(--midnight-accent-1); 
+}
+
+.slider-bubblegum::before{
+  background-color: var(--bubblegum-text-1);
+}
+
+.switch input:checked + .slider-bubblegum {
+  background-color: var(--bubblegum-accent-1); 
+}
+
+.slider-blueLagoon::before{
+  background-color: var(--blueLagoon-text-1);
+}
+
+.switch input:checked + .slider-blueLagoon {
+  background-color: var(--blueLagoon-accent-1); 
+}
+
+.slider-deepOcean::before{
+  background-color: var(--deepOcean-text-1);
+}
+
+.switch input:checked + .slider-deepOcean {
+  background-color: var(--deepOcean-accent-1); 
+}

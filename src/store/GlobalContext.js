@@ -1,12 +1,32 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
 export const context = React.createContext();
 
 export default function GlobalContext(props) {
   //Themes: pearlShores, midnight, bubblegum, blueLagoon, deepOcean
-  const [theme, setTheme] = useState("midnight");
+  const DEFAULT_SETTINGS = {
+    theme: "midnight",
+    noListsShownDashboard: 3,
+    askBeforeListDelete: true,
+    askBeforeShopDelete: true,
+    askBeforeProductDeleteEdit: false,
+    askBeforeShopDeleteEdit: false,
+    addListNotification: true,
+    removeListNotification: true,
+    addShopNotification: true,
+    removeShopNotification: true,
+  }
 
-  //TODO: add reducer for other settings, download and set (app.js), add def values?
+  const [settings, dispatchSettings] = useReducer(settingsReducer, DEFAULT_SETTINGS);
+
+  function settingsReducer(prevState, action) {
+    if (action.type === "SET_SETTINGS") {
+      //only action, test if settings are valid
+      return { ...prevState, ...action.settings };
+    } else if (action.type === "RESET_SETTINGS") {
+      return DEFAULT_SETTINGS;
+    }
+  }
 
   //Notifications:
   const [notifications, setNotifications] = useState([]);
@@ -19,11 +39,7 @@ export default function GlobalContext(props) {
 
     setNotifications((prev) => {
       let copy = [...prev];
-
-      if (copy.length >= MAX_NOTIFICATIONS) {
-        copy.shift();
-      }
-
+      if (copy.length >= MAX_NOTIFICATIONS) copy.shift();
       copy.push(notification);
       return copy;
     });
@@ -37,15 +53,20 @@ export default function GlobalContext(props) {
     setNotifications((prev) => {
       let copy = [...prev];
       copy = copy.filter((item) => item.id !== id);
-      // const index = copy.findIndex((item) => item.id === id);
-      // copy.splice(index, 1);
       return copy;
     });
   }
 
   return (
     <context.Provider
-      value={{ theme, setTheme, notifications, showNotification, removeNotification }}
+      value={{
+        theme: settings.theme,
+        settings,
+        dispatchSettings,
+        notifications,
+        showNotification,
+        removeNotification,
+      }}
     >
       {props.children}
     </context.Provider>

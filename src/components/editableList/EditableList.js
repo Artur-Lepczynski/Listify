@@ -26,7 +26,17 @@ export default function EditableList(props) {
   //props.mode = "add" or "edit";
   const getClassNames = useTheme(style);
 
-  const { showNotification } = useContext(context);
+  const {
+    showNotification,
+    settings: {
+      askBeforeProductDeleteEdit,
+      askBeforeShopDeleteEdit,
+      addListNotification,
+    },
+  } = useContext(context);
+
+  const [productDeleteModalShown, setProductDeleteModalShown] = useState(false);
+  const [shopDeleteModalShown, setShopDeleteModalShown] = useState(false);
 
   const navigate = useNavigate();
   const params = useParams();
@@ -238,9 +248,25 @@ export default function EditableList(props) {
   }
 
   //delete shop
+  const [deletedShopId, setDeletedShopId] = useState(null);
   function handleShopDelete(shopId) {
-    //TODO: check setting to see if prompt is needed
-    dispatchList({ type: "DELETE_SHOP", value: shopId });
+    if (askBeforeShopDeleteEdit) {
+      setDeletedShopId(shopId);
+      setShopDeleteModalShown(true);
+    } else {
+      dispatchList({ type: "DELETE_SHOP", value: shopId });
+    }
+  }
+
+  function handleShopDeleteModalConfirm() {
+    setShopDeleteModalShown(false);
+    dispatchList({ type: "DELETE_SHOP", value: deletedShopId });
+    setDeletedShopId(null);
+  }
+
+  function handleShopDeleteModalCancel() {
+    setShopDeleteModalShown(false);
+    setDeletedShopId(null);
   }
 
   //add product to shop
@@ -257,9 +283,31 @@ export default function EditableList(props) {
   }
 
   //delete product
+  const [deletedProductId, setDeletedProductId] = useState(null);
   function handleProductDelete(shopId, productId) {
-    //TODO: check setting to see if prompt is needed
-    dispatchList({ type: "DELETE_PRODUCT", value: { shopId, productId } });
+    if (askBeforeProductDeleteEdit) {
+      setDeletedProductId({ productId, shopId });
+      setProductDeleteModalShown(true);
+    } else {
+      dispatchList({ type: "DELETE_PRODUCT", value: { shopId, productId } });
+    }
+  }
+
+  function handleProductDeleteModalConfirm() {
+    setProductDeleteModalShown(false);
+    dispatchList({
+      type: "DELETE_PRODUCT",
+      value: {
+        shopId: deletedProductId.shopId,
+        productId: deletedProductId.productId,
+      },
+    });
+    setDeletedProductId(null);
+  }
+
+  function handleProductDeleteModalCancel() {
+    setProductDeleteModalShown(false);
+    setDeletedProductId(null);
   }
 
   //change product qty in input
@@ -335,13 +383,15 @@ export default function EditableList(props) {
 
       update(ref(db, "users/" + userId + "/lists/" + listKey), copy)
         .then(() => {
-          showNotification(
-            "information",
-            props.mode === "add" ? "List saved" : "List updated",
-            props.mode === "add"
-              ? 'Your list "' + list.name + '" was saved successfully!'
-              : 'Your list "' + list.name + '" was updated successfully!'
-          );
+          if (addListNotification) {
+            showNotification(
+              "information",
+              props.mode === "add" ? "List saved" : "List updated",
+              props.mode === "add"
+                ? 'Your list "' + list.name + '" was saved successfully!'
+                : 'Your list "' + list.name + '" was updated successfully!'
+            );
+          }
           navigate("/dash");
         })
         .catch(() => {
@@ -354,11 +404,11 @@ export default function EditableList(props) {
     }
   }
 
-  function handleModalConfirm(){
+  function handleNoShopsModalConfirm() {
     navigate("/edit/shops");
   }
 
-  function handleModalCancel(){
+  function handleNoShopsModalCancel() {
     navigate("/dash");
   }
 
@@ -376,8 +426,28 @@ export default function EditableList(props) {
         message="You don't have any shops registered. You need at least one shop in order to add products to it when creating a list. Do you want to add a shop now?"
         confirmText="Manage shops"
         cancelText="Cancel"
-        onConfirm={handleModalConfirm}
-        onCancel={handleModalCancel}
+        onConfirm={handleNoShopsModalConfirm}
+        onCancel={handleNoShopsModalCancel}
+      />
+      <Modal
+        in={shopDeleteModalShown}
+        type="choice"
+        title="Confirm shop deletion"
+        message="Are you sure you want to delete this shop? All products in this shop will be deleted as well."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleShopDeleteModalConfirm}
+        onCancel={handleShopDeleteModalCancel}
+      />
+      <Modal
+        in={productDeleteModalShown}
+        type="choice"
+        title="Confirm product deletion"
+        message="Are you sure you want to delete this product?"
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={handleProductDeleteModalConfirm}
+        onCancel={handleProductDeleteModalCancel}
       />
       <CSSTransition
         in={!loading}

@@ -4,6 +4,7 @@
   position: fixed;
   top: 0;
   z-index: 100;
+  transition: background-color var(--theme-change-duration), color var(--theme-change-duration);
 }
 
 .header-button{
@@ -43,6 +44,7 @@
   align-items: center;
   justify-content: space-between;
   position: absolute;
+  transition: background-color 3s, color 3s;
 }
 
 .header-not-logged-in img{
@@ -56,7 +58,7 @@
 
 .header-not-logged-in-enter-active{
   opacity: 1;
-  transition: opacity var(--header-transition-duration);
+  transition: background-color var(--theme-change-duration), color var(--theme-change-duration);
 }
 
 .header-not-logged-in-exit{
@@ -72,6 +74,7 @@
   height: 100%;
   max-width: 500px;
   margin: auto;
+  transition: background-color var(--theme-change-duration), color var(--theme-change-duration);
 }
 
 .header-logged-in-pearlShores{

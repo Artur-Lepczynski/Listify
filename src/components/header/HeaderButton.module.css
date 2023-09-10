@@ -16,8 +16,7 @@
   justify-content: center;
   cursor: pointer;
   background-color: transparent;
-  transition-property: color background-color;
-  transition-duration: var(--header-color-fade-duration);
+  transition: background-color var(--theme-change-duration), color var(--theme-change-duration);
 }
 
 .button{

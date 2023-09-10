@@ -1,0 +1,47 @@
+.loader-wrapper{
+  width: 100%;
+  height: calc(100vh - var(--header-height) - 10px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader{
+  margin: 20px auto;
+}
+
+.fade-enter{
+  opacity: 0;
+}
+
+.fade-enter-active{
+  opacity: 1;
+  transition: opacity var(--card-fade-duration);
+}
+
+.settings-group-title{
+  font-weight: 400;
+  text-align: center;
+}
+
+.account-actions-wrapper{
+  margin: 25px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.account-action{
+  width: 150px;
+}
+
+@media (max-width: 400px){
+  .account-actions-wrapper{
+    height: 100px;
+    flex-direction: column;
+  }
+
+  .account-action{
+    width: 95%;
+  }
+}

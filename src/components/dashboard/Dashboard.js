@@ -1,7 +1,6 @@
 import style from "./Dashboard.module.css";
 import Page from "../UI/Page";
 import Card from "../UI/Card";
-import { useTheme } from "../../hooks/useTheme";
 import {
   getDatabase,
   ref,
@@ -23,9 +22,10 @@ export default function Dashboard() {
   const [lists, setLists] = useState([]);
   const [listNumbers, setListNumbers] = useState({});
   const [listsLoading, setListsLoading] = useState(true);
-  const NO_RECENT_LISTS_SHOWN = 3; //make this a setting?
 
-  const { showNotification } = useContext(context);
+  const {
+    settings: { noListsShownDashboard },
+  } = useContext(context);
 
   useEffect(() => {
     const auth = getAuth();
@@ -37,7 +37,7 @@ export default function Dashboard() {
       const data = snapshot.val();
       if (data) {
         const shortList = Object.entries(data)
-          .slice(-NO_RECENT_LISTS_SHOWN)
+          .slice(-noListsShownDashboard)
           .reverse();
         setLists(shortList);
 
@@ -55,7 +55,7 @@ export default function Dashboard() {
 
       setListsLoading(false);
     });
-  }, []);
+  }, [noListsShownDashboard]);
 
   function sendDummyData() {
     function getRandomKey() {
@@ -101,12 +101,12 @@ export default function Dashboard() {
       });
   }
 
-  function sendDummyShop(){
+  function sendDummyShop() {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
-    const dummy = {name: "Piekarnia"}; 
+    const dummy = { name: "Piekarnia" };
     const newShopKey = push(child(ref(db), "users/" + userId + "/shops/")).key;
 
     update(ref(db, "users/" + userId + "/shops/" + newShopKey), dummy)
@@ -162,13 +162,19 @@ export default function Dashboard() {
           <div className={style["lists-wrapper"]}>
             {lists.length === 0 && (
               <p>
-                ...and the {NO_RECENT_LISTS_SHOWN} most recent will be displayed
-                here!
+                {noListsShownDashboard === 1
+                  ? "...and the most recent list will be displayed here!"
+                  : `...and the ${noListsShownDashboard} most recent will be displayed
+                here!`}
               </p>
             )}
             {lists.length > 0 && (
               <>
-                <p>Your {NO_RECENT_LISTS_SHOWN} most recent lists:</p>
+                <p>
+                  {noListsShownDashboard === 1
+                    ? "Your most recent list:"
+                    : `Your ${noListsShownDashboard} most recent lists:`}
+                </p>
                 {lists.map((item) => {
                   return (
                     <ListItem

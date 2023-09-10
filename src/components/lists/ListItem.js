@@ -5,15 +5,22 @@ import Card from "../UI/Card";
 import Icon from "../UI/Icon";
 import ProductCounter from "../UI/ProductCounter";
 import { getDatabase, ref, remove, update } from "firebase/database";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { context } from "../../store/GlobalContext";
+import Modal from "../UI/Modal";
 
 export default function ListItem(props) {
   //props.data -> done, #total, #done, #notDone, date - full/hour, mode - select/edit, name
   //props.id
 
   const getClassNames = useTheme(style);
+  const {
+    showNotification,
+    settings: { askBeforeListDelete, removeListNotification },
+  } = useContext(context);
 
+  const [deleteModalShown, setDeleteModalShown] = useState(false);
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
 
@@ -35,9 +42,9 @@ export default function ListItem(props) {
   }
 
   function handleListClick() {
-    if(props.mode === "select"){
+    if (props.mode === "select") {
       navigate("/lists/" + props.id);
-    }else if(props.mode === "edit"){
+    } else if (props.mode === "edit") {
       navigate("/edit/lists/" + props.id);
     }
   }
@@ -56,18 +63,45 @@ export default function ListItem(props) {
     });
   }
 
-  function handleListDelete() {
-    //TODO: check settings to display confirm modal
+  function handleListDeleteButtonClick() {
+    if (askBeforeListDelete) {
+      setDeleteModalShown(true);
+    } else {
+      removeList();
+    }
+  }
+
+  function handleModalConfirm(){
+    setDeleteModalShown(false);
+    removeList();
+  }
+
+  function handleModalCancel(){
+    setDeleteModalShown(false);
+  }
+
+  function removeList() {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
     remove(ref(db, "users/" + userId + "/lists/" + props.id))
       .then(() => {
-        //TODO: show successful list removal notification
+        if (removeListNotification) {
+          showNotification(
+            "information",
+            "List removed",
+            'The list "' + props.data.name + '" has been removed.'
+          );
+        }
       })
       .catch((error) => {
-        //TODO: show error notification
+        console.log("error removing list:", error);
+        showNotification(
+          "error",
+          "Error",
+          "An error occurred while removing the list. Please try again later."
+        );
       });
   }
 
@@ -116,10 +150,20 @@ export default function ListItem(props) {
             type="button"
             icon="fa-solid fa-trash-can"
             className={style["list-item-controls-icon"]}
-            onClick={handleListDelete}
+            onClick={handleListDeleteButtonClick}
           />
         )}
       </div>
+      <Modal
+        type="choice"
+        in={deleteModalShown}
+        title="Confirm list removal"
+        message={'Please confirm the removal of "' + props.data.name + '".'}
+        confirmText="Remove"
+        onConfirm={handleModalConfirm}
+        cancelText="Cancel"
+        onCancel={handleModalCancel}
+      />
     </Card>
   );
 }

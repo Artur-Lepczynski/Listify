@@ -1,0 +1,73 @@
+.setting{
+  height: 60px;
+  margin: 10px auto;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.setting-name{
+  margin: 12px 10px 12px 10px;
+}
+
+.switch{
+  margin-right: 10px;
+}
+
+.button{
+  min-width: 125px;
+  height: 100%;
+  padding: 0px;
+  font-family: Montserrat;
+  font-size: 1em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.button-pearlShores{
+  color: var(--pearlShores-text-1);
+  border-left: 1px solid var(--pearlShores-bg-1);
+}
+
+.button-pearlShores:hover{
+  color: var(--pearlShores-accent-1);
+}
+
+.button-midnight{
+  color: var(--midnight-text-1);
+  border-left: 1px solid var(--midnight-bg-1);
+}
+
+.button-midnight:hover{
+  color: var(--midnight-accent-1);
+}
+
+.button-bubblegum{
+  color: var(--bubblegum-text-1);
+  border-left: 1px solid var(--bubblegum-bg-1);
+}
+
+.button-bubblegum:hover{
+  color: var(--bubblegum-accent-1);
+}
+
+.button-blueLagoon{
+  color: var(--blueLagoon-text-1);
+  border-left: 1px solid var(--blueLagoon-bg-1);
+}
+
+.button-blueLagoon:hover{
+  color: var(--blueLagoon-accent-1);
+}
+
+.button-deepOcean{
+  color: var(--deepOcean-text-1);
+  border-left: 1px solid var(--deepOcean-bg-1);
+}
+
+.button-deepOcean:hover{
+  color: var(--deepOcean-accent-1);
+}

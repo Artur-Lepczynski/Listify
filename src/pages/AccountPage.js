@@ -1,7 +1,13 @@
+import { redirect } from "react-router-dom";
 import Account from "../components/account/Account";
+import { getUser } from "../util/getUserLoggedInStatus";
 
 export default function AccountPage(){
   return <Account/>
 }
 
-//TODO: add loader checking login state, redirect if not logged in
+export async function accountPageLoader() {
+  const user = await getUser(); 
+  if (!user) return redirect("/");
+  return null; 
+}

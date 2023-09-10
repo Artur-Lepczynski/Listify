@@ -1,0 +1,51 @@
+.fade-enter{
+  opacity: 0;
+}
+
+.fade-enter-active{
+  opacity: 1;
+  transition: opacity var(--card-fade-duration);
+}
+
+.outer-card{
+  background-color: transparent;
+  max-width: 400px;
+}
+
+.outer-card img{
+  width: 60px;
+  display: block;
+  margin: 5px auto;
+}
+
+.title{
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.inner-card{
+  margin: 10px auto; 
+  max-width: 300px;
+  position: relative;
+}
+
+.forgot-link{
+  font-size: 0.8em;
+  position: absolute;
+  right: 18px;
+  bottom: 98px;
+  z-index: 10;
+}
+
+.action-button{
+  width: 270px;
+  height: 30px;
+  margin: 12px auto; 
+  display: block;
+}
+
+.nav-text{
+  margin: 20px auto; 
+  text-align: center;
+}

@@ -2,6 +2,7 @@ import style from "./Prompt.module.css";
 import { Transition } from "react-transition-group";
 import { useTheme } from "../../hooks/useTheme";
 import { useState, useLayoutEffect } from "react";
+import Icon from "./Icon";
 
 export default function Prompt(props) {
   //TODO: props.selected -> a string of the selected item, show tick next to it
@@ -56,6 +57,7 @@ export default function Prompt(props) {
                     }}
                   >
                     {option}
+                    {props.selected === option && <Icon className={style["selected-icon"]} type="button" icon="fa-solid fa-check"/>}
                   </div>
                 );
               })}

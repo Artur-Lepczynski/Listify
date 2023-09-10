@@ -115,3 +115,8 @@
 .no-options-text{
   text-align: center;
 }
+
+.selected-icon{
+  position: absolute;
+  right: 5px;
+}
