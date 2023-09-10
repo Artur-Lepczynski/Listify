@@ -118,7 +118,7 @@ export default function AccountRemove() {
             <>
               <p className={style["nav-text"]}>
                 Enter password to reauthenticate. Once you do, you'll still have
-                a chance to back out.
+                a chance to back out
               </p>
               <Card className={style["inner-card"]}>
                 <form onSubmit={handleReAuthFormSubmit}>
@@ -151,7 +151,7 @@ export default function AccountRemove() {
           {reAuth && (
             <>
               <p className={style["nav-text"]}>
-                This is your last chance to back out. Press the button below to remove your account. This action is final and cannot be undone. We're sad to see you go :(
+                This is your last chance to back out. Press the button below to remove your account. This action is final and cannot be undone. We're sad to see you go 😢
               </p>
               <Card className={style["inner-card"]}>
                   <Button
