@@ -1,7 +1,7 @@
 import style from "./ViewableList.module.css";
 import { useParams } from "react-router-dom";
 import Page from "../UI/Page";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { getDatabase, onValue, ref, update } from "firebase/database";
 import Card from "../UI/Card";
@@ -11,6 +11,7 @@ import Loader from "../UI/Loader";
 import Button from "../UI/Button";
 import { useTheme } from "../../hooks/useTheme";
 import { CSSTransition } from "react-transition-group";
+import { context } from "../../store/GlobalContext";
 
 export default function ViewableList() {
   const params = useParams();
@@ -21,6 +22,7 @@ export default function ViewableList() {
   const [error, setError] = useState(false);
 
   const getClassNames = useTheme(style);
+  const { showNotification } = useContext(context);
 
   useEffect(() => {
     const auth = getAuth();
@@ -80,9 +82,17 @@ export default function ViewableList() {
       "/" +
       productId;
 
-    update(ref(db, path), { done: status }).catch((error) => {
-      //TODO: show error notification
-    });
+    update(ref(db, path), { done: status })
+      .then(() => {
+        trackStats("product", status, db, userId, listId);
+      })
+      .catch((error) => {
+        showNotification(
+          "error",
+          "Error",
+          "An error occurred when changing product status. Please try again."
+        );
+      });
   }
 
   function handleListStatusChange() {
@@ -92,9 +102,54 @@ export default function ViewableList() {
     const db = getDatabase();
     let path = "users/" + userId + "/lists/" + listId;
 
-    update(ref(db, path), { done: !list.done }).catch((error) => {
-      //TODO: show error notification
-    });
+    update(ref(db, path), { done: !list.done })
+      .then(() => {
+        trackStats("list", !list.done, db, userId, listId);
+      })
+      .catch((error) => {
+        showNotification(
+          "error",
+          "Error",
+          "An error occurred when changing list status. Please try again."
+        );
+      });
+  }
+
+  function trackStats(mode, done, db, userId, listKey) {
+    const createDate = new Date(list.createDate);
+    const statsRef = ref(
+      db,
+      "users/" +
+        userId +
+        "/stats/" +
+        createDate.getFullYear() +
+        "/" +
+        (createDate.getMonth() + 1) +
+        "/" +
+        createDate.getDate() +
+        "/" +
+        listKey
+    );
+    if (mode === "list") {
+      update(statsRef, { done }).catch((err) => {
+        console.log("there was an error tracking stats", err);
+      });
+    } else if (mode === "product") {
+      let prodDoneNumber = Object.values(list.items).reduce((acc, shop) => {
+        return (
+          acc +
+          Object.values(shop).reduce((acc, product) => {
+            return acc + +product.done;
+          }, 0)
+        );
+      }, 0);
+
+      done ? prodDoneNumber++ : prodDoneNumber--;
+
+      update(statsRef, { prodDoneNumber }).catch((err) => {
+        console.log("there was an error tracking stats", err);
+      });
+    }
   }
 
   return (

@@ -58,8 +58,38 @@ export default function ListItem(props) {
 
     update(ref(db, "users/" + userId + "/lists/" + props.id), {
       done: !done,
-    }).catch((error) => {
-      //TODO: show error notification
+    })
+      .then(() => {
+        trackStats(done, db, userId, props.id);
+      })
+      .catch(() => {
+        showNotification(
+          "error",
+          "Error",
+          "An error occurred when changing list status. Please try again."
+        );
+      });
+  }
+
+  function trackStats(done, db, userId, listKey) {
+    const createDate = new Date(props.data.createDate);
+
+    const statsRef = ref(
+      db,
+      "users/" +
+        userId +
+        "/stats/" +
+        createDate.getFullYear() +
+        "/" +
+        (createDate.getMonth() + 1) +
+        "/" +
+        createDate.getDate() +
+        "/" +
+        listKey
+    );
+
+    update(statsRef, {done: !done}).catch((err)=>{
+      console.log("there was an error tracking stats", err);
     });
   }
 
@@ -71,12 +101,12 @@ export default function ListItem(props) {
     }
   }
 
-  function handleModalConfirm(){
+  function handleModalConfirm() {
     setDeleteModalShown(false);
     removeList();
   }
 
-  function handleModalCancel(){
+  function handleModalCancel() {
     setDeleteModalShown(false);
   }
 

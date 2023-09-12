@@ -383,6 +383,7 @@ export default function EditableList(props) {
 
       update(ref(db, "users/" + userId + "/lists/" + listKey), copy)
         .then(() => {
+          trackStats(copy, db, userId, listKey); 
           if (addListNotification) {
             showNotification(
               "information",
@@ -402,6 +403,51 @@ export default function EditableList(props) {
           );
         });
     }
+  }
+
+  function trackStats(copy, db, userId, listKey){
+    //track the stats
+
+    let createDate; 
+    if(copy.createDate instanceof Date){
+      createDate = copy.createDate;
+    }else{
+      createDate = new Date(copy.createDate);
+    }
+
+    let prodNumber = 0;
+    const prodDoneNumber = Object.values(copy.items).reduce((acc, shop) => {
+      return (
+        acc +
+        Object.values(shop).reduce((acc, product) => {
+          prodNumber++;
+          return acc + +product.done;
+        }, 0)
+      );
+    }, 0);
+
+    const stats = {
+      done: copy.done,
+      prodNumber,
+      prodDoneNumber,
+    };
+
+    const statsRef = ref(
+      db,
+      "users/" +
+        userId +
+        "/stats/" +
+        createDate.getFullYear() +
+        "/" +
+        (createDate.getMonth() + 1) +
+        "/" +
+        createDate.getDate() +
+        "/" +
+        listKey
+    );
+    update(statsRef, stats).catch((err)=>{
+      console.log("there was an error tracking stats", err);
+    });
   }
 
   function handleNoShopsModalConfirm() {
