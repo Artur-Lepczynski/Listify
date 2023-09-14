@@ -56,7 +56,11 @@ export default function Home() {
         <div className={style.spacer}></div>
         <footer className={style.footer}>
           <p>Free and open source on</p>
-          <Icon type="outside-link" icon="fa-brands fa-github" to="https://github.com/Artur-Lepczynski/Listify"/>
+          <Icon
+            type="outside-link"
+            icon="fa-brands fa-github"
+            to="https://github.com/Artur-Lepczynski/Listify"
+          />
         </footer>
       </div>
     </Page>

@@ -67,9 +67,16 @@ export default function Graph(props) {
             },
             tooltip: {
               enabled: false,
-            },
+            },         
           },
-        } : {},
+          animation: {
+            duration: 0,
+          } 
+        } : {
+          animation: {
+            duration: 0,
+          } 
+        },
       });
     }; 
 

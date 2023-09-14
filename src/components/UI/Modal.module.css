@@ -45,39 +45,62 @@
 .modal-pearlShores{
   background-color: var(--pearlShores-bg-4);
   color: var(--pearlShores-text-1);
-  border: 2px solid var(--pearlShores-bg-3);
+  border: 2px solid var(--pearlShores-bg-1);
 }
 
 .modal-midnight{
   background-color: var(--midnight-bg-4);
   color: var(--midnight-text-1);
-  border: 2px solid var(--midnight-bg-3);
+  border: 2px solid var(--midnight-bg-1);
 }
 
 .modal-bubblegum{
   background-color: var(--bubblegum-bg-4);
   color: var(--bubblegum-text-1);
-  border: 2px solid var(--bubblegum-bg-3);
+  border: 2px solid var(--bubblegum-bg-1);
 }
 
 .modal-blueLagoon{
   background-color: var(--blueLagoon-bg-4);
   color: var(--blueLagoon-text-1);
-  border: 2px solid var(--blueLagoon-bg-3);
+  border: 2px solid var(--blueLagoon-bg-1);
 }
 
 .modal-deepOcean{
   background-color: var(--deepOcean-bg-4);
   color: var(--deepOcean-text-1);
-  border: 2px solid var(--deepOcean-bg-3);
+  border: 2px solid var(--deepOcean-bg-1);
 }
 
-hr{
+.line{
+  height: 2px;
   width: 100%;
+  margin: auto;
+  background-color: white;
+}
+
+.line-pearlShores{
+  background-image: linear-gradient(to right, var(--pearlShores-accent-1), var(--pearlShores-accent-2), var(--pearlShores-accent-3));
+}
+
+.line-midnight{
+  background-image: linear-gradient(to right, var(--midnight-accent-1), var(--midnight-accent-2), var(--midnight-accent-3));
+}
+
+.line-bubblegum{
+  background-image: linear-gradient(to right, var(--bubblegum-accent-1), var(--bubblegum-accent-2), var(--bubblegum-accent-3));
+}
+
+.line-blueLagoon{
+  background-image: linear-gradient(to right, var(--blueLagoon-accent-1), var(--blueLagoon-accent-2), var(--blueLagoon-accent-3));
+}
+
+.line-deepOcean{
+  background-image: linear-gradient(to right, var(--deepOcean-accent-1), var(--deepOcean-accent-2), var(--deepOcean-accent-3));
 }
 
 .title{
-  margin: 15px 0px 5px;
+  margin: 15px 0px 10px;
   font-weight: 400;
   text-align: center;
 }
@@ -85,6 +108,10 @@ hr{
 .modal-body{
   flex-grow: 1;
   padding: 5px 10px;
+}
+
+.modal-body-input{
+  min-height: 100px;
 }
 
 .message{
@@ -161,7 +188,7 @@ hr{
 }
 
 .modal-buttons{
-  margin: -5px 10px 0px;
+  margin: 0px 10px;
   display: flex;
   justify-content: flex-end;
 }

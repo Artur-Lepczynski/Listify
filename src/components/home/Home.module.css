@@ -21,7 +21,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: rgba(245, 245, 220, 0.181); */
 }
 
 .title-inner-wrapper img{
@@ -59,6 +58,14 @@
   height: 65px;
   font-size: 1.4em;
   justify-content: space-around;
+  transition: box-shadow 150ms ease-out, color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out;
+}
+
+.action-button:hover{
+  background-color: #0ea9dd;
+  border-color: #0ea9dd;
+  box-shadow: 0px 0px 15px 3px #0ea9dd;
+  color: var(--midnight-bg-5)
 }
 
 @media (max-width: 1100px) {

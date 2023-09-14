@@ -75,8 +75,8 @@ export default function Modal(props) {
           onKeyDown={handleKeyDown}
         >
           <h3 className={style.title}>{props.title}</h3>
-          <hr />
-          <div className={style["modal-body"]}>
+          <div className={`${style.line} ${getClassNames("line")}`}></div>
+          <div className={`${style["modal-body"]} ${props.type === "input" && style["modal-body-input"]}`}>
             <p className={style.message}>{props.message}</p>
             {props.type === "input" && (
               <>
@@ -100,7 +100,7 @@ export default function Modal(props) {
               </>
             )}
           </div>
-          <hr />
+          <div className={`${style.line} ${getClassNames("line")}`}></div>
           <div className={style["modal-buttons"]}>
             <Button type="button" look="secondary" onClick={handleCancelClick}>
               {props.cancelText}

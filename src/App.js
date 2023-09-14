@@ -17,7 +17,7 @@ import {
 
 //pages & loaders
 import RootLayout from "./pages/RootLayout";
-import HomePage from "./pages/HomePage";
+import HomePage, { HomePageLoader } from "./pages/HomePage";
 import DashboardPage, { DashboardPageLoader } from "./pages/DashboardPage";
 import ListsPage, { ListsPageLoader } from "./pages/ListsPage";
 import ViewSingleListPage, {
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: HomePageLoader },
       { path: "/auth", element: <AuthPage />, loader: AuthPageLoader },
       {
         path: "/dash",
