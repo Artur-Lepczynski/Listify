@@ -123,7 +123,6 @@
 
 .bottom-controls{
   width: 165px;
-  /* background-color: rgba(0, 255, 255, 0.187); */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -134,6 +133,26 @@
   width: 55px;
   padding-left: 5px;
   overflow: hidden;
+}
+
+.product-qty-input-invalid-pearlShores{
+  border-color: var(--pearlShores-text-error-1);
+}
+
+.product-qty-input-invalid-midnight{
+  border-color: var(--midnight-text-error-1);
+}
+
+.product-qty-input-invalid-bubblegum{
+  border-color: var(--bubblegum-text-error-1);
+}
+
+.product-qty-input-invalid-blueLagoon{
+  border-color: var(--blueLagoon-text-error-1);
+}
+
+.product-qty-input-invalid-deepOcean{
+  border-color: var(--deepOcean-text-error-1);
 }
 
 .product-qty-button{

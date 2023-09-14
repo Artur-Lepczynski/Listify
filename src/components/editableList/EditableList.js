@@ -341,10 +341,10 @@ export default function EditableList(props) {
     const shopsEmpty = list.items.length === 0;
     const shopsValid = list.items.every((shop) => {
       const emptyShop = Object.keys(shop.products).length === 0;
-      const noEmptyProducts = Object.values(shop.products).every((item) => {
-        return item.name;
+      const noInvalidProducts = Object.values(shop.products).every((item) => {
+        return item.name && item.qty >= 1 && item.qty <= 999 && !Number.isNaN(item.qty);
       });
-      return !emptyShop && noEmptyProducts;
+      return !emptyShop && noInvalidProducts;
     });
 
     const listValid =

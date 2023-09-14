@@ -49,16 +49,24 @@ export default function EditableProduct(props) {
     props.onProductDelete(props.id);
   }
 
+  const [qtyInputValid, setQtyInputValid] = useState(true);
+
   function handleQtyChange(event) {
     const value = Number.parseInt(event.target.value);
-    if (value >= 1 && value <= 99 && !Number.isNaN(value)) {
-      props.onQtyChange(props.id, value);
+    props.onQtyChange(props.id, Number.isNaN(value) ? value+"" : value);
+    if (value < 1 || value > 999 || Number.isNaN(value)) {
+      setQtyInputValid(false);
+    }else{
+      setQtyInputValid(true);
     }
   }
 
   function handlePlusClick() {
-    if (props.qty < 99) {
+    if (props.qty < 999) {
       props.onQtyChange(props.id, props.qty + 1);
+    }else if(props.qty === "NaN"){
+      props.onQtyChange(props.id, 1);
+      setQtyInputValid(true);
     }
   }
 
@@ -119,12 +127,12 @@ export default function EditableProduct(props) {
           <input
             type="number"
             min={1}
-            max={99}
+            max={999}
             value={props.qty}
             onChange={handleQtyChange}
             className={`${style.input} ${
               style["product-qty-input"]
-            } ${getClassNames("input")}`}
+            } ${getClassNames("input")} ${!qtyInputValid && getClassNames("product-qty-input-invalid")}`}
           ></input>
           <Button
             className={style["product-qty-button"]}
