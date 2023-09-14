@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import style from "./Graph.module.css";
 import { context } from "../../store/GlobalContext";
 import Chart from "chart.js/auto";
@@ -7,9 +7,15 @@ export default function Graph(props) {
   const { theme } = useContext(context);
   const chartRef = useRef(null);
 
+  const [empty, setEmpty] = useState(false);
+
   useEffect(() => {
     let graph;
     let colors = [];
+    if(props.type === "bar"){
+      const count = props.data[0].reduce((acc, item)=>acc + item, 0);
+      count === 0 ? setEmpty(true) : setEmpty(false);
+    }
 
     if (theme === "pearlShores") {
       colors = ["#078b07", "#820f0f"];
@@ -82,6 +88,7 @@ export default function Graph(props) {
         <div className={style["chart-wrapper-1"]}>
           <div className={style["chart-wrapper-2"]}>
             <canvas ref={chartRef} height={550} width={0}></canvas>
+            {empty && <p className={style["no-data"]}>Add a list to make this look more interesting</p>}
           </div>
         </div>
         </>

@@ -1,11 +1,11 @@
-.button{
+.element{
   background-color: transparent;
   border: none; 
   text-decoration: none;
   cursor: pointer;
 }
 
-.button i{
+.element i{
   width: 100%; 
   height: 100%; 
   display: flex;
@@ -13,42 +13,42 @@
   align-items: center;
 }
 
-.button-pearlShores{
+.element-pearlShores{
   color: var(--pearlShores-accent-1); 
 }
 
-.button-pearlShores:hover{
+.element-pearlShores:hover{
   color: var(--pearlShores-accent-2); 
 }
 
-.button-midnight{
+.element-midnight{
   color: var(--midnight-accent-1); 
 }
 
-.button-midnight:hover{
+.element-midnight:hover{
   color: var(--midnight-accent-2); 
 }
 
-.button-bubblegum{
+.element-bubblegum{
   color: var(--bubblegum-accent-1); 
 }
 
-.button-bubblegum:hover{
+.element-bubblegum:hover{
   color: var(--bubblegum-accent-2); 
 }
 
-.button-blueLagoon{
+.element-blueLagoon{
   color: var(--blueLagoon-accent-1); 
 }
 
-.button-blueLagoon:hover{
+.element-blueLagoon:hover{
   color: var(--blueLagoon-accent-2); 
 }
 
-.button-deepOcean{
+.element-deepOcean{
   color: var(--deepOcean-accent-1); 
 }
 
-.button-deepOcean:hover{
+.element-deepOcean:hover{
   color: var(--deepOcean-accent-2); 
 }

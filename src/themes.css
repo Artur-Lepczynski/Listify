@@ -4,6 +4,7 @@
   --footer-height: 60px; 
 
   --initial-fade-duration: 150ms;
+  --feature-transition-duration: 400ms; 
   --header-transition-duration: 100ms; 
   --header-color-fade-duration: 100ms; 
   --card-fade-duration: 150ms;

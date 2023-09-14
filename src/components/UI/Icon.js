@@ -10,7 +10,7 @@ export default function Icon(props) {
       {props.type === "button" && (
         <button
           onClick={props.onClick}
-          className={`${style.button} ${getClassNames("button")} ${
+          className={`${style.element} ${getClassNames("element")} ${
             props.className
           }`}
         >
@@ -20,12 +20,24 @@ export default function Icon(props) {
       {props.type === "link" && (
         <Link
           to={props.to}
-          className={`${style.button} ${getClassNames("button")} ${
+          className={`${style.element} ${getClassNames("element")} ${
             props.className
           }`}
         >
           <i className={props.icon}></i>
         </Link>
+      )}
+      {props.type === "outside-link" && (
+        <a
+          href={props.to}
+          target="_blank"
+          rel="noreferrer"
+          className={`${style.element} ${getClassNames("element")} ${
+            props.className
+          }`}
+        >
+          <i className={props.icon}></i>
+        </a>
       )}
     </>
   );

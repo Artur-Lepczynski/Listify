@@ -1,6 +1,10 @@
+.page{
+  overflow-x: hidden;
+}
+
 .title-fullscreen-wrapper{
   width: 100%;
-  height: calc(100vh - var(--header-height) - 5px);
+  height: calc(100vh - var(--header-height));
 
   display: flex;
   flex-direction: column;
@@ -147,5 +151,26 @@
 
 .features-fullscreen-wrapper{
   width: 100%;
-  height: calc(100vh - var(--header-height) - 5px);
+  min-height: calc(100vh - var(--header-height) - 5px);
+}
+
+.spacer{
+  height: 70px;
+}
+
+.footer{
+  height: var(--footer-height);
+  width: 100%;
+  position: absolute; 
+  bottom: 0px;
+  left: 0px;
+  background-color: var(--midnight-bg-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer i{
+  margin-left: 5px;
+  font-size: 2em;
 }
