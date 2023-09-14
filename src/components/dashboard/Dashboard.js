@@ -14,7 +14,7 @@ import { useContext, useEffect, useState } from "react";
 import Button from "../UI/Button";
 import Loader from "../UI/Loader";
 import ListItem from "../lists/ListItem";
-import ListCounter from "./ListCounter";
+import Counter from "../UI/Counter";
 import { CSSTransition } from "react-transition-group";
 import { context } from "../../store/GlobalContext";
 
@@ -141,7 +141,7 @@ export default function Dashboard() {
           {lists.length === 0 ? (
             <p>You don't have any shopping lists!</p>
           ) : (
-            <p>You have {listNumbers.total} shopping lists</p>
+            <p>You have {listNumbers.total} shopping list{listNumbers.total > 1 && "s"}</p>
           )}
           <hr></hr>
           <div className={style["list-counters-wrapper"]}>
@@ -153,8 +153,8 @@ export default function Dashboard() {
             )}
             {lists.length > 0 && (
               <>
-                <ListCounter type="open" number={listNumbers.pending} />
-                <ListCounter type="closed" number={listNumbers.done} />
+                <Counter type="open" caption="Open" number={listNumbers.pending} />
+                <Counter type="closed" caption="Closed" number={listNumbers.done} />
               </>
             )}
           </div>

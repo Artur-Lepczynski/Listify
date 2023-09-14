@@ -1,0 +1,15 @@
+.chart-caption{
+  text-align: center;
+}
+
+.chart-wrapper-1{
+  width: 100%; 
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.chart-wrapper-2{
+  margin: 10px auto; 
+  width: 1000px;
+  height: 500px;
+}

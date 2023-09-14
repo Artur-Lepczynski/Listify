@@ -19,7 +19,9 @@
   transition: opacity var(--card-fade-duration);
 }
 
-.settings-group-title{
+.account-group-title{
+  padding-bottom: 10px;
+  border-bottom: 2px dashed;
   font-weight: 400;
   text-align: center;
 }
@@ -43,5 +45,35 @@
 
   .account-action{
     width: 95%;
+  }
+}
+
+.lists-number-wrapper{
+  width: fit-content;
+  padding: 10px 20px;
+  display: flex;
+}
+
+.lists-number{
+  display: inline-block;
+  margin: 10px auto; 
+  text-align: center;
+  font-size: 3.6em;
+}
+
+.stats-wrapper{
+  margin: 20px auto 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lists-text{
+  text-align: center;
+}
+
+@media (max-width: 600px){
+  .stats-wrapper{
+    flex-direction: column;
   }
 }

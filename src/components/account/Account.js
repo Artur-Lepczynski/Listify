@@ -11,14 +11,18 @@ import Loader from "../UI/Loader";
 import { CSSTransition } from "react-transition-group";
 import Setting from "./Setting";
 import Modal from "../UI/Modal";
+import Counter from "../UI/Counter";
+import Graph from "./Graph";
 
 export default function Account() {
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(true);
-  const { settings, dispatchSettings, showNotification } = useContext(context);
-  const [settingsList, setSettingsList] = useState([]); //list of settings in the format used in the template
+  const [loading, setLoading] = useState({ settings: true, stats: true });
+  const { settings, dispatchSettings, showNotification } =
+    useContext(context);
   const [logoutModalShown, setLogoutModalShown] = useState(false);
+
+  const [databaseStats, setDatabaseStats] = useState({});
 
   useEffect(() => {
     const auth = getAuth();
@@ -30,64 +34,159 @@ export default function Account() {
         const dbSettings = snapshot.val();
         dispatchSettings({ type: "SET_SETTINGS", settings: dbSettings });
       }
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, settings: false }));
+    });
+
+    const statsRef = ref(db, "users/" + userId + "/stats");
+    onValue(statsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const dbStats = snapshot.val();
+        setDatabaseStats(dbStats);
+      }
+      setLoading((prev) => ({ ...prev, stats: false }));
     });
   }, []);
 
+  const [settingsList, setSettingsList] = useState([]);
+
   useEffect(() => {
+    const settingNames = {
+      theme: "Theme",
+      noListsShownDashboard: "Number of lists shown on dashboard",
+      askBeforeListDelete: "Ask before removing a list",
+      askBeforeShopDelete: "Ask before removing a shop",
+      askBeforeProductDeleteEdit: "Ask before removing a product when editing a list",
+      askBeforeShopDeleteEdit: "Ask before removing a shop when editing a list",
+      addListNotification: "Notify me when a list has been added or modified",
+      removeListNotification: "Notify me when a list has been removed",
+      addShopNotification: "Notify me when a shop has been added",
+      removeShopNotification: "Notify me when a shop has been removed",
+    }
     const newSettingsList = [];
-    //god forgive me for this
     for (const key in settings) {
-      const setting = settings[key];
+      const setting = {
+        type: "options",
+        name: settingNames[key],
+        current: settings[key],
+        settingKey: key,
+      }
       if (key === "theme") {
-        newSettingsList.push({
-          name: "Theme",
-          type: "options",
-          options: new Map([
+          setting.options = new Map([
             ["pearlShores", "Pearl Shores"],
             ["midnight", "Midnight"],
             ["bubblegum", "Bubblegum"],
             ["blueLagoon", "Blue Lagoon"],
             ["deepOcean", "Deep Ocean"],
-          ]),
-          current: setting,
-          settingKey: key,
-        });
+          ]);
       } else if (key === "noListsShownDashboard") {
-        newSettingsList.push({
-          name: "Number of lists shown on dashboard",
-          type: "options",
-          options: [1, 3, 5, 7],
-          current: setting,
-          settingKey: key,
-        });
+          setting.options = [1, 3, 5, 7];
       } else {
-        let name;
-        if (key === "askBeforeListDelete") name = "Ask before removing a list";
-        else if (key === "askBeforeShopDelete")
-          name = "Ask before removing a shop";
-        else if (key === "askBeforeProductDeleteEdit")
-          name = "Ask before removing a product when editing a list";
-        else if (key === "askBeforeShopDeleteEdit")
-          name = "Ask before removing a shop when editing a list";
-        else if (key === "addListNotification")
-          name = "Notify me when a list has been added or modified";
-        else if (key === "removeListNotification")
-          name = "Notify me when a list has been removed";
-        else if (key === "addShopNotification")
-          name = "Notify me when a shop has been added";
-        else if (key === "removeShopNotification")
-          name = "Notify me when a shop has been removed";
-        newSettingsList.push({
-          name,
-          type: "toggle",
-          current: setting,
-          settingKey: key,
-        });
+          setting.type = "toggle";
       }
+      newSettingsList.push(setting);
     }
     setSettingsList(newSettingsList);
   }, [settings]);
+
+  const [lifetimeStats, setLifetimeStats] = useState({});
+  const [monthStats, setMonthStats] = useState({});
+  const [yearStats, setYearStats] = useState({});
+
+  useEffect(() => {
+    setLifetimeStats(calculateListStats(databaseStats));
+    setMonthStats(getStats(databaseStats, "month", 30));
+    setYearStats(getStats(databaseStats, "year", 12));
+  }, [databaseStats]);
+
+  function calculateListStats(object) {
+    let obj = {
+      lists: 0,
+      doneLists: 0,
+      products: 0,
+      doneProducts: 0,
+    };
+    if ("done" in object) {
+      obj.lists++;
+      if (object.done) obj.doneLists++;
+      obj.products += object.prodNumber;
+      obj.doneProducts += object.prodDoneNumber;
+    } else {
+      Object.values(object).forEach((value) => {
+        const returned = calculateListStats(value);
+        obj.lists += returned.lists;
+        obj.doneLists += returned.doneLists;
+        obj.products += returned.products;
+        obj.doneProducts += returned.doneProducts;
+      });
+    }
+    return obj;
+  }
+
+  function getStats(databaseStats, type, timeFrame) {
+    const lists = new Array(timeFrame).fill(0);
+    const listsOpen = new Array(timeFrame).fill(0);
+    const products = new Array(timeFrame).fill(0);
+    const productsDone = new Array(timeFrame).fill(0);
+    const graphLabels = [];
+
+    let counter = 0;
+    const date = new Date();
+
+    while (counter < timeFrame) {
+      const listsObject =
+        type === "year"
+          ? databaseStats[date.getFullYear()]?.[date.getMonth() + 1]
+          : databaseStats[date.getFullYear()]?.[date.getMonth() + 1]?.[
+              date.getDate()
+            ];
+
+      graphLabels[timeFrame - 1 - counter] =
+        type === "year"
+          ? date.toLocaleString("en-gb", { month: "long" })
+          : date.getDate() + "/" + (date.getMonth() + 1);
+
+      if (listsObject) {
+        let listsInTimeFrame =
+          type === "year"
+            ? Object.values(listsObject).flatMap((item) => Object.values(item))
+            : Object.values(listsObject);
+
+        lists[timeFrame - 1 - counter] = listsInTimeFrame.length;
+        listsOpen[timeFrame - 1 - counter] = listsInTimeFrame.reduce(
+          (acc, item) => acc + +!item.done,
+          0
+        );
+
+        const productStats = listsInTimeFrame.reduce(
+          (acc, item) => {
+            acc.prodNumber += item.prodNumber;
+            acc.prodDoneNumber += item.prodDoneNumber;
+            return acc;
+          },
+          { prodNumber: 0, prodDoneNumber: 0 }
+        );
+        products[timeFrame - 1 - counter] = productStats.prodNumber;
+        productsDone[timeFrame - 1 - counter] = productStats.prodDoneNumber;
+      }
+      counter++;
+      type === "year"
+        ? date.setMonth(date.getMonth() - 1)
+        : date.setDate(date.getDate() - 1);
+    }
+
+    const listsClosed = lists.map((item, i) => item - listsOpen[i]);
+    const productsNotDone = products.map((item, i) => item - productsDone[i]);
+
+    return {
+      lists,
+      listsOpen,
+      listsClosed,
+      products,
+      productsDone,
+      productsNotDone,
+      graphLabels,
+    };
+  }
 
   function handleSwitchToggle(name, value) {
     changeSetting(name, value);
@@ -105,13 +204,9 @@ export default function Account() {
 
     const updateObject = { [key]: value };
 
-    update(settingsRef, updateObject)
-      .then(() => {
-        console.log("setting updated");
-      })
-      .catch((error) => {
-        console.log("setting update failed", error);
-      });
+    update(settingsRef, updateObject).catch((error) => {
+      console.log("setting update failed", error);
+    });
   }
 
   function handleLogoutButtonClick() {
@@ -139,21 +234,16 @@ export default function Account() {
     setLogoutModalShown(false);
   }
 
-  function handleRemoveAccount() {
-    //TODO: implement
-    console.log("remove account"); 
-  }
-
   return (
     <Page>
-      {loading && (
+      {(loading.settings || loading.stats) && (
         <div className={style["loader-wrapper"]}>
           <Loader className={style.loader} />
         </div>
       )}
       <CSSTransition
-        in={!loading}
-        appear={!loading}
+        in={!loading.settings && !loading.stats}
+        appear={!loading.settings && !loading.stats}
         timeout={150}
         mountOnEnter
         classNames={{
@@ -162,8 +252,8 @@ export default function Account() {
         }}
       >
         <Card>
-          <div className={style["settings-group"]}>
-            <h3 className={style["settings-group-title"]}>
+          <div className={style["account-group"]}>
+            <h3 className={style["account-group-title"]}>
               Settings and account
             </h3>
             {settingsList.map((setting) => {
@@ -198,6 +288,117 @@ export default function Account() {
               >
                 Remove account
               </Button>
+            </div>
+          </div>
+
+          <div className={style["account-group"]}>
+            <h3 className={style["account-group-title"]}>Statistics</h3>
+            <div className={style["account-stats-wrapper"]}>
+              <p className={style["lists-text"]}>Lifetime lists created</p>
+              <Card nested={true} className={style["lists-number-wrapper"]}>
+                <p className={style["lists-number"]}>{lifetimeStats.lists}</p>
+              </Card>
+              <div className={style["stats-wrapper"]}>
+                <Counter
+                  type="closed"
+                  number={lifetimeStats.doneLists}
+                  caption="Closed"
+                />
+                <Graph
+                  type="doughnut"
+                  data={[
+                    lifetimeStats.lists - lifetimeStats.doneLists,
+                    lifetimeStats.doneLists,
+                  ]}
+                />
+                <Counter
+                  type="open"
+                  number={lifetimeStats.lists - lifetimeStats.doneLists}
+                  caption="Open"
+                />
+              </div>
+            </div>
+            <div className={style["account-stats-wrapper"]}>
+              <p className={style["lists-text"]}>Lifetime products added</p>
+              <Card nested={true} className={style["lists-number-wrapper"]}>
+                <p className={style["lists-number"]}>
+                  {lifetimeStats.products}
+                </p>
+              </Card>
+              <div className={style["stats-wrapper"]}>
+                <Counter
+                  type="closed"
+                  number={lifetimeStats.doneProducts}
+                  caption="Done"
+                />
+                <Graph
+                  type="doughnut"
+                  data={[
+                    lifetimeStats.products - lifetimeStats.doneProducts,
+                    lifetimeStats.doneProducts,
+                  ]}
+                />
+                <Counter
+                  type="open"
+                  number={lifetimeStats.products - lifetimeStats.doneProducts}
+                  caption="Not done"
+                />
+              </div>
+            </div>
+
+            <div className={style["account-stats-wrapper"]}>
+              <Graph
+                type="bar"
+                data={[
+                  monthStats.lists,
+                  monthStats.listsClosed,
+                  monthStats.listsOpen,
+                ]}
+                labels={monthStats.graphLabels}
+                barLabels={["Total lists", "Closed lists", "Open lists"]}
+                caption="Lists over the last month"
+              />
+              <Graph
+                type="bar"
+                data={[
+                  monthStats.products,
+                  monthStats.productsDone,
+                  monthStats.productsNotDone,
+                ]}
+                labels={monthStats.graphLabels}
+                barLabels={[
+                  "Total products",
+                  "Done products",
+                  "Not done products",
+                ]}
+                caption="Products over the last month"
+              />
+              <Graph
+                type="bar"
+                data={[
+                  yearStats.lists,
+                  yearStats.listsClosed,
+                  yearStats.listsOpen,
+                ]}
+                labels={yearStats.graphLabels}
+                barLabels={["Total lists", "Closed lists", "Open lists"]}
+                caption="Lists over the last year"
+              />
+              <Graph
+                type="bar"
+                data={[
+                  yearStats.products,
+                  yearStats.productsDone,
+                  yearStats.productsNotDone,
+                ]}
+                labels={yearStats.graphLabels}
+                barLabels={[
+                  "Total products",
+                  "Done products",
+                  "Not done products",
+                ]}
+                caption="Products over the last year"
+              />
             </div>
           </div>
           <Modal
