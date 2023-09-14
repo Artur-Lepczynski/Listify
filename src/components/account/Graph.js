@@ -27,8 +27,8 @@ export default function Graph(props) {
       colors = ["#078b07", "#820f0f"];
       if (props.type === "bar") colors.unshift("#FF6B9D");
     } else if (theme === "blueLagoon") {
-      colors = ["#078b07", "#bd1c1c"];
-      if (props.type === "bar") colors.unshift("#70BFA2");
+      colors = ["#088408", "#c03e3a"];
+      if (props.type === "bar") colors.unshift("#519aae");
     } else if (theme === "deepOcean") {
       colors = ["#078b07", "#c41a1a"];
       if (props.type === "bar") colors.unshift("#61B6B1");
