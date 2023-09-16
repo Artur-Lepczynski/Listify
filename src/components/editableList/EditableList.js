@@ -47,6 +47,7 @@ export default function EditableList(props) {
   const [shopsLoading, setShopsLoading] = useState(true);
   const [shops, setShops] = useState([]);
   const [noShopsError, setNoShopsError] = useState(false);
+  const [listUpdateLoading, setListUpdateLoading] = useState(false);
   const [list, dispatchList] = useReducer(
     listReducer,
     listData || {
@@ -364,7 +365,7 @@ export default function EditableList(props) {
 
   //add the list
   function handleAddOrUpdateList() {
-    if (listValid) {
+    if (listValid && !listUpdateLoading) {
       const copy = { ...list };
       const result = {};
 
@@ -399,9 +400,11 @@ export default function EditableList(props) {
                 : 'Your list "' + list.name + '" was updated successfully!'
             );
           }
+          setListUpdateLoading(false);
           navigate("/dash");
         })
-        .catch(() => {
+        .catch((err) => {
+          setListUpdateLoading(false);
           showNotification(
             "error",
             "Error saving list",
@@ -413,7 +416,7 @@ export default function EditableList(props) {
 
   function trackStats(copy, db, userId, listKey) {
     let createDate = copy.createDate;
-    if (copy.createDate instanceof String)
+    if (typeof copy.createDate === "string")
       createDate = new Date(copy.createDate);
 
     let prodNumber = 0;
@@ -637,6 +640,7 @@ export default function EditableList(props) {
                 type="button"
                 look="primary"
                 onClick={handleAddOrUpdateList}
+                loading={listUpdateLoading}
                 disabled={!listValid}
               >
                 {props.mode === "add" ? "Add list" : "Save list"}
