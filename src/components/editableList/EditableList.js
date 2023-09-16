@@ -54,7 +54,6 @@ export default function EditableList(props) {
       name: "List",
       createDate: new Date(),
       note: "",
-      achievementProgress: true,
       done: false,
       items: [],
     }

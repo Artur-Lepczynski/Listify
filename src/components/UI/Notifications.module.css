@@ -16,17 +16,30 @@
   align-items: center;
 }
 
-.notification-enter{
-  opacity: 0;
+.notification-entering{
+  animation: fade-in var(--notification-fade-duration) ease-in;
 }
 
-.notification-enter-active{
-  opacity: 1;
-  transition: opacity var(--notification-fade-duration) ease-in;
+@keyframes fade-in{
+  from{
+    transform: translateY(100px);
+  }
+  to{
+    transform: translateY(0px);
+  }
 }
 
-.notification-exit{
-  opacity: 1;
+.notification-exiting{
+  animation: fade-out var(--notification-fade-duration) ease-in forwards;
+}
+
+@keyframes fade-out {
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
 }
 
 .notification-exit-active{

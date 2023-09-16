@@ -5,9 +5,6 @@ import {
   getDatabase,
   ref,
   onValue,
-  update,
-  push,
-  child,
 } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";

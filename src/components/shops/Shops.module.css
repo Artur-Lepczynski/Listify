@@ -25,10 +25,15 @@
 }
 
 .add-shop-button{
-  min-height: 32px;
-  min-width: 140px;
+  width: 150px;
   margin: 10px auto;
   display: block;
+}
+
+@media (max-width: 400px) {
+  .add-shop-button {
+    width: 95%;
+  }
 }
 
 .no-shops-text{
