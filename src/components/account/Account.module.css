@@ -20,10 +20,13 @@
 }
 
 .account-group-title{
-  padding-bottom: 10px;
-  border-bottom: 2px dashed;
+  margin: 15px auto;
   font-weight: 400;
   text-align: center;
+}
+
+.separator{
+  margin-bottom: 20px;
 }
 
 .account-actions-wrapper{

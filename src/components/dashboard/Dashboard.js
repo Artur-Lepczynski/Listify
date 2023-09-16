@@ -17,6 +17,7 @@ import ListItem from "../lists/ListItem";
 import Counter from "../UI/Counter";
 import { CSSTransition } from "react-transition-group";
 import { context } from "../../store/GlobalContext";
+import Separator from "../UI/Separator";
 
 export default function Dashboard() {
   const [lists, setLists] = useState([]);
@@ -82,7 +83,7 @@ export default function Dashboard() {
           ) : (
             <p>You have {listNumbers.total} shopping list{listNumbers.total > 1 && "s"}</p>
           )}
-          <hr></hr>
+          <Separator/>
           <div className={style["list-counters-wrapper"]}>
             {lists.length === 0 && (
               <p>
@@ -97,7 +98,7 @@ export default function Dashboard() {
               </>
             )}
           </div>
-          <hr></hr>
+          <Separator/>
           <div className={style["lists-wrapper"]}>
             {lists.length === 0 && (
               <p>
@@ -128,7 +129,7 @@ export default function Dashboard() {
               </>
             )}
           </div>
-          <hr></hr>
+          <Separator/>
           <nav className={style.actions}>
             <Button type="link" look="primary" to="/lists">
               See all lists

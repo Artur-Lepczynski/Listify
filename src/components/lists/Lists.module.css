@@ -26,8 +26,7 @@
 }
 
 .date {
-  margin: 5px auto;
+  margin: 5px auto 0px;
   padding: 5px 15px;
-  border-bottom: 2px solid;
   font-size: 1.2em;
 }

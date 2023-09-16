@@ -6,7 +6,7 @@ import { firebaseConfig } from "./firebaseData";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 //context
-import GlobalContext, { context } from "./store/GlobalContext";
+import { context } from "./store/GlobalContext";
 
 //router
 import {

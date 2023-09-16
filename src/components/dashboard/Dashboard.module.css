@@ -50,7 +50,7 @@
 
 .actions a {
   width: 150px;
-  margin: 10px auto; 
+  margin: 15px auto 10px; 
 }
 
 @media (max-width: 450px) {

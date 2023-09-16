@@ -13,6 +13,7 @@ import Setting from "./Setting";
 import Modal from "../UI/Modal";
 import Counter from "../UI/Counter";
 import Graph from "./Graph";
+import Separator from "../UI/Separator";
 
 export default function Account() {
   const navigate = useNavigate();
@@ -258,6 +259,7 @@ export default function Account() {
             <h3 className={style["account-group-title"]}>
               Settings and account
             </h3>
+            <Separator className={style.separator}/>
             {settingsList.map((setting) => {
               return (
                 <Setting
@@ -295,6 +297,7 @@ export default function Account() {
 
           <div className={style["account-group"]}>
             <h3 className={style["account-group-title"]}>Statistics</h3>
+            <Separator className={style.separator}/>
             <div className={style["account-stats-wrapper"]}>
               <p className={style["lists-text"]}>Lifetime lists created</p>
               <Card nested={true} className={style["lists-number-wrapper"]}>

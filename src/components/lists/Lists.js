@@ -1,3 +1,4 @@
+import React from "react";
 import style from "./Lists.module.css";
 import Page from "../UI/Page";
 import Card from "../UI/Card";
@@ -7,6 +8,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import Loader from "../UI/Loader";
 import ListItem from "./ListItem";
 import { CSSTransition } from "react-transition-group";
+import Separator from "../UI/Separator";
 
 export default function Lists(props) {
   const [lists, setLists] = useState([]);
@@ -88,13 +90,16 @@ export default function Lists(props) {
             lists.map((item) => {
               if (item instanceof Date) {
                 return (
-                  <p key={item.valueOf()} className={style["date"]}>
+                  <React.Fragment key={item.valueOf()}>
+                  <p className={style["date"]}>
                     {item.toLocaleDateString("en-gb", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
                     })}
                   </p>
+                  <Separator/>
+                  </React.Fragment>
                 );
               } else {
                 return (
