@@ -20,10 +20,17 @@ export default function ListItem(props) {
   if (props.date === "full")
     options.year = options.month = options.day = "2-digit";
 
-  const dateString = new Date(props.data.createDate).toLocaleString(
-    "en-gb",
-    options
-  );
+  const listCreateDate = new Date(props.data.createDate);
+  let dateString = listCreateDate.toLocaleString("en-gb", options);
+
+  if (props.date === "full") {
+    const timestampDifference = new Date().valueOf() - listCreateDate.valueOf();
+    if (timestampDifference < 86400000) {
+      dateString = "Today," + dateString.split(",")[1];
+    } else if (timestampDifference < 172800000) {
+      dateString = "Yesterday," + dateString.split(",")[1];
+    }
+  }
 
   function handleMouseEnter() {
     setHover(true);
@@ -89,7 +96,7 @@ export default function ListItem(props) {
     });
   }
 
-  function handleListDeleteButtonClick(){
+  function handleListDeleteButtonClick() {
     props.onDelete(props.id, props.data.name);
   }
 
