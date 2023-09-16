@@ -1,7 +1,7 @@
 import style from "./EditableList.module.css";
 import Page from "../UI/Page";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import Card from "../UI/Card";
 import { useContext, useEffect, useReducer, useState } from "react";
 import {
@@ -23,7 +23,6 @@ import { context } from "../../store/GlobalContext";
 import Modal from "../UI/Modal";
 
 export default function EditableList(props) {
-  //props.mode = "add" or "edit";
   const getClassNames = useTheme(style);
 
   const {
@@ -40,15 +39,18 @@ export default function EditableList(props) {
 
   const navigate = useNavigate();
   const params = useParams();
-  const data = useLoaderData();
+  const listData = useLoaderData();
 
-  const [loading, setLoading] = useState(true);
-  const [shops, setShops] = useState([]);
+  const PRODUCT_MIN_QTY = 1;
+  const PRODUCT_MAX_QTY = 999;
+
+  const [shopsLoading, setShopsLoading] = useState(true);
+  const [currentShops, setCurrentShops] = useState([]);
   const [allShops, setAllShops] = useState([]);
-  const [shopsError, setShopsError] = useState(false);
+  const [noShopsError, setNoShopsError] = useState(false);
   const [list, dispatchList] = useReducer(
     listReducer,
-    data || {
+    listData || {
       name: "List",
       createDate: new Date(),
       note: "",
@@ -68,7 +70,7 @@ export default function EditableList(props) {
     } else if (action.type === "ADD_SHOP") {
       copy.items.push({ shopId: action.value, products: {} });
       setTimeout(() => {
-        setShops((prev) => {
+        setCurrentShops((prev) => {
           return prev.filter((shop) => shop.shopId !== action.value);
         });
       }, 150);
@@ -84,10 +86,10 @@ export default function EditableList(props) {
         }
       });
       setTimeout(() => {
-        setShops((prev) => {
+        setCurrentShops((prev) => {
           let copy = [...prev];
           const shop = findShopById(action.value.oldShopId);
-          //shop can not exist, (when changing from removed shop to new shop)
+          //shop can not exist, (when changing from "removed shop" to new shop)
           if (shop) copy.push(shop);
           return copy.filter((item) => {
             return item.shopId !== action.value.shopId;
@@ -99,10 +101,10 @@ export default function EditableList(props) {
       copy.items = copy.items.filter((item) => {
         return item.shopId !== action.value;
       });
-      setShops((prev) => {
+      setCurrentShops((prev) => {
         let copy = [...prev];
         const shop = findShopById(action.value);
-        //shop can not exist, (when removing removed shop)
+        //shop can not exist, (when removing "removed shop")
         if (shop) copy.push(shop);
         return copy;
       });
@@ -175,6 +177,7 @@ export default function EditableList(props) {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
+
     const shopsRef = ref(db, "users/" + userId + "/shops");
 
     onValue(shopsRef, (snapshot) => {
@@ -189,28 +192,26 @@ export default function EditableList(props) {
         shopsArray = shopsArray.filter((shop) => {
           return !list.items.some((item) => item.shopId === shop.shopId);
         });
-        setShops(shopsArray);
+        setCurrentShops(shopsArray);
       } else if (!snapshot.exists() && props.mode === "add") {
-        setShopsError(true);
+        setNoShopsError(true);
       }
-      setLoading(false);
+      setShopsLoading(false);
     });
   }, []);
 
   //list name
-  const [listNameEdited, setListNameEdited] = useState(false);
+  const [editingListName, setEditingListName] = useState(false);
   const [enteredListName, setEnteredListName] = useState(list.name);
   const listNameValid =
     enteredListName.trim() !== "" && enteredListName.length <= 32;
 
   function handleListNameEdit() {
-    if (!listNameEdited) {
-      setListNameEdited(true);
-    } else {
-      if (listNameValid) {
-        setListNameEdited(false);
-        dispatchList({ type: "CHANGE_LIST_NAME", value: enteredListName });
-      }
+    if (!editingListName) {
+      setEditingListName(true);
+    } else if (listNameValid) {
+      setEditingListName(false);
+      dispatchList({ type: "CHANGE_LIST_NAME", value: enteredListName });
     }
   }
 
@@ -220,11 +221,10 @@ export default function EditableList(props) {
 
   //new shop
   const [shopPromptShown, setShopPromptShown] = useState(false);
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
 
   function handleAddShopButtonPress(event) {
-    const clickCoordinates = { x: event.pageX, y: event.pageY };
-    setCoordinates(clickCoordinates);
+    setClickCoordinates({ x: event.pageX, y: event.pageY });
     setShopPromptShown(true);
   }
 
@@ -310,7 +310,7 @@ export default function EditableList(props) {
     setDeletedProductId(null);
   }
 
-  //change product qty in input
+  //change product qty
   function handleQtyChange(shopId, productId, qty) {
     dispatchList({
       type: "CHANGE_PRODUCT_QTY",
@@ -342,7 +342,12 @@ export default function EditableList(props) {
     const shopsValid = list.items.every((shop) => {
       const emptyShop = Object.keys(shop.products).length === 0;
       const noInvalidProducts = Object.values(shop.products).every((item) => {
-        return item.name && item.qty >= 1 && item.qty <= 999 && !Number.isNaN(item.qty);
+        return (
+          item.name &&
+          item.qty >= PRODUCT_MIN_QTY &&
+          item.qty <= PRODUCT_MAX_QTY &&
+          !Number.isNaN(item.qty)
+        );
       });
       return !emptyShop && noInvalidProducts;
     });
@@ -351,10 +356,10 @@ export default function EditableList(props) {
       !shopsEmpty &&
       shopsValid &&
       listNameValid &&
-      !listNameEdited &&
+      !editingListName &&
       noteValid;
     setListValid(listValid);
-  }, [list, listNameValid, listNameEdited, noteValid]);
+  }, [list, listNameValid, editingListName, noteValid]);
 
   //add the list
   function handleAddOrUpdateList() {
@@ -383,7 +388,7 @@ export default function EditableList(props) {
 
       update(ref(db, "users/" + userId + "/lists/" + listKey), copy)
         .then(() => {
-          trackStats(copy, db, userId, listKey); 
+          trackStats(copy, db, userId, listKey);
           if (addListNotification) {
             showNotification(
               "information",
@@ -405,15 +410,10 @@ export default function EditableList(props) {
     }
   }
 
-  function trackStats(copy, db, userId, listKey){
-    //track the stats
-
-    let createDate; 
-    if(copy.createDate instanceof Date){
-      createDate = copy.createDate;
-    }else{
+  function trackStats(copy, db, userId, listKey) {
+    let createDate = copy.createDate;
+    if (copy.createDate instanceof String)
       createDate = new Date(copy.createDate);
-    }
 
     let prodNumber = 0;
     const prodDoneNumber = Object.values(copy.items).reduce((acc, shop) => {
@@ -445,8 +445,12 @@ export default function EditableList(props) {
         "/" +
         listKey
     );
-    update(statsRef, stats).catch((err)=>{
-      console.log("there was an error tracking stats", err);
+    update(statsRef, stats).catch(() => {
+      showNotification(
+        "error",
+        "Error tracking stats",
+        "There was a network error when tracking usage statistics for this list. We're sorry about that. Please repeat this action to try again."
+      );
     });
   }
 
@@ -460,13 +464,13 @@ export default function EditableList(props) {
 
   return (
     <Page>
-      {loading && (
+      {shopsLoading && (
         <div className={style["loader-wrapper"]}>
           <Loader className={style.loader} />
         </div>
       )}
       <Modal
-        in={!loading && shopsError}
+        in={!shopsLoading && noShopsError}
         type="choice"
         title="No shops registered"
         message="You don't have any shops registered. You need at least one shop in order to add products to it when creating a list. Do you want to add a shop now?"
@@ -496,8 +500,8 @@ export default function EditableList(props) {
         onCancel={handleProductDeleteModalCancel}
       />
       <CSSTransition
-        in={!loading}
-        appear={!loading}
+        in={!shopsLoading}
+        appear={!shopsLoading}
         timeout={150}
         mountOnEnter
         classNames={{
@@ -506,18 +510,18 @@ export default function EditableList(props) {
         }}
       >
         <>
-          {data?.error && (
+          {listData?.error && (
             <Card>
               <p className={style["no-list-text"]}>
                 The requested list does not exist.
               </p>
             </Card>
           )}
-          {!data?.error && (
+          {!listData?.error && (
             <>
               <Card>
                 <div className={style["list-title-wrapper"]}>
-                  {!listNameEdited && (
+                  {!editingListName && (
                     <>
                       <h2 className={style["list-title"]}>{list.name}</h2>
                       <Icon
@@ -528,7 +532,7 @@ export default function EditableList(props) {
                       />
                     </>
                   )}
-                  {listNameEdited && (
+                  {editingListName && (
                     <>
                       <div>
                         <input
@@ -571,7 +575,9 @@ export default function EditableList(props) {
                       id={shop.shopId}
                       name={shopName}
                       products={shop.products}
-                      shops={shops}
+                      shops={currentShops}
+                      maxProductQty={PRODUCT_MAX_QTY}
+                      minProductQty={PRODUCT_MIN_QTY}
                       onShopNameEdit={handleShopNameEdit}
                       onShopDelete={handleShopDelete}
                       onAddProduct={handleAddProduct}
@@ -616,8 +622,8 @@ export default function EditableList(props) {
                 <Prompt
                   shown={shopPromptShown}
                   setShown={setShopPromptShown}
-                  coordinates={coordinates}
-                  options={shops.map((item) => item.shopName)}
+                  coordinates={clickCoordinates}
+                  options={currentShops.map((item) => item.shopName)}
                   noOptionsText="There are no more shops to add"
                   onBackgroundClick={handlePromptBackgroundClick}
                   onSelect={handleAddShop}

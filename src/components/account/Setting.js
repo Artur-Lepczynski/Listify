@@ -6,23 +6,16 @@ import style from "./Setting.module.css";
 import Prompt from "../UI/Prompt";
 
 export default function Setting(props) {
-  //current -> boolean/string;
-  //name -> string;
-  //type -> options/toggle;
-  //options -> array of strings to choose
-  //displayOptions -> array of strings to display
-
   const getClassNames = useTheme(style);
   const [settingPromptShown, setSettingPromptShown] = useState(false);
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
 
   function handleSwitchToggle(value) {
     props.onToggle(props.settingKey, value);
   }
 
   function handlePromptlOpen(event) {
-    const clickCoordinates = { x: event.pageX, y: event.pageY };
-    setCoordinates(clickCoordinates);
+    setClickCoordinates({ x: event.pageX, y: event.pageY });
     setSettingPromptShown(true);
   }
 
@@ -74,10 +67,9 @@ export default function Setting(props) {
       <Prompt
         shown={settingPromptShown}
         setShown={setSettingPromptShown}
-        coordinates={coordinates}
+        coordinates={clickCoordinates}
         options={getOptions()}
         selected={getSelected()}
-        noOptionsText="There are no more shops to add"
         onBackgroundClick={handlePromptBackgroundClick}
         onSelect={handleOptionSelect}
       />

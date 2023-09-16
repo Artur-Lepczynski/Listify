@@ -4,11 +4,6 @@ import style from "./Button.module.css";
 import Loader from "./Loader";
 
 export default function Button(props) {
-  //look: primary/secondary
-  //type: button/link
-  //buttonType: button/submit
-  //loading = bool 
-
   const getClassName = useTheme(style);
 
   let className;

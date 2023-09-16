@@ -6,11 +6,6 @@ import { CSSTransition } from "react-transition-group";
 export default function DropdownMenu(props) {
   const getClassNames = useTheme(style);
 
-  // menu={[
-  //   { to: "/edit/lists", name: "Edit lists" },
-  //   { to: "/edit/shops", name: "Edit shops" },
-  // ]}
-
   return (
     <CSSTransition
       in={props.shown}

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import style from "./Feature.module.css";
+import Separator from "../UI/Separator";
 
 export default function Feature(props) {
   const ref = useRef(null);

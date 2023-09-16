@@ -1,0 +1,25 @@
+.separator{
+  height: 2px;
+  width: 100%;
+  margin: auto;
+}
+
+.separator-pearlShores{
+  background-image: linear-gradient(to right, var(--pearlShores-accent-1), var(--pearlShores-accent-2), var(--pearlShores-accent-3));
+}
+
+.separator-midnight{
+  background-image: linear-gradient(to right, var(--midnight-accent-1), var(--midnight-accent-2), var(--midnight-accent-3));
+}
+
+.separator-bubblegum{
+  background-image: linear-gradient(to right, var(--bubblegum-accent-1), var(--bubblegum-accent-2), var(--bubblegum-accent-3));
+}
+
+.separator-blueLagoon{
+  background-image: linear-gradient(to right, var(--blueLagoon-accent-1), var(--blueLagoon-accent-2), var(--blueLagoon-accent-3));
+}
+
+.separator-deepOcean{
+  background-image: linear-gradient(to right, var(--deepOcean-accent-1), var(--deepOcean-accent-2), var(--deepOcean-accent-3));
+}

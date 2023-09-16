@@ -57,67 +57,6 @@ export default function Dashboard() {
     });
   }, [noListsShownDashboard]);
 
-  function sendDummyData() {
-    function getRandomKey() {
-      return (Math.random() + "").slice(2);
-    }
-
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const db = getDatabase();
-
-    const dummy = {
-      name: "Test list 6 no note",
-      achievementProgress: true,
-      done: false,
-      createDate: new Date(),
-      note: "",
-      items: {
-        vit: {
-          [getRandomKey()]: { name: "borówa", qty: 3, done: true },
-          [getRandomKey()]: { name: "marchewa", qty: 1, done: false },
-        },
-        "u baby": { [getRandomKey()]: { name: "serek", qty: 2, done: false } },
-        Apteka: { [getRandomKey()]: { name: "apap", qty: 1, done: false } },
-        test: {
-          c: { name: "test", qty: 1, done: false },
-          b: { name: "test", qty: 1, done: false },
-          a: { name: "test", qty: 1, done: false },
-          3: { name: "test", qty: 1, done: true },
-          2: { name: "test", qty: 1, done: false },
-          1: { name: "test", qty: 1, done: false },
-        },
-      },
-    };
-
-    const newListKey = push(child(ref(db), "users/" + userId + "/lists/")).key;
-
-    update(ref(db, "users/" + userId + "/lists/" + newListKey), dummy)
-      .then(() => {
-        console.log("success?");
-      })
-      .catch((err) => {
-        console.log("fail?", err);
-      });
-  }
-
-  function sendDummyShop() {
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const db = getDatabase();
-
-    const dummy = { name: "Piekarnia" };
-    const newShopKey = push(child(ref(db), "users/" + userId + "/shops/")).key;
-
-    update(ref(db, "users/" + userId + "/shops/" + newShopKey), dummy)
-      .then(() => {
-        console.log("success?");
-      })
-      .catch((err) => {
-        console.log("fail?", err);
-      });
-  }
-
   return (
     <Page>
       {listsLoading && (
@@ -200,9 +139,6 @@ export default function Dashboard() {
           </nav>
         </Card>
       </CSSTransition>
-
-      {/* <button onClick={sendDummyData}>add</button> */}
-      {/* <button onClick={sendDummyShop}>send shop</button> */}
     </Page>
   );
 }

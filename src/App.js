@@ -76,59 +76,38 @@ const router = createBrowserRouter([
         loader: EditShopsPageLoader,
       },
       { path: "/account", element: <AccountPage />, loader: accountPageLoader },
-      { path: "/account/remove", element: <AccountRemovePage/>, loader: accountPageLoader}
+      {
+        path: "/account/remove",
+        element: <AccountRemovePage />,
+        loader: accountPageLoader,
+      },
+      { path: "*", element: <Navigate to={"/"} /> },
     ],
   },
 ]);
 
-//Themes: pearlShores, midnight, bubblegum, blueLagoon, deepOcean
-//icons:
-//house: <i class="fa-solid fa-house-chimney-window"></i>
-//list: <i class="fa-solid fa-list-ul"></i>
-//plus: <i class="fa-solid fa-plus"></i>
-//minus: <i class="fa-solid fa-minus"></i>
-//edit: <i class="fa-solid fa-pen-to-square"></i>
-//user: <i class="fa-solid fa-user"></i>
-//settings: <i class="fa-solid fa-gear"></i>
-//check: <i class="fa-solid fa-check"></i>
-//x: <i class="fa-solid fa-xmark"></i>
-//trash <i class="fa-solid fa-trash-can"></i>
-//dots vert: <i class="fa-solid fa-ellipsis-vertical"></i>
-//dot: <i className="fa-solid fa-circle"></i>
-//eye: <i class="fa-solid fa-eye"></i>
-//arrow-right: <i class="fa-solid fa-arrow-right"></i>
-//square: <i class="fa-regular fa-square"></i>
-//checkbox: <i class="fa-regular fa-square-check"></i>
-//info: <i class="fa-solid fa-circle-info"></i>
-//error: <i class="fa-solid fa-triangle-exclamation"></i>
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
   const { dispatchSettings } = useContext(context);
 
-  //check signed in user, get settings
   useEffect(() => {
     async function checkUserAndSettings() {
       const auth = getAuth();
-      onAuthStateChanged(auth, async (user)=>{
-      if (user) {
-        console.log("user is signed in, id:", user.uid);
-        const settingsRef = await getUserSettingsRef(user.uid);
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const settingsRef = await getUserSettingsRef(user.uid);
 
-        onValue(settingsRef, (snapshot) => {
-          if (snapshot.exists()) {
-            const settings = snapshot.val();
-            dispatchSettings({ type: "SET_SETTINGS", settings });
-            setIsLoading(false);
-          }else {
-            console.log("user has no settings");
-            setIsLoading(false);
-          }
-        });
-      } else {
-        console.log("user is NOT signed in");
-        setIsLoading(false);
-      }
-    })
+          onValue(settingsRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const settings = snapshot.val();
+              dispatchSettings({ type: "SET_SETTINGS", settings });
+            }
+            setUserLoading(false);
+          });
+        } else {
+          setUserLoading(false);
+        }
+      });
     }
     checkUserAndSettings();
   }, []);
@@ -143,7 +122,7 @@ function App() {
 
   return (
     <>
-      <LoaderFullPage in={isLoading} />
+      <LoaderFullPage in={userLoading} />
       <RouterProvider router={router} />
     </>
   );

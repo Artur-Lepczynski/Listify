@@ -54,7 +54,7 @@ export default function EditableProduct(props) {
   function handleQtyChange(event) {
     const value = Number.parseInt(event.target.value);
     props.onQtyChange(props.id, Number.isNaN(value) ? value+"" : value);
-    if (value < 1 || value > 999 || Number.isNaN(value)) {
+    if (value < props.minProductQty || value > props.maxProductQty || Number.isNaN(value)) {
       setQtyInputValid(false);
     }else{
       setQtyInputValid(true);
@@ -62,16 +62,16 @@ export default function EditableProduct(props) {
   }
 
   function handlePlusClick() {
-    if (props.qty < 999) {
+    if (props.qty < props.maxProductQty) {
       props.onQtyChange(props.id, props.qty + 1);
     }else if(props.qty === "NaN"){
-      props.onQtyChange(props.id, 1);
+      props.onQtyChange(props.id, props.minProductQty);
       setQtyInputValid(true);
     }
   }
 
   function handleMinusClick() {
-    if (props.qty > 1) {
+    if (props.qty > props.minProductQty) {
       props.onQtyChange(props.id, props.qty - 1);
     }
   }
@@ -126,8 +126,8 @@ export default function EditableProduct(props) {
           />
           <input
             type="number"
-            min={1}
-            max={999}
+            min={props.minProductQty}
+            max={props.maxProductQty}
             value={props.qty}
             onChange={handleQtyChange}
             className={`${style.input} ${

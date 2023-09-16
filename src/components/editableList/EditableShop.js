@@ -3,12 +3,10 @@ import Card from "../UI/Card";
 import Icon from "../UI/Icon";
 import style from "./EditableShop.module.css";
 import Prompt from "../UI/Prompt";
-import { CSSTransition } from "react-transition-group";
 import Button from "../UI/Button";
 import EditableProduct from "./EditableProduct";
 
 export default function EditableShop(props) {
-  //shop name change prompt
   const [shopPromptShown, setShopPromptShown] = useState(false);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
 
@@ -27,36 +25,29 @@ export default function EditableShop(props) {
     props.onShopNameEdit(props.id, shop);
   }
 
-  //shop delete
   function handleShopDelete() {
     props.onShopDelete(props.id);
   }
 
-  //add product
   function handleAddProduct() {
     props.onAddProduct(props.id);
   }
 
-  //change product name 
   function handleProductNameChange(productId, name) {
     props.onProductNameChange(props.id, productId, name);
   }
 
-  //delete product
   function handleProductDelete(productId) {
     props.onProductDelete(props.id, productId);
   }
 
-  //change product qty in input
   function handleQtyChange(productId, qty){
     props.onQtyChange(props.id, productId, qty);
   }
 
-  //change done status 
   function handleDoneStatusChange(productId){
     props.onDoneStatusChange(props.id, productId);
   }
-
 
   return (
     <Card nested={true}>
@@ -87,6 +78,8 @@ export default function EditableShop(props) {
               qty={item[1].qty}
               edit={item[1].edit}
               done={item[1].done}
+              maxProductQty={props.maxProductQty}
+              minProductQty={props.minProductQty}
               onProductNameChange={handleProductNameChange}
               onProductDelete={handleProductDelete}
               onQtyChange={handleQtyChange}

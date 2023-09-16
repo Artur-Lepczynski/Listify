@@ -11,9 +11,6 @@ import { context } from "../../store/GlobalContext";
 import Modal from "../UI/Modal";
 
 export default function ListItem(props) {
-  //props.data -> done, #total, #done, #notDone, date - full/hour, mode - select/edit, name
-  //props.id
-
   const getClassNames = useTheme(style);
   const {
     showNotification,
@@ -88,8 +85,12 @@ export default function ListItem(props) {
         listKey
     );
 
-    update(statsRef, {done: !done}).catch((err)=>{
-      console.log("there was an error tracking stats", err);
+    update(statsRef, { done: !done }).catch(() => {
+      showNotification(
+        "error",
+        "Error tracking stats",
+        "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
+      );
     });
   }
 

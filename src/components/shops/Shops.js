@@ -25,7 +25,7 @@ export default function Shops() {
   const [removeShopModalShown, setRemoveShopModalShown] = useState(false);
   const [shopsLoading, setShopsLoading] = useState(true);
   const [newShopLoading, setNewShopLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [noShopsError, setNoShopsError] = useState(false);
 
   const {
     showNotification,
@@ -46,10 +46,10 @@ export default function Shops() {
       if (snapshot.exists()) {
         const data = snapshot.val();
         setShops(data);
-        setError(false);
+        setNoShopsError(false);
       } else {
         setShops({});
-        setError(true);
+        setNoShopsError(true);
       }
     });
 
@@ -92,7 +92,7 @@ export default function Shops() {
         }
         setNewShopLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         showNotification(
           "error",
           "Shop saving failed",
@@ -114,12 +114,10 @@ export default function Shops() {
 
   function handleRemoveShopModalConfirm() {
     deleteShop(removedShopData.shopId, removedShopData.shopName);
-    setRemovedShopData({});
     setRemoveShopModalShown(false);
   }
 
   function handleRemoveShopModalCancel() {
-    setRemovedShopData({});
     setRemoveShopModalShown(false);
   }
 
@@ -138,7 +136,7 @@ export default function Shops() {
           );
         }
       })
-      .catch((error) => {
+      .catch(() => {
         showNotification(
           "error",
           "Shop deletion failed",
@@ -166,7 +164,7 @@ export default function Shops() {
       >
         <Card>
           <h2 className={style.title}>Shops</h2>
-          {error && (
+          {noShopsError && (
             <p className={style["no-shops-text"]}>
               You don't have any shops yet. You need at least one in order to
               add products to it when creating a new list.

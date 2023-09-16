@@ -19,7 +19,7 @@ export default function ViewableList() {
   const [list, setList] = useState({});
   const [shops, setShops] = useState({});
   const [loading, setLoading] = useState({ list: true, shops: true });
-  const [error, setError] = useState(false);
+  const [noListError, setNoListError] = useState(false);
 
   const getClassNames = useTheme(style);
   const { showNotification } = useContext(context);
@@ -41,7 +41,7 @@ export default function ViewableList() {
         });
       } else {
         setList({});
-        setError(true);
+        setNoListError(true);
         setLoading((prev) => {
           return { ...prev, list: false };
         });
@@ -86,7 +86,7 @@ export default function ViewableList() {
       .then(() => {
         trackStats("product", status, db, userId, listId);
       })
-      .catch((error) => {
+      .catch(() => {
         showNotification(
           "error",
           "Error",
@@ -106,7 +106,7 @@ export default function ViewableList() {
       .then(() => {
         trackStats("list", !list.done, db, userId, listId);
       })
-      .catch((error) => {
+      .catch(() => {
         showNotification(
           "error",
           "Error",
@@ -131,8 +131,12 @@ export default function ViewableList() {
         listKey
     );
     if (mode === "list") {
-      update(statsRef, { done }).catch((err) => {
-        console.log("there was an error tracking stats", err);
+      update(statsRef, { done }).catch(() => {
+        showNotification(
+          "error",
+          "Error tracking stats",
+          "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
+        );
       });
     } else if (mode === "product") {
       let prodDoneNumber = Object.values(list.items).reduce((acc, shop) => {
@@ -146,8 +150,12 @@ export default function ViewableList() {
 
       done ? prodDoneNumber++ : prodDoneNumber--;
 
-      update(statsRef, { prodDoneNumber }).catch((err) => {
-        console.log("there was an error tracking stats", err);
+      update(statsRef, { prodDoneNumber }).catch(() => {
+        showNotification(
+          "error",
+          "Error tracking stats",
+          "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
+        );
       });
     }
   }
@@ -159,14 +167,14 @@ export default function ViewableList() {
           <Loader className={style.loader} />
         </div>
       )}
-      {error && !(loading.list || loading.shops) && (
+      {noListError && !(loading.list || loading.shops) && (
         <Card>
           <p className={style["error-text"]}>This list does not exist</p>
         </Card>
       )}
       <CSSTransition
-        in={!error && !(loading.list || loading.shops)}
-        appear={!error && !(loading.list || loading.shops)}
+        in={!noListError && !(loading.list || loading.shops)}
+        appear={!noListError && !(loading.list || loading.shops)}
         timeout={{
           appear: 150,
         }}
@@ -187,7 +195,7 @@ export default function ViewableList() {
             />
           </div>
           <Card>
-            {!error &&
+            {!noListError &&
               !(loading.list || loading.shops) &&
               Object.entries(list.items).map((item) => {
                 return (

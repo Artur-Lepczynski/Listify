@@ -5,9 +5,9 @@ import { useTheme } from "../../hooks/useTheme";
 import Button from "./Button";
 import { useInput } from "../../hooks/useInput";
 import { useEffect, useRef } from "react";
+import Separator from "./Separator";
 
 export default function Modal(props) {
-  //type: "input", "choice"; in; title; message; onConfirm; onCancel; cancelText; confirmText;
   const getClassNames = useTheme(style);
 
   const {
@@ -75,7 +75,7 @@ export default function Modal(props) {
           onKeyDown={handleKeyDown}
         >
           <h3 className={style.title}>{props.title}</h3>
-          <div className={`${style.line} ${getClassNames("line")}`}></div>
+          <Separator/>
           <div className={`${style["modal-body"]} ${props.type === "input" && style["modal-body-input"]}`}>
             <p className={style.message}>{props.message}</p>
             {props.type === "input" && (
@@ -100,7 +100,7 @@ export default function Modal(props) {
               </>
             )}
           </div>
-          <div className={`${style.line} ${getClassNames("line")}`}></div>
+          <Separator/>
           <div className={style["modal-buttons"]}>
             <Button type="button" look="secondary" onClick={handleCancelClick}>
               {props.cancelText}

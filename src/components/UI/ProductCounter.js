@@ -2,8 +2,6 @@ import { useTheme } from "../../hooks/useTheme";
 import style from "./ProductCounter.module.css";
 
 export default function ProductCounter(props) {
-  //props.items => items like in database;
-  //props.done
   const getClassNames = useTheme(style);
 
   const itemsArray = [].concat(...Object.values(props.items));

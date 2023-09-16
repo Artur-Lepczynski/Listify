@@ -9,9 +9,6 @@ import ListItem from "./ListItem";
 import { CSSTransition } from "react-transition-group";
 
 export default function Lists(props) {
-  //select or edit mode in props
-  //this is the list of lists
-
   const [lists, setLists] = useState([]);
   const [listsLoading, setListsLoading] = useState(true);
 
@@ -22,30 +19,34 @@ export default function Lists(props) {
     const listsRef = ref(db, "users/" + userId + "/lists");
 
     onValue(listsRef, (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
         const lists = Object.entries(data).reverse();
         lists.forEach((item) => {
           item[1].id = item[0];
         });
 
-        //sort by date
-        let lastDate = new Date(lists[0][1].createDate);
-        const result = [lastDate];
-
-        lists.forEach((item)=>{
-          const currentDate = new Date(item[1].createDate);
-          if (isDayBefore(currentDate, lastDate)) result.push(currentDate);
-          result.push(item[1]);
-          lastDate = currentDate;
-        })
-        setLists(result);
-      }else{
+        const listsSorted = sortListsByDate(lists);
+        setLists(listsSorted);
+      } else {
         setLists([]);
       }
-        setListsLoading(false);
+      setListsLoading(false);
     });
   }, []);
+
+  function sortListsByDate(lists) {
+    let lastDate = new Date(lists[0][1].createDate);
+    const result = [lastDate];
+
+    lists.forEach((item) => {
+      const currentDate = new Date(item[1].createDate);
+      if (isDayBefore(currentDate, lastDate)) result.push(currentDate);
+      result.push(item[1]);
+      lastDate = currentDate;
+    });
+    return result;
+  }
 
   function isDayBefore(a, b) {
     return (
@@ -72,7 +73,7 @@ export default function Lists(props) {
         in={!listsLoading && lists.length > 0}
         appear={!listsLoading && lists.length > 0}
         timeout={{
-          appear: 150
+          appear: 150,
         }}
         mountOnEnter
         unmountOnExit

@@ -4,7 +4,7 @@
 
 .title-fullscreen-wrapper{
   width: 100%;
-  height: calc(100vh - var(--header-height));
+  min-height: calc(100vh - var(--header-height));
 
   display: flex;
   flex-direction: column;
@@ -58,7 +58,7 @@
   height: 65px;
   font-size: 1.4em;
   justify-content: space-around;
-  transition: box-shadow 150ms ease-out, color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out;
+  transition: box-shadow 150ms, color 150ms, background-color 150ms, border-color 150ms;
 }
 
 .action-button:hover{

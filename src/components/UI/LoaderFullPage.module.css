@@ -5,14 +5,11 @@
 .wrapper{
   width: 100vw; 
   height: 100vh;
-
   background-color: rgb(255, 255, 255);
-
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1000;
-
   display: flex;
   align-items: center;
   justify-content: center;

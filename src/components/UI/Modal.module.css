@@ -8,7 +8,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: rgba(255, 255, 255, 0); */
   backdrop-filter: blur(2.5px);
 }
 
@@ -70,33 +69,6 @@
   background-color: var(--deepOcean-bg-4);
   color: var(--deepOcean-text-1);
   border: 2px solid var(--deepOcean-bg-1);
-}
-
-.line{
-  height: 2px;
-  width: 100%;
-  margin: auto;
-  background-color: white;
-}
-
-.line-pearlShores{
-  background-image: linear-gradient(to right, var(--pearlShores-accent-1), var(--pearlShores-accent-2), var(--pearlShores-accent-3));
-}
-
-.line-midnight{
-  background-image: linear-gradient(to right, var(--midnight-accent-1), var(--midnight-accent-2), var(--midnight-accent-3));
-}
-
-.line-bubblegum{
-  background-image: linear-gradient(to right, var(--bubblegum-accent-1), var(--bubblegum-accent-2), var(--bubblegum-accent-3));
-}
-
-.line-blueLagoon{
-  background-image: linear-gradient(to right, var(--blueLagoon-accent-1), var(--blueLagoon-accent-2), var(--blueLagoon-accent-3));
-}
-
-.line-deepOcean{
-  background-image: linear-gradient(to right, var(--deepOcean-accent-1), var(--deepOcean-accent-2), var(--deepOcean-accent-3));
 }
 
 .title{

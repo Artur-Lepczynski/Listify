@@ -1,33 +1,33 @@
-.loader-wrapper{
+.loader-wrapper {
   width: 100%;
-  height: calc(100vh - var(--header-height) - 10px); 
+  height: calc(100vh - var(--header-height) - 10px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.loader{
+.loader {
   margin: 20px auto;
 }
 
-.fade-appear{
+.fade-appear {
   opacity: 0;
 }
 
-.fade-appear-active{
+.fade-appear-active {
   opacity: 1;
   transition: opacity var(--card-fade-duration);
 }
 
-.no-lists-text{
+.no-lists-text {
   text-align: center;
   margin: 20px auto;
   font-size: 1.2em;
 }
 
-.date{
-  margin: 5px auto; 
-  padding: 5px 15px; 
+.date {
+  margin: 5px auto;
+  padding: 5px 15px;
   border-bottom: 2px solid;
   font-size: 1.2em;
 }

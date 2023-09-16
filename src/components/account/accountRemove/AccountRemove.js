@@ -22,9 +22,8 @@ export default function AccountRemove() {
   const navigate = useNavigate(); 
 
   const [reAuthLoading, setReAuthLoading] = useState(false);
-  const [reAuth, setReAuth] = useState(false);
+  const [reAuthorized, setReAuthorized] = useState(false);
 
-  //password
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredPasswordValid, setEnteredPasswordValid] = useState(false);
 
@@ -55,7 +54,7 @@ export default function AccountRemove() {
       reauthenticateWithCredential(user, credential)
         .then(() => {
           setReAuthLoading(false);
-          setReAuth(true);
+          setReAuthorized(true);
         })
         .catch((error) => {
           setReAuthLoading(false);
@@ -77,7 +76,6 @@ export default function AccountRemove() {
     }
   }
 
-  //reauthed and ready to remove account
   const [removeAccountLoading, setRemoveAccountLoading] = useState(false);
 
   function handleRemoveAccount() {
@@ -114,7 +112,7 @@ export default function AccountRemove() {
         <Card className={style["outer-card"]}>
           <img alt="logo" src={logo}></img>
           <p className={style.title}>Remove account</p>
-          {!reAuth && (
+          {!reAuthorized && (
             <>
               <p className={style["nav-text"]}>
                 Enter password to reauthenticate. Once you do, you'll still have
@@ -148,7 +146,7 @@ export default function AccountRemove() {
               </p>
             </>
           )}
-          {reAuth && (
+          {reAuthorized && (
             <>
               <p className={style["nav-text"]}>
                 This is your last chance to back out. Press the button below to remove your account. This action is final and cannot be undone. We're sad to see you go 😢

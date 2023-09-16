@@ -4,14 +4,13 @@ import { getUser } from "../util/getUserLoggedInStatus";
 import { child, get, getDatabase, ref } from "firebase/database";
 
 export default function EditSingleListPage() {
-  return <EditableList mode="edit"/>;
+  return <EditableList mode="edit" />;
 }
 
 export async function EditSingleListPageLoader({ params }) {
   const user = await getUser();
   if (!user) return redirect("/");
 
-  //read list data from database
   const db = getDatabase();
   const listsRef = ref(db);
   const userId = user.uid;
@@ -21,26 +20,25 @@ export async function EditSingleListPageLoader({ params }) {
     const snapshot = await get(
       child(listsRef, "users/" + userId + "/lists/" + listId)
     );
-    if (snapshot.exists()){ 
-      //change items to an array 
-      const list = snapshot.val();
-      const itemsNew = [];
-      Object.entries(list.items).forEach((item)=>{
-        let newObj = {
-          shopId: item[0],
-          products: item[1],
-        };
-        itemsNew.push(newObj);
-      });
-      list.items = itemsNew;
-      return list;
-    }else{
-      return {error: "List not found"};
+    if (snapshot.exists()) {
+      return transformListData(snapshot.val());
+    } else {
+      return { error: "List not found" };
     }
   } catch (err) {
-    //TODO: show error notification
     console.log("Loader error: ", err);
   }
 
   return null;
+}
+
+function transformListData(list) {
+  const listItemsTransformed = Object.entries(list.items).map((item) => {
+    return {
+      shopId: item[0],
+      products: item[1],
+    };
+  });
+  list.items = listItemsTransformed;
+  return list;
 }

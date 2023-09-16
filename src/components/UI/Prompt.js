@@ -5,10 +5,8 @@ import { useState, useLayoutEffect } from "react";
 import Icon from "./Icon";
 
 export default function Prompt(props) {
-  //TODO: props.selected -> a string of the selected item, show tick next to it
-  //props.options -> array of strings
   const getClassNames = useTheme(style);
-
+  
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
@@ -23,7 +21,6 @@ export default function Prompt(props) {
     const yOffset = yCoord + promptHeight + space - pageHeight;
     const xOffset = xCoord + promptWidth + space - pageWidth;
 
-    // console.log("yCord:", yCoord, "offsetY:", yOffset, "put:", yCoord - yOffset);
     const yPrompt =
       promptHeight + space + yCoord > pageHeight ? yCoord - yOffset : yCoord;
     const xPrompt =

@@ -93,46 +93,44 @@ export default function Account() {
   const [yearStats, setYearStats] = useState({});
 
   useEffect(() => {
-    setLifetimeStats(calculateListStats(databaseStats));
-    setMonthStats(getStats(databaseStats, "month", 30));
-    setYearStats(getStats(databaseStats, "year", 12));
+    setLifetimeStats(calculateLifetimeStats(databaseStats));
+    setMonthStats(getTimeframeStats(databaseStats, "month"));
+    setYearStats(getTimeframeStats(databaseStats, "year"));
   }, [databaseStats]);
 
-  function calculateListStats(object) {
-    let obj = {
+  function calculateLifetimeStats(object) {
+    let result = {
       lists: 0,
       doneLists: 0,
       products: 0,
       doneProducts: 0,
     };
     if ("done" in object) {
-      obj.lists++;
-      if (object.done) obj.doneLists++;
-      obj.products += object.prodNumber;
-      obj.doneProducts += object.prodDoneNumber;
+      result.lists++;
+      if (object.done) result.doneLists++;
+      result.products += object.prodNumber;
+      result.doneProducts += object.prodDoneNumber;
     } else {
       Object.values(object).forEach((value) => {
-        const returned = calculateListStats(value);
-        obj.lists += returned.lists;
-        obj.doneLists += returned.doneLists;
-        obj.products += returned.products;
-        obj.doneProducts += returned.doneProducts;
+        const returned = calculateLifetimeStats(value);
+        for (const key in returned) result[key] += returned[key];
       });
     }
-    return obj;
+    return result;
   }
 
-  function getStats(databaseStats, type, timeFrame) {
-    const lists = new Array(timeFrame).fill(0);
-    const listsOpen = new Array(timeFrame).fill(0);
-    const products = new Array(timeFrame).fill(0);
-    const productsDone = new Array(timeFrame).fill(0);
+  function getTimeframeStats(databaseStats, type) {
+    const timeframe = type === "year" ? 12 : 30;
+    const lists = new Array(timeframe).fill(0);
+    const listsOpen = new Array(timeframe).fill(0);
+    const products = new Array(timeframe).fill(0);
+    const productsDone = new Array(timeframe).fill(0);
     const graphLabels = [];
 
     let counter = 0;
     const date = new Date();
 
-    while (counter < timeFrame) {
+    while (counter < timeframe) {
       const listsObject =
         type === "year"
           ? databaseStats[date.getFullYear()]?.[date.getMonth() + 1]
@@ -140,7 +138,7 @@ export default function Account() {
               date.getDate()
             ];
 
-      graphLabels[timeFrame - 1 - counter] =
+      graphLabels[timeframe - 1 - counter] =
         type === "year"
           ? date.toLocaleString("en-gb", { month: "long" })
           : date.getDate() + "/" + (date.getMonth() + 1);
@@ -151,8 +149,8 @@ export default function Account() {
             ? Object.values(listsObject).flatMap((item) => Object.values(item))
             : Object.values(listsObject);
 
-        lists[timeFrame - 1 - counter] = listsInTimeFrame.length;
-        listsOpen[timeFrame - 1 - counter] = listsInTimeFrame.reduce(
+        lists[timeframe - 1 - counter] = listsInTimeFrame.length;
+        listsOpen[timeframe - 1 - counter] = listsInTimeFrame.reduce(
           (acc, item) => acc + +!item.done,
           0
         );
@@ -165,8 +163,8 @@ export default function Account() {
           },
           { prodNumber: 0, prodDoneNumber: 0 }
         );
-        products[timeFrame - 1 - counter] = productStats.prodNumber;
-        productsDone[timeFrame - 1 - counter] = productStats.prodDoneNumber;
+        products[timeframe - 1 - counter] = productStats.prodNumber;
+        productsDone[timeframe - 1 - counter] = productStats.prodDoneNumber;
       }
       counter++;
       type === "year"
@@ -205,7 +203,11 @@ export default function Account() {
     const updateObject = { [key]: value };
 
     update(settingsRef, updateObject).catch((error) => {
-      console.log("setting update failed", error);
+      showNotification(
+        "error",
+        "Failed to update settings",
+        "There was a network error when updating the settings. We're sorry about that. Please try again."
+      );
     });
   }
 

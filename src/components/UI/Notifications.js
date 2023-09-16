@@ -6,7 +6,7 @@ import { useTheme } from "../../hooks/useTheme";
 import Button from "./Button";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-export default function Notifications(props) {
+export default function Notifications() {
   const getClassNames = useTheme(style);
 
   const { notifications, removeNotification } = useContext(context);
