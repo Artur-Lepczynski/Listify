@@ -481,7 +481,7 @@ export default function EditableList(props) {
         in={!shopsLoading && noShopsError}
         type="choice"
         title="No shops registered"
-        message="You don't have any shops registered. You need at least one shop in order to add products to it when creating a list. Do you want to add a shop now?"
+        message="You don't have any shops registered. You need at least one shop in order to add products to it when creating a list. Would you like to manage your shops now?"
         confirmText="Manage shops"
         cancelText="Cancel"
         onConfirm={handleNoShopsModalConfirm}
@@ -490,8 +490,8 @@ export default function EditableList(props) {
       <Modal
         in={shopDeleteModalShown}
         type="choice"
-        title="Confirm shop deletion"
-        message="Are you sure you want to delete this shop? All products in this shop will be deleted as well."
+        title="Confirm shop removal"
+        message="Are you sure you want to remove this shop? All products in this shop will be deleted as well."
         confirmText="Delete"
         cancelText="Cancel"
         onConfirm={handleShopDeleteModalConfirm}
@@ -500,8 +500,8 @@ export default function EditableList(props) {
       <Modal
         in={productDeleteModalShown}
         type="choice"
-        title="Confirm product deletion"
-        message="Are you sure you want to delete this product?"
+        title="Confirm product removal"
+        message="Are you sure you want to remove this product?"
         confirmText="Delete"
         cancelText="Cancel"
         onConfirm={handleProductDeleteModalConfirm}

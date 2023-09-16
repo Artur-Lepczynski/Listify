@@ -174,7 +174,7 @@ export default function Lists(props) {
             type="choice"
             in={deleteModalShown}
             title="Confirm list removal"
-            message={'Please confirm the removal of "' + deletedListName + '".'}
+            message={'Are you sure you want to remove "' + deletedListName + '"?'}
             confirmText="Remove"
             onConfirm={handleModalConfirm}
             cancelText="Cancel"

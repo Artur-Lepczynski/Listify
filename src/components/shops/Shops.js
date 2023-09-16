@@ -193,8 +193,8 @@ export default function Shops() {
       </CSSTransition>
       <Modal
         in={newShopModalShown}
-        title="Add a new shop"
-        message="Please enter a name for the new shop"
+        title="Adding a new shop"
+        message="Please enter a name for the new shop:"
         type="input"
         validateFunction={validateShopName}
         onCancel={handleNewShopModalCancel}
@@ -204,11 +204,11 @@ export default function Shops() {
       />
       <Modal
         in={removeShopModalShown}
-        title="Confirm shop deletion"
+        title="Confirm shop removal"
         message={
-          'Are you sure you want to delete "' +
+          'Are you sure you want to remove "' +
           removedShopData.shopName +
-          '"? This action cannot be undone.'
+          '"? If you remove this shop, it will be displayed as "Removed shop" on all lists that use it.'
         }
         type="choice"
         onCancel={handleRemoveShopModalCancel}
