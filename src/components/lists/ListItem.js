@@ -64,8 +64,8 @@ export default function ListItem(props) {
       .catch(() => {
         showNotification(
           "error",
-          "Error",
-          "An error occurred when changing list status. Please try again."
+          "Changing list status failed",
+          "There was a network error when changing list status. We're sorry about that. Please try again."
         );
       });
   }
@@ -90,8 +90,10 @@ export default function ListItem(props) {
     update(statsRef, { done: !done }).catch(() => {
       showNotification(
         "error",
-        "Error tracking stats",
-        "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
+        "Tracking stats failed",
+        "There was a network error when tracking usage statistics for this list. We're sorry about that. Please try to set this list as" +
+          (done ? "open" : "closed") +
+          "again."
       );
     });
   }

@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 export default function AccountRemove() {
   const { showNotification } = useContext(context);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [reAuthLoading, setReAuthLoading] = useState(false);
   const [reAuthorized, setReAuthorized] = useState(false);
@@ -62,13 +62,13 @@ export default function AccountRemove() {
             showNotification(
               "error",
               "Wrong password",
-              "The password you entered is incorrect. Please try again."
+              "Unfortunately the password you entered was incorrect. Please try again."
             );
           } else {
             showNotification(
               "error",
-              "Error",
-              "An error occured. Please try again. Code: ",
+              "Failed to reauthenticate",
+              "There was a network error when reauthenticating. We're sorry about that. Please try again later. Code: ",
               error.code
             );
           }
@@ -83,18 +83,25 @@ export default function AccountRemove() {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    deleteUser(user).then(()=>{
-      setRemoveAccountLoading(false);
-      showNotification(
-        "information",
-        "Account deleted",
-        "Your account has been deleted. We're sad to see you go :("
-      );
-      navigate("/");
-    }).catch((error)=>{
-      setRemoveAccountLoading(false);
-      showNotification("error", "Error", "An error occured. Please try again. Code: " + error.code);
-    })
+    deleteUser(user)
+      .then(() => {
+        setRemoveAccountLoading(false);
+        showNotification(
+          "information",
+          "Account deleted",
+          "Your account has been deleted. We're sad to see you go :("
+        );
+        navigate("/");
+      })
+      .catch((error) => {
+        setRemoveAccountLoading(false);
+        showNotification(
+          "error",
+          "Failed to remove account",
+          "There was a network error when removing your account. We're sorry about that. Please try again later. Code: " +
+            error.code
+        );
+      });
   }
 
   return (
@@ -149,18 +156,20 @@ export default function AccountRemove() {
           {reAuthorized && (
             <>
               <p className={style["nav-text"]}>
-                This is your last chance to back out. Press the button below to remove your account. This action is final and cannot be undone. We're sad to see you go 😢
+                This is your last chance to back out. Press the button below to
+                remove your account. This action is final and cannot be undone.
+                We're sad to see you go 😢
               </p>
               <Card className={style["inner-card"]}>
-                  <Button
-                    type="button"
-                    look="primary"
-                    className={style["action-button"]}
-                    loading={removeAccountLoading}
-                    onClick={handleRemoveAccount}
-                  >
-                    Remove account
-                  </Button>
+                <Button
+                  type="button"
+                  look="primary"
+                  className={style["action-button"]}
+                  loading={removeAccountLoading}
+                  onClick={handleRemoveAccount}
+                >
+                  Remove account
+                </Button>
               </Card>
               <p className={style["nav-text"]}>
                 Changed your mind?{" "}

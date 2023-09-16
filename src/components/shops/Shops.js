@@ -87,7 +87,7 @@ export default function Shops() {
           showNotification(
             "information",
             "Shop added",
-            'The shop "' + shopName + '" has been added successfully'
+            'The shop "' + shopName + '" has been added successfully.'
           );
         }
         setNewShopLoading(false);
@@ -95,8 +95,8 @@ export default function Shops() {
       .catch(() => {
         showNotification(
           "error",
-          "Shop saving failed",
-          "An error occured while saving the shop. Please try again later."
+          "Shop adding failed",
+          "There was a network error when adding this shop. We're sorry about that. Please try again."
         );
         setNewShopLoading(false);
       });
@@ -132,15 +132,15 @@ export default function Shops() {
           showNotification(
             "information",
             "Shop deleted",
-            'The shop "' + shopName + '" has been deleted successfully'
+            'The shop "' + shopName + '" has been deleted successfully.'
           );
         }
       })
       .catch(() => {
         showNotification(
           "error",
-          "Shop deletion failed",
-          "An error occured while deleting the shop. Please try again later."
+          "Shop removal failed",
+          "There was a network error when removing this shop. We're sorry about that. Please try again."
         );
       });
   }

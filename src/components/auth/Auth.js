@@ -128,20 +128,21 @@ export default function Auth() {
           } else if (error.code === "auth/invalid-email") {
             showNotification(
               "error",
-              "Invalid email",
-              "The email address is badly formatted."
+              "Invalid email address",
+              "The email address is invalid. Please try again."
             );
           } else if (error.code === "auth/weak-password") {
             showNotification(
               "error",
-              "Weak password",
-              "The password must be at least 6 characters long."
+              "Password too weak",
+              "The password must be at least 6 characters long. Please try again."
             );
           } else {
             showNotification(
               "error",
               "Sign up failed",
-              "An unknown error occurred. Code: " + error.code
+              "There was a network error when signing up. We're sorry about that. Please try again. Code: " +
+                error.code
             );
           }
         });
@@ -159,38 +160,39 @@ export default function Auth() {
           if (error.code === "auth/invalid-email") {
             showNotification(
               "error",
-              "Invalid email",
-              "The email address is badly formatted."
+              "Invalid email address",
+              "The email address is invalid. Please try again."
             );
           } else if (error.code === "auth/user-disabled") {
             showNotification(
               "error",
               "Account disabled",
-              "This account has been disabled."
+              "This account has been disabled by our team. Please contact us for more information."
             );
           } else if (error.code === "auth/user-not-found") {
             showNotification(
               "error",
               "Account not found",
-              "There is no account with this email address."
+              "There is no account with this email address. Please try again."
             );
           } else if (error.code === "auth/wrong-password") {
             showNotification(
               "error",
               "Wrong password",
-              "The password is incorrect."
+              "Unfortunately the password you entered was incorrect. Please try again."
             );
           } else if (error.code === "auth/too-many-requests") {
             showNotification(
               "error",
-              "Too many requests",
-              "Too many unsuccessful login attempts. Please try again later."
+              "Too many log in attempts",
+              "There were too many unsuccessful log in attempts. Please try again later."
             );
           } else {
             showNotification(
               "error",
               "Log in failed",
-              "An unknown error occurred. Code: " + error.code
+              "There was an unknown network error. We're sorry about that. Please try again later. Code: " +
+                error.code
             );
           }
         });
@@ -207,7 +209,7 @@ export default function Auth() {
           setIsLoading(false);
           showNotification(
             "information",
-            "Email sent!",
+            "Email sent",
             "We have sent you an email with a link to reset your password."
           );
         })
@@ -216,20 +218,21 @@ export default function Auth() {
           if (error.code === "auth/invalid-email") {
             showNotification(
               "error",
-              "Invalid email",
-              "The email address is badly formatted."
+              "Invalid email address",
+              "The email address is invalid. Please try again."
             );
           } else if (error.code === "auth/user-not-found") {
             showNotification(
               "error",
               "Account not found",
-              "There is no account with this email address."
+              "There is no account with this email address. Please try again."
             );
           } else {
             showNotification(
               "error",
-              "Sending failed",
-              "An unknown error occurred. Code: " + error.code
+              "Sending email failed",
+              "There was an unknown network error. We're sorry about that. Please try again later. Code: " +
+                error.code
             );
           }
         });
@@ -242,8 +245,8 @@ export default function Auth() {
           setIsLoading(false);
           showNotification(
             "information",
-            "Password changed!",
-            "Your password has been changed. You can now log in with your new password."
+            "Password changed",
+            "Your password has been changed successfully. You can now log in with your new password."
           );
           navigate("/auth?action=login");
         })
@@ -253,37 +256,38 @@ export default function Auth() {
             showNotification(
               "error",
               "Invalid code",
-              "The password reset link is invalid or has already been used."
+              "The password reset link is invalid or has already been used. Please request a new one."
             );
           } else if (error.code === "auth/expired-action-code") {
             showNotification(
               "error",
               "Expired code",
-              "The password reset link has expired. Please request a new one."
+              "The password reset link has expired. We're sorry about that. Please request a new one."
             );
           } else if (error.code === "auth/user-disabled") {
             showNotification(
               "error",
               "Account disabled",
-              "This account has been disabled."
+              "This account has been disabled by our team. Please contact us for more information."
             );
           } else if (error.code === "auth/user-not-found") {
             showNotification(
               "error",
               "Account not found",
-              "There is no account with this email address."
+              "There is no account with this email address. Please try again."
             );
           } else if (error.code === "auth/weak-password") {
             showNotification(
               "error",
-              "Weak password",
-              "The password must be at least 6 characters long."
+              "Password too weak",
+              "The password must be at least 6 characters long. Please try again."
             );
           } else {
             showNotification(
               "error",
-              "Reset failed",
-              "An unknown error occurred. Code: " + error.code
+              "Password reset failed",
+              "There was a network error when resetting your password. We're sorry about that. Please try again. Code: " +
+                error.code
             );
           }
         });

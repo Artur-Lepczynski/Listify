@@ -104,12 +104,11 @@ export default function Lists(props) {
           );
         }
       })
-      .catch((error) => {
-        console.log("error removing list:", error);
+      .catch(() => {
         showNotification(
           "error",
-          "Error",
-          "An error occurred while removing the list. Please try again later."
+          "Removing list failed",
+          "There was a network error when removing the list. We're sorry about that. Please try again."
         );
       });
   }

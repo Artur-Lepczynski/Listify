@@ -42,8 +42,12 @@ export default function EditableShop(props) {
 
         update(shopsRef, {
           name: enteredValue,
-        }).catch((err)=>{
-          showNotification("error", "Error updating shop name", "There was an error updating the shop name. Please try again later.");
+        }).catch(() => {
+          showNotification(
+            "error",
+            "Updating name failed",
+            "There was a network error when updating the shop name. We're sorry about that. Please try again."
+          );
         });
       }
     }

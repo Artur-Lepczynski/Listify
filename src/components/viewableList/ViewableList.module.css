@@ -41,9 +41,14 @@
 
 .button{
   margin: 20px auto;
-  width: 100%;
-  max-width: 200px;
+  width: 120px;
   display: block;
+}
+
+@media (max-width: 400px) {
+  .button {
+    width: 95%;
+  }
 }
 
 .note-header{

@@ -89,7 +89,7 @@ export default function EditableShop(props) {
         })}
       </div>
       <Button
-        className={style["add-product-button"]}
+        className={style.button}
         type="button"
         look="secondary"
         onClick={handleAddProduct}

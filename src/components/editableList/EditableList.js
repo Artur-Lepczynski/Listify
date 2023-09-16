@@ -396,19 +396,23 @@ export default function EditableList(props) {
               "information",
               props.mode === "add" ? "List saved" : "List updated",
               props.mode === "add"
-                ? 'Your list "' + list.name + '" was saved successfully!'
-                : 'Your list "' + list.name + '" was updated successfully!'
+                ? 'Your list "' + list.name + '" was saved successfully.'
+                : 'Your list "' + list.name + '" was updated successfully.'
             );
           }
           setListUpdateLoading(false);
           navigate("/dash");
         })
-        .catch((err) => {
+        .catch(() => {
           setListUpdateLoading(false);
           showNotification(
             "error",
-            "Error saving list",
-            "There was an error saving your list. Please try again."
+            props.mode === "add"
+              ? "Saving the list failed"
+              : "Updating the list failed",
+            "There was a network error when " +
+              (props.mode === "add" ? "saving" : "updating") +
+              " your list. We're sorry about that. Please try again."
           );
         });
     }
@@ -452,7 +456,7 @@ export default function EditableList(props) {
     update(statsRef, stats).catch(() => {
       showNotification(
         "error",
-        "Error tracking stats",
+        "Tracking stats failed",
         "There was a network error when tracking usage statistics for this list. We're sorry about that. Please repeat this action to try again."
       );
     });
@@ -596,7 +600,7 @@ export default function EditableList(props) {
                 <Button
                   type="button"
                   look="primary"
-                  className={style["add-shop-button"]}
+                  className={style.button}
                   onClick={handleAddShopButtonPress}
                 >
                   Add a new shop
@@ -636,7 +640,7 @@ export default function EditableList(props) {
                 />
               </Card>
               <Button
-                className={style["save-button"]}
+                className={style.button}
                 type="button"
                 look="primary"
                 onClick={handleAddOrUpdateList}

@@ -89,8 +89,8 @@ export default function ViewableList() {
       .catch(() => {
         showNotification(
           "error",
-          "Error",
-          "An error occurred when changing product status. Please try again."
+          "Status change failed",
+          "There was a network error when changing the status of this product. We're sorry about that. Please try again."
         );
       });
   }
@@ -109,8 +109,8 @@ export default function ViewableList() {
       .catch(() => {
         showNotification(
           "error",
-          "Error",
-          "An error occurred when changing list status. Please try again."
+          "Status change failed",
+          "There was a network error when changing the status of this list. We're sorry about that. Please try again."
         );
       });
   }
@@ -134,7 +134,7 @@ export default function ViewableList() {
       update(statsRef, { done }).catch(() => {
         showNotification(
           "error",
-          "Error tracking stats",
+          "Tracking stats failed",
           "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
         );
       });
@@ -153,7 +153,7 @@ export default function ViewableList() {
       update(statsRef, { prodDoneNumber }).catch(() => {
         showNotification(
           "error",
-          "Error tracking stats",
+          "Tracking stats failed",
           "There was a network error when tracking usage statistics for this action. We're sorry about that. Please repeat this action to try again."
         );
       });
@@ -227,7 +227,7 @@ export default function ViewableList() {
             onClick={handleListStatusChange}
             className={style.button}
           >
-            {list.done ? "Mark as not done" : "Mark as done"}
+            {list.done ? "Open" : "Close"}
           </Button>
         </div>
       </CSSTransition>

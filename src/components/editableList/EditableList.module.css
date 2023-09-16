@@ -106,9 +106,16 @@
   color: var(--deepOcean-text-error-1);
 }
 
-.add-shop-button{
-  display: block;
+.button{
+  width: 150px;
   margin: 10px auto;
+  display: block;
+}
+
+@media (max-width: 400px) {
+  .button {
+    width: 95%;
+  }
 }
 
 .note-header{
@@ -187,10 +194,4 @@
 .note-footer-text{
   margin: 0px 7px;
   font-size: 0.8em;
-}
-
-.save-button{
-  min-width: 100px;
-  margin: 10px auto;
-  display: block;
 }

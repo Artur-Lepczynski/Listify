@@ -203,7 +203,7 @@ export default function Account() {
 
     const updateObject = { [key]: value };
 
-    update(settingsRef, updateObject).catch((error) => {
+    update(settingsRef, updateObject).catch(() => {
       showNotification(
         "error",
         "Failed to update settings",
@@ -227,8 +227,8 @@ export default function Account() {
         console.log("error signing out", error);
         showNotification(
           "error",
-          "Error signing out",
-          "There has been an error signing out. Please try again."
+          "Failed to sign out",
+          "There was a network error when signing out. We're sorry about that. Please try again."
         );
       });
   }
