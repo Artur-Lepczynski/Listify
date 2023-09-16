@@ -41,11 +41,11 @@ export default function EditableShop(props) {
     props.onProductDelete(props.id, productId);
   }
 
-  function handleQtyChange(productId, qty){
+  function handleQtyChange(productId, qty) {
     props.onQtyChange(props.id, productId, qty);
   }
 
-  function handleDoneStatusChange(productId){
+  function handleDoneStatusChange(productId) {
     props.onDoneStatusChange(props.id, productId);
   }
 
@@ -100,7 +100,9 @@ export default function EditableShop(props) {
         shown={shopPromptShown}
         setShown={setShopPromptShown}
         coordinates={coordinates}
-        options={props.shops.map((item)=>item.shopName)}
+        options={props.shops
+          .filter((item) => !item.used)
+          .map((item) => item.shopName)}
         noOptionsText="There are no more shops to add"
         onBackgroundClick={handlePromptBackgroundClick}
         onSelect={handleChangeShopName}
