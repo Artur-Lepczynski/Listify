@@ -4,20 +4,15 @@ import { useTheme } from "../../hooks/useTheme";
 import Card from "../UI/Card";
 import Icon from "../UI/Icon";
 import ProductCounter from "../UI/ProductCounter";
-import { getDatabase, ref, remove, update } from "firebase/database";
+import { getDatabase, ref, update } from "firebase/database";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { context } from "../../store/GlobalContext";
-import Modal from "../UI/Modal";
 
 export default function ListItem(props) {
   const getClassNames = useTheme(style);
-  const {
-    showNotification,
-    settings: { askBeforeListDelete, removeListNotification },
-  } = useContext(context);
+  const { showNotification } = useContext(context);
 
-  const [deleteModalShown, setDeleteModalShown] = useState(false);
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
 
@@ -94,46 +89,8 @@ export default function ListItem(props) {
     });
   }
 
-  function handleListDeleteButtonClick() {
-    if (askBeforeListDelete) {
-      setDeleteModalShown(true);
-    } else {
-      removeList();
-    }
-  }
-
-  function handleModalConfirm() {
-    setDeleteModalShown(false);
-    removeList();
-  }
-
-  function handleModalCancel() {
-    setDeleteModalShown(false);
-  }
-
-  function removeList() {
-    const auth = getAuth();
-    const userId = auth.currentUser.uid;
-    const db = getDatabase();
-
-    remove(ref(db, "users/" + userId + "/lists/" + props.id))
-      .then(() => {
-        if (removeListNotification) {
-          showNotification(
-            "information",
-            "List removed",
-            'The list "' + props.data.name + '" has been removed.'
-          );
-        }
-      })
-      .catch((error) => {
-        console.log("error removing list:", error);
-        showNotification(
-          "error",
-          "Error",
-          "An error occurred while removing the list. Please try again later."
-        );
-      });
+  function handleListDeleteButtonClick(){
+    props.onDelete(props.id, props.data.name);
   }
 
   return (
@@ -185,16 +142,6 @@ export default function ListItem(props) {
           />
         )}
       </div>
-      <Modal
-        type="choice"
-        in={deleteModalShown}
-        title="Confirm list removal"
-        message={'Please confirm the removal of "' + props.data.name + '".'}
-        confirmText="Remove"
-        onConfirm={handleModalConfirm}
-        cancelText="Cancel"
-        onCancel={handleModalCancel}
-      />
     </Card>
   );
 }

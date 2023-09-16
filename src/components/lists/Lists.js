@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import style from "./Lists.module.css";
 import Page from "../UI/Page";
 import Card from "../UI/Card";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { getDatabase, onValue, ref } from "firebase/database";
+import { getDatabase, onValue, ref, remove } from "firebase/database";
 import Loader from "../UI/Loader";
 import ListItem from "./ListItem";
 import { CSSTransition } from "react-transition-group";
 import Separator from "../UI/Separator";
+import { context } from "../../store/GlobalContext";
+import Modal from "../UI/Modal";
 
 export default function Lists(props) {
   const [lists, setLists] = useState([]);
   const [listsLoading, setListsLoading] = useState(true);
+  
+  const [deleteModalShown, setDeleteModalShown] = useState(false);
+  const [deletedListName, setDeletedListName] = useState("");
+  const [deletedListId, setDeletedListId] = useState("");
+
+  const {
+    showNotification,
+    settings: { askBeforeListDelete, removeListNotification },
+  } = useContext(context);
 
   useEffect(() => {
     const auth = getAuth();
@@ -57,6 +68,52 @@ export default function Lists(props) {
     );
   }
 
+  function handleListDeleteButtonClick(id, listName) {
+    setDeletedListName(listName);
+    setDeletedListId(id);
+    if (askBeforeListDelete) {
+      setDeleteModalShown(true);
+    } else {
+      handleListDelete();
+    }
+  }
+
+  function handleModalConfirm() {
+    setDeleteModalShown(false);
+    handleListDelete();
+  }
+
+  function handleModalCancel() {
+    setDeleteModalShown(false);
+  }
+
+
+  function handleListDelete() {
+    console.log(deletedListName)
+    const auth = getAuth();
+    const userId = auth.currentUser.uid;
+    const db = getDatabase();
+
+    remove(ref(db, "users/" + userId + "/lists/" + deletedListId))
+      .then(() => {
+        if (removeListNotification) {
+          showNotification(
+            "information",
+            "List removed",
+            'The list "' + deletedListName + '" has been removed.'
+          );
+        }
+      })
+      .catch((error) => {
+        console.log("error removing list:", error);
+        showNotification(
+          "error",
+          "Error",
+          "An error occurred while removing the list. Please try again later."
+        );
+      });
+  }
+
   return (
     <Page>
       {listsLoading && (
@@ -91,14 +148,14 @@ export default function Lists(props) {
               if (item instanceof Date) {
                 return (
                   <React.Fragment key={item.valueOf()}>
-                  <p className={style["date"]}>
-                    {item.toLocaleDateString("en-gb", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                  <Separator/>
+                    <p className={style["date"]}>
+                      {item.toLocaleDateString("en-gb", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </p>
+                    <Separator />
                   </React.Fragment>
                 );
               } else {
@@ -109,10 +166,21 @@ export default function Lists(props) {
                     data={item}
                     date="hour"
                     mode={props.mode}
+                    onDelete={handleListDeleteButtonClick}
                   />
                 );
               }
             })}
+          <Modal
+            type="choice"
+            in={deleteModalShown}
+            title="Confirm list removal"
+            message={'Please confirm the removal of "' + deletedListName + '".'}
+            confirmText="Remove"
+            onConfirm={handleModalConfirm}
+            cancelText="Cancel"
+            onCancel={handleModalCancel}
+          />
         </Card>
       </CSSTransition>
     </Page>
