@@ -24,12 +24,21 @@ export default function ListItem(props) {
   let dateString = listCreateDate.toLocaleString("en-gb", options);
 
   if (props.date === "full") {
-    const timestampDifference = new Date().valueOf() - listCreateDate.valueOf();
-    if (timestampDifference < 86400000) {
+    if (isXDaysBefore(listCreateDate, 0)) {
       dateString = "Today," + dateString.split(",")[1];
-    } else if (timestampDifference < 172800000) {
+    } else if (isXDaysBefore(listCreateDate, 1)) {
       dateString = "Yesterday," + dateString.split(",")[1];
     }
+  }
+
+  function isXDaysBefore(dateToCheck, x) {
+    const today = new Date();
+    today.setDate(today.getDate() - x);
+    return (
+      dateToCheck.getFullYear() === today.getFullYear() &&
+      dateToCheck.getMonth() === today.getMonth() &&
+      dateToCheck.getDate() === today.getDate()
+    );
   }
 
   function handleMouseEnter() {
