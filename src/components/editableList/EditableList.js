@@ -172,7 +172,6 @@ export default function EditableList(props) {
     return (Math.random() + "").slice(2);
   }
 
-  //get shops from db
   useEffect(() => {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
@@ -201,7 +200,6 @@ export default function EditableList(props) {
     });
   }, []);
 
-  //list name
   const [editingListName, setEditingListName] = useState(false);
   const [enteredListName, setEnteredListName] = useState(list.name);
   const listNameValid =
@@ -220,7 +218,6 @@ export default function EditableList(props) {
     setEnteredListName(event.target.value);
   }
 
-  //new shop
   const [shopPromptShown, setShopPromptShown] = useState(false);
   const [clickCoordinates, setClickCoordinates] = useState({ x: 0, y: 0 });
 
@@ -239,7 +236,6 @@ export default function EditableList(props) {
     dispatchList({ type: "ADD_SHOP", value: selectedShop.shopId });
   }
 
-  //edit shop name
   function handleShopNameEdit(shopId, name) {
     const selectedShop = findShopByName(name);
     dispatchList({
@@ -248,7 +244,6 @@ export default function EditableList(props) {
     });
   }
 
-  //delete shop
   const [deletedShopId, setDeletedShopId] = useState(null);
   function handleShopDelete(shopId) {
     if (askBeforeShopDeleteEdit) {
@@ -270,12 +265,10 @@ export default function EditableList(props) {
     setDeletedShopId(null);
   }
 
-  //add product to shop
   function handleAddProduct(shopId) {
     dispatchList({ type: "ADD_PRODUCT", value: shopId });
   }
 
-  //change product name
   function handleProductNameChange(shopId, productId, name) {
     dispatchList({
       type: "CHANGE_PRODUCT_NAME",
@@ -283,7 +276,6 @@ export default function EditableList(props) {
     });
   }
 
-  //delete product
   const [deletedProductId, setDeletedProductId] = useState(null);
   function handleProductDelete(shopId, productId) {
     if (askBeforeProductDeleteEdit) {
@@ -311,7 +303,6 @@ export default function EditableList(props) {
     setDeletedProductId(null);
   }
 
-  //change product qty
   function handleQtyChange(shopId, productId, qty) {
     dispatchList({
       type: "CHANGE_PRODUCT_QTY",
@@ -319,7 +310,6 @@ export default function EditableList(props) {
     });
   }
 
-  //change done status
   function handleDoneStatusChange(shopId, productId) {
     dispatchList({
       type: "CHANGE_DONE_STATUS",
@@ -327,7 +317,6 @@ export default function EditableList(props) {
     });
   }
 
-  //note
   const NOTE_MAX_LENGTH = 1000;
   const noteValid = list.note.length <= NOTE_MAX_LENGTH;
 
@@ -335,7 +324,6 @@ export default function EditableList(props) {
     dispatchList({ type: "CHANGE_NOTE", value: event.target.value });
   }
 
-  //check list validity
   const [listValid, setListValid] = useState(false);
 
   useEffect(() => {
@@ -362,7 +350,6 @@ export default function EditableList(props) {
     setListValid(listValid);
   }, [list, listNameValid, editingListName, noteValid]);
 
-  //add the list
   function handleAddOrUpdateList() {
     if (listValid && !listUpdateLoading) {
       const copy = { ...list };

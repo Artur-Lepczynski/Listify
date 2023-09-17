@@ -5,13 +5,6 @@ import { useEffect, useState } from "react";
 import DropdownMenu from "../UI/DropdownMenu";
 
 export default function HeaderButton(props) {
-  // icon, type=link/menu, to, menu - {to, name}
-
-  // menu={[
-  //   { to: "/edit/lists", name: "Edit lists" },
-  //   { to: "/edit/shops", name: "Edit shops" },
-  // ]}
-
   const getClassNames = useTheme(style);
 
   const [menuShown, setMenuShown] = useState(false);

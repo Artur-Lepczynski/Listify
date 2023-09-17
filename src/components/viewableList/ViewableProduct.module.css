@@ -1,20 +1,22 @@
 .product-container{
   width: 99%;
-  min-height: 50px;
+  min-height: 40px;
   margin: 5px auto; 
   border-radius: var(--border-radius-1);
   background-color: rgba(245, 245, 220, 0.099);
 
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .qty{
-  margin: auto 10px; 
+  margin: 5px 10px; 
   flex-shrink: 0;
 }
 
 .name{
+  margin: 5px auto;
   flex: 1 1 100%;
 }
 

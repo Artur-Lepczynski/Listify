@@ -6,8 +6,6 @@ import Icon from "../UI/Icon";
 import Button from "../UI/Button";
 
 export default function EditableProduct(props) {
-  //name, id, qty, edit, done
-
   const getClassNames = useTheme(style);
 
   const inputRef = useRef(null);

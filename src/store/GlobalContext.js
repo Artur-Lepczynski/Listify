@@ -3,7 +3,6 @@ import React, { useReducer, useState } from "react";
 export const context = React.createContext();
 
 export default function GlobalContext(props) {
-  //Themes: pearlShores, midnight, bubblegum, blueLagoon, deepOcean
   const DEFAULT_SETTINGS = {
     theme: "midnight",
     noListsShownDashboard: 3,
@@ -21,19 +20,16 @@ export default function GlobalContext(props) {
 
   function settingsReducer(prevState, action) {
     if (action.type === "SET_SETTINGS") {
-      //only action, test if settings are valid
       return { ...prevState, ...action.settings };
     } else if (action.type === "RESET_SETTINGS") {
       return DEFAULT_SETTINGS;
     }
   }
 
-  //Notifications:
   const [notifications, setNotifications] = useState([]);
   const NOTIFICATION_SHOW_TIME_MS = 4000;
   const MAX_NOTIFICATIONS = 3;
 
-  //{type: information/error, title: "...", message: "..."}
   function showNotification(type, title, message) {
     const notification = { id: Math.random(), type, title, message };
 

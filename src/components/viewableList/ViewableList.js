@@ -31,7 +31,6 @@ export default function ViewableList() {
     const db = getDatabase();
     const listsRef = ref(db, "users/" + userId + "/lists/" + listId);
 
-    //list:
     onValue(listsRef, (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -48,7 +47,6 @@ export default function ViewableList() {
       }
     });
 
-    //shops:
     const shopsRef = ref(db, "users/" + userId + "/shops");
     onValue(shopsRef, (snapshot) => {
       const data = snapshot.val();

@@ -5,8 +5,6 @@ import { useEffect, useState } from "react";
 import TextLink from "../UI/TextLink";
 
 export default function AuthInput(props) {
-  //props.type = email/password/ invalidText validateFunction onChangeFunc onChangeValidFunc name
-
   const getClassNames = useTheme(style);
 
   const [passwordShown, setPasswordShown] = useState(false);

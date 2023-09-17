@@ -119,11 +119,11 @@ export default function ListItem(props) {
         onMouseLeave={handleMouseLeave}
         onClick={handleListClick}
       >
-        <div className={style["list-item-name-time"]}>
+        <div className={style["list-item-header"]}>
           <p className={`${hover && getClassNames("hover")}`}>
             {props.data.name}
           </p>
-          <p>{dateString}</p>
+          <p className={style["list-item-date"]}>{dateString}</p>
         </div>
         <ProductCounter done={props.data.done} items={props.data.items} />
       </div>

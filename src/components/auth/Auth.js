@@ -38,7 +38,6 @@ export default function Auth() {
     }
   }, []);
 
-  //email:
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredEmailValid, setEnteredEmailValid] = useState(false);
 
@@ -56,7 +55,6 @@ export default function Auth() {
     setEnteredEmailValid(valid);
   }
 
-  //password 1
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredPasswordValid, setEnteredPasswordValid] = useState(false);
 
@@ -72,7 +70,6 @@ export default function Auth() {
     setEnteredPasswordValid(valid);
   }
 
-  //password 2:
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const [repeatedPasswordValid, setRepeatedPasswordValid] = useState(false);
 
@@ -88,7 +85,6 @@ export default function Auth() {
     setRepeatedPasswordValid(valid);
   }
 
-  //form validity:
   let formIsValid = false;
   if (action === "signup") {
     formIsValid =
@@ -105,7 +101,6 @@ export default function Auth() {
     event.preventDefault();
     if (!isLoading && action === "signup" && formIsValid) {
       setIsLoading(true);
-      console.log("signing up:", enteredEmail, enteredPassword);
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then(() => {
@@ -148,7 +143,6 @@ export default function Auth() {
         });
     } else if (!isLoading && action === "login" && formIsValid) {
       setIsLoading(true);
-      console.log("logging in:", enteredEmail, enteredPassword);
       const auth = getAuth();
       signInWithEmailAndPassword(auth, enteredEmail, enteredPassword)
         .then(() => {
@@ -202,7 +196,6 @@ export default function Auth() {
       formIsValid
     ) {
       setIsLoading(true);
-      console.log("sending reset to:", enteredEmail);
       const auth = getAuth();
       sendPasswordResetEmail(auth, enteredEmail)
         .then(() => {

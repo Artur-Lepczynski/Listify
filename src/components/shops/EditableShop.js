@@ -9,7 +9,6 @@ import { getDatabase, ref, update } from "firebase/database";
 import { context } from "../../store/GlobalContext";
 
 export default function EditableShop(props) {
-  //shopId, shopName, onDelete
   const getClassNames = useTheme(style);
   const [editMode, setEditMode] = useState(false);
 

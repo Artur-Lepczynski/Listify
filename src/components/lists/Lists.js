@@ -89,7 +89,6 @@ export default function Lists(props) {
 
 
   function handleListDelete() {
-    console.log(deletedListName)
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();

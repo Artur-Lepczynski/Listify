@@ -5,8 +5,6 @@ import { CSSTransition } from "react-transition-group";
 import { useTheme } from "../../hooks/useTheme";
 
 export default function TextSwitch(props) {
-  //props.words, props.time
-
   const [shown, setShown] = useState(true);
   const [word, setWord] = useState(props.words[0]);
 

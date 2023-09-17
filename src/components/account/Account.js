@@ -223,8 +223,7 @@ export default function Account() {
         dispatchSettings({ type: "RESET_SETTINGS" });
         navigate("/");
       })
-      .catch((error) => {
-        console.log("error signing out", error);
+      .catch(() => {
         showNotification(
           "error",
           "Failed to sign out",

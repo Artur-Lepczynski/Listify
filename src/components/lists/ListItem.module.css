@@ -9,13 +9,17 @@
   cursor: pointer;
 }
 
-.list-item-name-time p{
+.list-item-header p{
   margin: 10px 5px 10px 0px; 
 }
 
-.list-item-name-time{
+.list-item-header{
   display: flex;
   justify-content: space-between;
+}
+
+.list-item-date{
+  font-size: 0.9em;
 }
 
 .hover-pearlShores{
