@@ -5,6 +5,7 @@ import style from "./EditableShop.module.css";
 import Prompt from "../UI/Prompt";
 import Button from "../UI/Button";
 import EditableProduct from "./EditableProduct";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export default function EditableShop(props) {
   const [shopPromptShown, setShopPromptShown] = useState(false);
@@ -68,26 +69,36 @@ export default function EditableShop(props) {
           />
         </div>
       </div>
-      <div>
+      <TransitionGroup>
         {Object.entries(props.products).map((item) => {
           return (
-            <EditableProduct
+            <CSSTransition
+              timeout={150}
               key={item[0]}
-              id={item[0]}
-              name={item[1].name}
-              qty={item[1].qty}
-              edit={item[1].edit}
-              done={item[1].done}
-              maxProductQty={props.maxProductQty}
-              minProductQty={props.minProductQty}
-              onProductNameChange={handleProductNameChange}
-              onProductDelete={handleProductDelete}
-              onQtyChange={handleQtyChange}
-              onDoneStatusChange={handleDoneStatusChange}
-            />
+              classNames={{
+                enter: style["product-enter"],
+                enterActive: style["product-enter-active"],
+                exit: style["product-exit"],
+                exitActive: style["product-exit-active"],
+              }}
+            >
+              <EditableProduct
+                id={item[0]}
+                name={item[1].name}
+                qty={item[1].qty}
+                edit={item[1].edit}
+                done={item[1].done}
+                maxProductQty={props.maxProductQty}
+                minProductQty={props.minProductQty}
+                onProductNameChange={handleProductNameChange}
+                onProductDelete={handleProductDelete}
+                onQtyChange={handleQtyChange}
+                onDoneStatusChange={handleDoneStatusChange}
+              />
+            </CSSTransition>
           );
         })}
-      </div>
+      </TransitionGroup>
       <Button
         className={style.button}
         type="button"

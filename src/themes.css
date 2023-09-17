@@ -8,6 +8,8 @@
   --header-transition-duration: 100ms;
   --header-color-fade-duration: 100ms;
   --card-fade-duration: 150ms;
+  --edit-list-fade-duration: 150ms; 
+
   --notification-fade-duration: 150ms;
   --prompt-fade-duration: 100ms;
   --modal-fade-duration: 150ms;

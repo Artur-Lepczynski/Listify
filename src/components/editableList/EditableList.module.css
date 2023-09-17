@@ -118,6 +118,24 @@
   }
 }
 
+.shop-enter{
+  opacity: 0;
+}
+
+.shop-enter-active{
+  opacity: 1;
+  transition: opacity var(--edit-list-fade-duration);
+}
+
+.shop-exit{
+  opacity: 1;
+}
+
+.shop-exit-active{
+  opacity: 0;
+  transition: opacity var(--edit-list-fade-duration);
+}
+
 .note-header{
   margin: 10px 0px; 
   font-weight: 400;

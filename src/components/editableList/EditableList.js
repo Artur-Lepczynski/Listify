@@ -1,7 +1,11 @@
 import style from "./EditableList.module.css";
 import Page from "../UI/Page";
 import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { CSSTransition } from "react-transition-group";
+import {
+  CSSTransition,
+  Transition,
+  TransitionGroup,
+} from "react-transition-group";
 import Card from "../UI/Card";
 import { useContext, useEffect, useReducer, useState } from "react";
 import {
@@ -556,32 +560,43 @@ export default function EditableList(props) {
                     </>
                   )}
                 </div>
-
-                {list.items.map((shop) => {
-                  const currentShop = shops.find((item) => {
-                    return item.shopId === shop.shopId;
-                  });
-                  let shopName = "Removed shop";
-                  if (currentShop) shopName = currentShop.shopName;
-                  return (
-                    <EditableShop
-                      key={shop.shopId}
-                      id={shop.shopId}
-                      name={shopName}
-                      products={shop.products}
-                      shops={shops}
-                      maxProductQty={PRODUCT_MAX_QTY}
-                      minProductQty={PRODUCT_MIN_QTY}
-                      onShopNameEdit={handleShopNameEdit}
-                      onShopDelete={handleShopDelete}
-                      onAddProduct={handleAddProduct}
-                      onProductNameChange={handleProductNameChange}
-                      onProductDelete={handleProductDelete}
-                      onQtyChange={handleQtyChange}
-                      onDoneStatusChange={handleDoneStatusChange}
-                    />
-                  );
-                })}
+                <TransitionGroup>
+                  {list.items.map((shop) => {
+                    const currentShop = shops.find((item) => {
+                      return item.shopId === shop.shopId;
+                    });
+                    let shopName = "Removed shop";
+                    if (currentShop) shopName = currentShop.shopName;
+                    return (
+                      <CSSTransition
+                        timeout={150}
+                        key={shop.shopId}
+                        classNames={{
+                          enter: style["shop-enter"],
+                          enterActive: style["shop-enter-active"],
+                          exit: style["shop-exit"],
+                          exitActive: style["shop-exit-active"],
+                        }}
+                      >
+                        <EditableShop
+                          id={shop.shopId}
+                          name={shopName}
+                          products={shop.products}
+                          shops={shops}
+                          maxProductQty={PRODUCT_MAX_QTY}
+                          minProductQty={PRODUCT_MIN_QTY}
+                          onShopNameEdit={handleShopNameEdit}
+                          onShopDelete={handleShopDelete}
+                          onAddProduct={handleAddProduct}
+                          onProductNameChange={handleProductNameChange}
+                          onProductDelete={handleProductDelete}
+                          onQtyChange={handleQtyChange}
+                          onDoneStatusChange={handleDoneStatusChange}
+                        />
+                      </CSSTransition>
+                    );
+                  })}
+                </TransitionGroup>
 
                 <Button
                   type="button"

@@ -19,20 +19,13 @@ export default function Notifications() {
     <TransitionGroup className={style["notifications-wrapper"]}>
       {notifications.map((item) => {
         return (
-          <Transition
-            key={item.id}
-            timeout={150}
-            classNames={{
-              enter: style["notification-enter"],
-              enterActive: style["notification-enter-active"],
-              exit: style["notification-exit"],
-              exitActive: style["notification-exit-active"],
-            }}
-          >
+          <Transition key={item.id} timeout={150}>
             {(state) => {
               return (
                 <Card
-                  className={`${style.notification} ${getClassNames("notification")}
+                  className={`${style.notification} ${getClassNames(
+                    "notification"
+                  )}
                    ${state === "entering" && style["notification-entering"]}
                    ${state === "exiting" && style["notification-exiting"]}`}
                 >
