@@ -3,7 +3,7 @@ import Page from "../UI/Page";
 import Button from "../UI/Button";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { getDatabase, onValue, ref, update } from "firebase/database";
 import { context } from "../../store/GlobalContext";
 import Card from "../UI/Card";
@@ -19,8 +19,7 @@ export default function Account() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState({ settings: true, stats: true });
-  const { settings, dispatchSettings, showNotification } =
-    useContext(context);
+  const { settings, dispatchSettings, showNotification } = useContext(context);
   const [logoutModalShown, setLogoutModalShown] = useState(false);
 
   const [databaseStats, setDatabaseStats] = useState({});
@@ -56,13 +55,14 @@ export default function Account() {
       noListsShownDashboard: "Number of lists shown on dashboard",
       askBeforeListDelete: "Ask before removing a list",
       askBeforeShopDelete: "Ask before removing a shop",
-      askBeforeProductDeleteEdit: "Ask before removing a product when editing a list",
+      askBeforeProductDeleteEdit:
+        "Ask before removing a product when editing a list",
       askBeforeShopDeleteEdit: "Ask before removing a shop when editing a list",
       addListNotification: "Notify me when a list has been added or modified",
       removeListNotification: "Notify me when a list has been removed",
       addShopNotification: "Notify me when a shop has been added",
       removeShopNotification: "Notify me when a shop has been removed",
-    }
+    };
     const newSettingsList = [];
     for (const key in settings) {
       const setting = {
@@ -70,19 +70,19 @@ export default function Account() {
         name: settingNames[key],
         current: settings[key],
         settingKey: key,
-      }
+      };
       if (key === "theme") {
-          setting.options = new Map([
-            ["pearlShores", "Pearl Shores"],
-            ["midnight", "Midnight"],
-            ["bubblegum", "Bubblegum"],
-            ["blueLagoon", "Blue Lagoon"],
-            ["deepOcean", "Deep Ocean"],
-          ]);
+        setting.options = new Map([
+          ["pearlShores", "Pearl Shores"],
+          ["midnight", "Midnight"],
+          ["bubblegum", "Bubblegum"],
+          ["blueLagoon", "Blue Lagoon"],
+          ["deepOcean", "Deep Ocean"],
+        ]);
       } else if (key === "noListsShownDashboard") {
-          setting.options = [1, 3, 5, 7];
+        setting.options = [1, 3, 5, 7];
       } else {
-          setting.type = "toggle";
+        setting.type = "toggle";
       }
       newSettingsList.push(setting);
     }
@@ -98,6 +98,43 @@ export default function Account() {
     setMonthStats(getTimeframeStats(databaseStats, "month"));
     setYearStats(getTimeframeStats(databaseStats, "year"));
   }, [databaseStats]);
+
+  const graphData = useMemo(() => {
+    return {
+      monthGraphLabels: monthStats.graphLabels,
+      yearGraphLabels: yearStats.graphLabels,
+      listsGraphBarLabels: ["Total lists", "Closed lists", "Open lists"],
+      productsGraphBarLabels: [
+        "Total products",
+        "Done products",
+        "Not done products",
+      ],
+      lifetimeLists: [
+        lifetimeStats.lists - lifetimeStats.doneLists,
+        lifetimeStats.doneLists,
+      ],
+      lifetimeProducts: [
+        lifetimeStats.products - lifetimeStats.doneProducts,
+        lifetimeStats.doneProducts,
+      ],
+      monthLists: [
+        monthStats.lists,
+        monthStats.listsClosed,
+        monthStats.listsOpen,
+      ],
+      monthProducts: [
+        monthStats.products,
+        monthStats.productsDone,
+        monthStats.productsNotDone,
+      ],
+      yearLists: [yearStats.lists, yearStats.listsClosed, yearStats.listsOpen],
+      yearProducts: [
+        yearStats.products,
+        yearStats.productsDone,
+        yearStats.productsNotDone,
+      ],
+    };
+  }, [lifetimeStats, monthStats, yearStats]);
 
   function calculateLifetimeStats(object) {
     let result = {
@@ -258,7 +295,7 @@ export default function Account() {
             <h3 className={style["account-group-title"]}>
               Settings and account
             </h3>
-            <Separator className={style.separator}/>
+            <Separator className={style.separator} />
             {settingsList.map((setting) => {
               return (
                 <Setting
@@ -296,7 +333,7 @@ export default function Account() {
 
           <div className={style["account-group"]}>
             <h3 className={style["account-group-title"]}>Statistics</h3>
-            <Separator className={style.separator}/>
+            <Separator className={style.separator} />
             <div className={style["account-stats-wrapper"]}>
               <p className={style["lists-text"]}>Lifetime lists created</p>
               <Card nested={true} className={style["lists-number-wrapper"]}>
@@ -308,13 +345,7 @@ export default function Account() {
                   number={lifetimeStats.doneLists}
                   caption="Closed"
                 />
-                <Graph
-                  type="doughnut"
-                  data={[
-                    lifetimeStats.lists - lifetimeStats.doneLists,
-                    lifetimeStats.doneLists,
-                  ]}
-                />
+                <Graph type="doughnut" data={graphData.lifetimeLists} />
                 <Counter
                   type="open"
                   number={lifetimeStats.lists - lifetimeStats.doneLists}
@@ -335,13 +366,7 @@ export default function Account() {
                   number={lifetimeStats.doneProducts}
                   caption="Done"
                 />
-                <Graph
-                  type="doughnut"
-                  data={[
-                    lifetimeStats.products - lifetimeStats.doneProducts,
-                    lifetimeStats.doneProducts,
-                  ]}
-                />
+                <Graph type="doughnut" data={graphData.lifetimeProducts} />
                 <Counter
                   type="open"
                   number={lifetimeStats.products - lifetimeStats.doneProducts}
@@ -353,54 +378,30 @@ export default function Account() {
             <div className={style["account-stats-wrapper"]}>
               <Graph
                 type="bar"
-                data={[
-                  monthStats.lists,
-                  monthStats.listsClosed,
-                  monthStats.listsOpen,
-                ]}
-                labels={monthStats.graphLabels}
-                barLabels={["Total lists", "Closed lists", "Open lists"]}
+                data={graphData.monthLists}
+                labels={graphData.monthGraphLabels}
+                barLabels={graphData.listsGraphBarLabels}
                 caption="Lists over the last month"
               />
               <Graph
                 type="bar"
-                data={[
-                  monthStats.products,
-                  monthStats.productsDone,
-                  monthStats.productsNotDone,
-                ]}
-                labels={monthStats.graphLabels}
-                barLabels={[
-                  "Total products",
-                  "Done products",
-                  "Not done products",
-                ]}
+                data={graphData.monthProducts}
+                labels={graphData.monthGraphLabels}
+                barLabels={graphData.productsGraphBarLabels}
                 caption="Products over the last month"
               />
               <Graph
                 type="bar"
-                data={[
-                  yearStats.lists,
-                  yearStats.listsClosed,
-                  yearStats.listsOpen,
-                ]}
-                labels={yearStats.graphLabels}
-                barLabels={["Total lists", "Closed lists", "Open lists"]}
+                data={graphData.yearLists}
+                labels={graphData.yearGraphLabels}
+                barLabels={graphData.listsGraphBarLabels}
                 caption="Lists over the last year"
               />
               <Graph
                 type="bar"
-                data={[
-                  yearStats.products,
-                  yearStats.productsDone,
-                  yearStats.productsNotDone,
-                ]}
-                labels={yearStats.graphLabels}
-                barLabels={[
-                  "Total products",
-                  "Done products",
-                  "Not done products",
-                ]}
+                data={graphData.yearProducts}
+                labels={graphData.yearGraphLabels}
+                barLabels={graphData.productsGraphBarLabels}
                 caption="Products over the last year"
               />
             </div>

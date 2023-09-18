@@ -1,9 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import style from "./Graph.module.css";
 import { context } from "../../store/GlobalContext";
 import Chart from "chart.js/auto";
 
-export default function Graph(props) {
+export default React.memo(function Graph(props) {
   const { theme } = useContext(context);
   const chartRef = useRef(null);
 
@@ -68,15 +68,8 @@ export default function Graph(props) {
             tooltip: {
               enabled: false,
             },         
-          },
-          animation: {
-            duration: 0,
-          } 
-        } : {
-          animation: {
-            duration: 0,
-          } 
-        },
+          }, 
+        } : {},
       });
     }; 
 
@@ -102,4 +95,4 @@ export default function Graph(props) {
       )}
     </>
   );
-}
+}); 
