@@ -192,7 +192,7 @@ export default function ViewableList() {
               items={list.items || {}}
             />
           </div>
-          <Card>
+          <Card role="list">
             {!noListError &&
               !(loading.list || loading.shops) &&
               Object.entries(list.items).map((item) => {

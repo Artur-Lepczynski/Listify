@@ -87,27 +87,27 @@
   overflow: hidden;
 }
 
-.prompt-option-pearlShores:hover{
+.prompt-option-pearlShores:hover, .prompt-option-pearlShores:focus{
   background-color: var(--pearlShores-bg-4);
-  color: var(--pearlShores-accent-1);
+  color: var(--pearlShores-accent-1);   
 }
 
-.prompt-option-midnight:hover{
+.prompt-option-midnight:hover, .prompt-option-midnight:focus{
   background-color: var(--midnight-bg-4);
   color: var(--midnight-accent-1);
 }
 
-.prompt-option-bubblegum:hover{
+.prompt-option-bubblegum:hover, .prompt-option-bubblegum:focus{
   background-color: var(--bubblegum-bg-4);
   color: var(--bubblegum-accent-1);
 }
 
-.prompt-option-blueLagoon:hover{
+.prompt-option-blueLagoon:hover, .prompt-option-blueLagoon:focus{
   background-color: var(--blueLagoon-bg-4);
   color: var(--blueLagoon-accent-1);
 }
 
-.prompt-option-deepOcean:hover{
+.prompt-option-deepOcean:hover, .prompt-option-deepOcean:focus{
   background-color: var(--deepOcean-bg-4);
   color: var(--deepOcean-accent-1);
 }

@@ -1,11 +1,7 @@
 import style from "./Dashboard.module.css";
 import Page from "../UI/Page";
 import Card from "../UI/Card";
-import {
-  getDatabase,
-  ref,
-  onValue,
-} from "firebase/database";
+import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import Button from "../UI/Button";
@@ -78,9 +74,12 @@ export default function Dashboard() {
           {lists.length === 0 ? (
             <p>You don't have any shopping lists!</p>
           ) : (
-            <p>You have {listNumbers.total} shopping list{listNumbers.total > 1 && "s"}</p>
+            <p>
+              You have {listNumbers.total} shopping list
+              {listNumbers.total > 1 && "s"}
+            </p>
           )}
-          <Separator/>
+          <Separator />
           <div className={style["list-counters-wrapper"]}>
             {lists.length === 0 && (
               <p>
@@ -90,13 +89,26 @@ export default function Dashboard() {
             )}
             {lists.length > 0 && (
               <>
-                <Counter type="open" caption="Open" number={listNumbers.pending} />
-                <Counter type="closed" caption="Closed" number={listNumbers.done} />
+                <Counter
+                  type="open"
+                  caption="Open"
+                  number={listNumbers.pending}
+                />
+                <Counter
+                  type="closed"
+                  caption="Closed"
+                  number={listNumbers.done}
+                />
               </>
             )}
           </div>
-          <Separator/>
-          <div className={style["lists-wrapper"]}>
+          <Separator />
+          <p className={style["recent-lists-text"]}>
+            {noListsShownDashboard === 1
+              ? "Your most recent list:"
+              : `Your ${noListsShownDashboard} most recent lists:`}
+          </p>
+          <div className={style["lists-wrapper"]} role="list">
             {lists.length === 0 && (
               <p>
                 {noListsShownDashboard === 1
@@ -107,11 +119,6 @@ export default function Dashboard() {
             )}
             {lists.length > 0 && (
               <>
-                <p>
-                  {noListsShownDashboard === 1
-                    ? "Your most recent list:"
-                    : `Your ${noListsShownDashboard} most recent lists:`}
-                </p>
                 {lists.map((item) => {
                   return (
                     <ListItem
@@ -126,7 +133,7 @@ export default function Dashboard() {
               </>
             )}
           </div>
-          <Separator/>
+          <Separator />
           <nav className={style.actions}>
             <Button type="link" look="primary" to="/lists">
               See all lists

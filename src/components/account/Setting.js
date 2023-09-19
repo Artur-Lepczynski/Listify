@@ -51,6 +51,7 @@ export default function Setting(props) {
       <p className={style["setting-name"]}>{props.name}</p>
       {props.type === "toggle" && (
         <Switch
+          settingName={props.name}
           className={style.switch}
           checked={props.current}
           onToggle={handleSwitchToggle}
@@ -60,11 +61,17 @@ export default function Setting(props) {
         <button
           onClick={handlePromptlOpen}
           className={`${style.button} ${getClassNames("button")}`}
+          aria-label={"Change" + props.name + " " + props.current}
+          aria-haspopup="menu"
+          aria-controls="settings-prompt"
+          aria-expanded={settingPromptShown}
         >
           {props.options.get?.(props.current) || props.current}
         </button>
       )}
       <Prompt
+        id="settings-prompt"
+        mode="setting"
         shown={settingPromptShown}
         setShown={setSettingPromptShown}
         coordinates={clickCoordinates}

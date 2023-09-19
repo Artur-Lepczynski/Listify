@@ -139,7 +139,7 @@ export default function Lists(props) {
           enterActive: style["fade-appear-active"],
         }}
       >
-        <Card>
+        <Card role="list">
           {!listsLoading &&
             lists.length > 0 &&
             lists.map((item) => {

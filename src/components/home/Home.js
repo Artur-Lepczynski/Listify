@@ -60,6 +60,7 @@ export default function Home() {
             type="outside-link"
             icon="fa-brands fa-github"
             to="https://github.com/Artur-Lepczynski/Listify"
+            aria-label="Listify on GitHub"
           />
         </footer>
       </div>

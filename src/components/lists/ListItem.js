@@ -5,7 +5,7 @@ import Card from "../UI/Card";
 import Icon from "../UI/Icon";
 import ProductCounter from "../UI/ProductCounter";
 import { getDatabase, ref, update } from "firebase/database";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { context } from "../../store/GlobalContext";
 
@@ -54,6 +54,14 @@ export default function ListItem(props) {
       navigate("/lists/" + props.id);
     } else if (props.mode === "edit") {
       navigate("/edit/lists/" + props.id);
+    }
+  }
+
+  const cardRef = useRef(null);
+
+  function handleKeyDown(event) {
+    if (event.key === "Enter" && cardRef.current === document.activeElement) {
+      handleListClick();
     }
   }
 
@@ -112,12 +120,19 @@ export default function ListItem(props) {
   }
 
   return (
-    <Card nested={true} className={style["list-item"]}>
+    <Card nested={true} className={style["list-item"]} role="listitem">
       <div
         className={style["list-item-text"]}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={handleListClick}
+        onKeyDown={handleKeyDown}
+        ref={cardRef}
+        tabIndex={0}
+        role="button"
+        aria-label={`List named ${props.data.name}, status: ${
+          props.data.done ? "closed" : "open"
+        }}`}
       >
         <div className={style["list-item-header"]}>
           <p className={`${hover && getClassNames("hover")}`}>
@@ -128,27 +143,24 @@ export default function ListItem(props) {
         <ProductCounter done={props.data.done} items={props.data.items} />
       </div>
       <div className={style["list-item-controls"]}>
-        {props.data.done ? (
-          <Icon
-            type="button"
-            icon="fa-regular fa-square-check"
-            className={style["list-item-controls-icon"]}
-            onClick={handleListStatusChange}
-          />
-        ) : (
-          <Icon
-            type="button"
-            icon="fa-regular fa-square"
-            className={style["list-item-controls-icon"]}
-            onClick={handleListStatusChange}
-          />
-        )}
+        <Icon
+          type="button"
+          icon={
+            props.data.done
+              ? "fa-regular fa-square-check"
+              : "fa-regular fa-square"
+          }
+          className={style["list-item-controls-icon"]}
+          onClick={handleListStatusChange}
+          aria-label={`Set list named ${props.data.name} as ${props.data.done ? "open" : "closed"}`}
+        />
         {props.mode === "select" && (
           <Icon
             type="link"
             to={"/edit/lists/" + props.id}
             icon="fa-regular fa-pen-to-square"
             className={style["list-item-controls-icon"]}
+            aria-label={`Edit list named ${props.data.name}`}
           />
         )}
         {props.mode === "edit" && (
@@ -157,6 +169,7 @@ export default function ListItem(props) {
             icon="fa-solid fa-trash-can"
             className={style["list-item-controls-icon"]}
             onClick={handleListDeleteButtonClick}
+            aria-label={`Delete list named ${props.data.name}`}
           />
         )}
       </div>

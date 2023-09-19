@@ -170,6 +170,7 @@ export default function Shops() {
               add products to it when creating a new list.
             </p>
           )}
+          <div role="list">
           {Object.entries(shops).map((item) => {
             return (
               <EditableShop
@@ -180,6 +181,7 @@ export default function Shops() {
               />
             );
           })}
+          </div>
           <Button
             type="button"
             look="primary"
@@ -201,6 +203,7 @@ export default function Shops() {
         cancelText="Cancel"
         onConfirm={handleNewShopModalConfirm}
         confirmText="Add"
+        placeholderText="New shop name"
       />
       <Modal
         in={removeShopModalShown}
@@ -214,7 +217,7 @@ export default function Shops() {
         onCancel={handleRemoveShopModalCancel}
         cancelText="Cancel"
         onConfirm={handleRemoveShopModalConfirm}
-        confirmText="Delete"
+        confirmText="Remove"
       />
     </Page>
   );

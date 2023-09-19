@@ -1,12 +1,12 @@
 import style from "./Prompt.module.css";
 import { Transition } from "react-transition-group";
 import { useTheme } from "../../hooks/useTheme";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import Icon from "./Icon";
 
 export default function Prompt(props) {
   const getClassNames = useTheme(style);
-  
+
   const [coords, setCoords] = useState({ x: 0, y: 0 });
 
   useLayoutEffect(() => {
@@ -29,6 +29,15 @@ export default function Prompt(props) {
     setCoords({ x: xPrompt, y: yPrompt });
   }, [props.coordinates.x, props.coordinates.y]);
 
+  function handleEnterClick(event){
+    if(event.key === "Enter"){
+      const focused = document.activeElement;
+      focused.click();
+    }else if(event.key === "Escape"){
+      props.onBackgroundClick();
+    }
+  }
+
   return (
     <Transition in={props.shown} timeout={100} mountOnEnter unmountOnExit>
       {(state) => {
@@ -43,23 +52,40 @@ export default function Prompt(props) {
                 ${state === "entering" && style["prompt-entering"]} ${
                 state === "exiting" && style["prompt-exiting"]
               }`}
+              id={props.id}
+              role="listbox"
+              onKeyDown={handleEnterClick}
             >
-              {props.options.length > 0 && props.options.map((option) => {
-                return (
-                  <div
-                    key={option}
-                    className={`${style["prompt-option"]} ${getClassNames("prompt-option")}`}
-                    onClick={() => {
-                      props.onSelect(option);
-                    }}
-                  >
-                    {option}
-                    {props.selected === option && <Icon className={style["selected-icon"]} type="button" icon="fa-solid fa-check"/>}
-                  </div>
-                );
-              })}
+              {props.options.length > 0 &&
+                props.options.map((option) => {
+                  return (
+                    <div
+                      key={option}
+                      className={`${style["prompt-option"]} ${getClassNames(
+                        "prompt-option"
+                      )}`}
+                      onClick={() => {
+                        props.onSelect(option);
+                      }}
+                      role="option"
+                      tabIndex={0}
+                      aria-selected={props.mode === "setting" ? props.selected === option : "undefined"}
+                    >
+                      {option}
+                      {props.selected === option && (
+                        <Icon
+                          className={style["selected-icon"]}
+                          type="icon"
+                          icon="fa-solid fa-check"
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               {props.options.length === 0 && (
-                <p className={style["no-options-text"]}>{props.noOptionsText || "There are no options available"}</p>
+                <p className={style["no-options-text"]}>
+                  {props.noOptionsText || "There are no options available"}
+                </p>
               )}
             </div>
           </div>

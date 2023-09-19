@@ -60,12 +60,28 @@ export default function EditableShop(props) {
             icon="fa-solid fa-pen-to-square"
             className={style["shop-name-icon"]}
             onClick={handleShopNameEditPress}
+            aria-label={"Edit shop name" + props.name}
+            aria-haspopup="menu"
+            aria-controls="shop-prompt"
+          />
+          <Prompt
+            id="shop-prompt"
+            shown={shopPromptShown}
+            setShown={setShopPromptShown}
+            coordinates={coordinates}
+            options={props.shops
+              .filter((item) => !item.used)
+              .map((item) => item.shopName)}
+            noOptionsText="There are no more shops to add"
+            onBackgroundClick={handlePromptBackgroundClick}
+            onSelect={handleChangeShopName}
           />
           <Icon
             type="button"
             icon="fa-solid fa-trash-can"
             className={style["shop-name-icon"]}
             onClick={handleShopDelete}
+            aria-label={"Remove shop " + props.name}
           />
         </div>
       </div>
@@ -104,20 +120,10 @@ export default function EditableShop(props) {
         type="button"
         look="secondary"
         onClick={handleAddProduct}
+        aria-label={"Add product to " + props.name}
       >
         Add product
       </Button>
-      <Prompt
-        shown={shopPromptShown}
-        setShown={setShopPromptShown}
-        coordinates={coordinates}
-        options={props.shops
-          .filter((item) => !item.used)
-          .map((item) => item.shopName)}
-        noOptionsText="There are no more shops to add"
-        onBackgroundClick={handlePromptBackgroundClick}
-        onSelect={handleChangeShopName}
-      />
     </Card>
   );
 }

@@ -13,6 +13,9 @@ export default function Icon(props) {
           className={`${style.element} ${getClassNames("element")} ${
             props.className
           }`}
+          aria-haspopup={props["aria-haspopup"]}
+          aria-controls={props["aria-controls"]}
+          aria-label={props["aria-label"]}
         >
           <i className={props.icon}></i>
         </button>
@@ -23,6 +26,7 @@ export default function Icon(props) {
           className={`${style.element} ${getClassNames("element")} ${
             props.className
           }`}
+          aria-label={props["aria-label"]}
         >
           <i className={props.icon}></i>
         </Link>
@@ -32,12 +36,22 @@ export default function Icon(props) {
           href={props.to}
           target="_blank"
           rel="noreferrer"
+          aria-label={props["aria-label"]}
           className={`${style.element} ${getClassNames("element")} ${
             props.className
           }`}
         >
           <i className={props.icon}></i>
         </a>
+      )}
+      {props.type === "icon" && (
+        <div
+          className={`${style.element} ${getClassNames("element")} ${
+            props.className
+          }`}
+        >
+          <i className={props.icon}></i>
+        </div>
       )}
     </>
   );

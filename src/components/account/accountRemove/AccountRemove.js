@@ -88,8 +88,8 @@ export default function AccountRemove() {
         setRemoveAccountLoading(false);
         showNotification(
           "information",
-          "Account deleted",
-          "Your account has been deleted. We're sad to see you go :("
+          "Account removed",
+          "Your account has been removed. We're sad to see you go :("
         );
         navigate("/");
       })

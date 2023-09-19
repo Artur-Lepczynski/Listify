@@ -20,11 +20,16 @@ export default function Modal(props) {
   } = useInput(props.validateFunction || (() => {}), "");
 
   const inputRef = useRef(null);
+  const confirmButtonRef = useRef(null);
 
   useEffect(() => {
     if (props.type === "input" && props.in) {
       setTimeout(()=>{
         inputRef.current.focus();
+      }, 50)
+    }else if(props.type === "choice" && props.in){
+      setTimeout(()=>{
+        confirmButtonRef.current.focus();
       }, 50)
     }
   }, [props.in]);
@@ -45,11 +50,12 @@ export default function Modal(props) {
     props.onCancel();
   }
 
+
   function handleKeyDown(event) {
     if (event.key === "Escape") {
       handleCancelClick();
     } else if (event.key === "Enter") {
-      if (props.type === "input" && enteredValueisValid) {
+      if (props.type === "input" && enteredValueisValid && event.target === inputRef.current) {
         handleConfirmClick();
       }
     }
@@ -73,8 +79,10 @@ export default function Modal(props) {
         <div
           className={`${style["modal"]} ${getClassNames("modal")}`}
           onKeyDown={handleKeyDown}
+          role="dialog"
+          aria-labelledby="modal-title"
         >
-          <h3 className={style.title}>{props.title}</h3>
+          <h3 id="modal-title" className={style.title}>{props.title}</h3>
           <Separator/>
           <div className={`${style["modal-body"]} ${props.type === "input" && style["modal-body-input"]}`}>
             <p className={style.message}>{props.message}</p>
@@ -86,6 +94,7 @@ export default function Modal(props) {
                   value={enteredValue}
                   onChange={inputChangeHandler}
                   onBlur={inputBlurHandler}
+                  placeholder={props.placeholderText}
                   ref={inputRef}
                 ></input>
                 {!inputIsValid && (
@@ -108,6 +117,7 @@ export default function Modal(props) {
             <Button
               type="button"
               look="primary"
+              buttonRef={confirmButtonRef}
               disabled={props.type === "input" && !enteredValueisValid}
               onClick={handleConfirmClick}
             >

@@ -13,11 +13,15 @@ export default function Switch(props) {
   }
 
   return (
-    <label className={`${style.switch} ${props.className}`}>
+    <label
+      className={`${style.switch} ${props.className}`}
+      aria-label={props.settingName}
+      role="checkbox"
+      aria-checked={props.checked}
+      tabIndex="0"
+    >
       <input type="checkbox" onChange={toggle} checked={props.checked}></input>
-      <span
-        className={`${style.slider} ${getClassNames("slider")}`}
-      ></span>
+      <span className={`${style.slider} ${getClassNames("slider")}`}></span>
     </label>
   );
 }

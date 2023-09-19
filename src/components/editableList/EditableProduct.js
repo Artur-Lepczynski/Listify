@@ -31,17 +31,23 @@ export default function EditableProduct(props) {
       }
     } else {
       setEdit(true);
-      setTimeout(()=>{
+      setTimeout(() => {
         inputRef.current.focus();
-      }, 50)
+      }, 50);
     }
   }
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      if(edit) inputRef.current.focus();
-    }, 50)
-  }, [])
+  useEffect(() => {
+    setTimeout(() => {
+      if (edit) inputRef.current.focus();
+    }, 50);
+  }, []);
+
+  function handleEnterPress(event) {
+    if (event.key === "Enter" && document.activeElement === inputRef.current) {
+      handleModeChange();
+    }
+  }
 
   function handleProductDelete() {
     props.onProductDelete(props.id);
@@ -51,10 +57,14 @@ export default function EditableProduct(props) {
 
   function handleQtyChange(event) {
     const value = Number.parseInt(event.target.value);
-    props.onQtyChange(props.id, Number.isNaN(value) ? value+"" : value);
-    if (value < props.minProductQty || value > props.maxProductQty || Number.isNaN(value)) {
+    props.onQtyChange(props.id, Number.isNaN(value) ? value + "" : value);
+    if (
+      value < props.minProductQty ||
+      value > props.maxProductQty ||
+      Number.isNaN(value)
+    ) {
       setQtyInputValid(false);
-    }else{
+    } else {
       setQtyInputValid(true);
     }
   }
@@ -62,7 +72,7 @@ export default function EditableProduct(props) {
   function handlePlusClick() {
     if (props.qty < props.maxProductQty) {
       props.onQtyChange(props.id, props.qty + 1);
-    }else if(props.qty === "NaN"){
+    } else if (props.qty === "NaN") {
       props.onQtyChange(props.id, props.minProductQty);
       setQtyInputValid(true);
     }
@@ -79,7 +89,11 @@ export default function EditableProduct(props) {
   }
 
   return (
-    <div className={`${style.product} ${getClassNames("product")}`}>
+    <div
+      className={`${style.product} ${getClassNames("product")}`}
+      role="listitem"
+      onKeyDown={handleEnterPress}
+    >
       <div className={style["top-wrapper"]}>
         {edit ? (
           <div>
@@ -112,6 +126,7 @@ export default function EditableProduct(props) {
           icon={edit ? "fa-solid fa-check" : "fa-solid fa-pen-to-square"}
           className={style.icon}
           onClick={handleModeChange}
+          aria-label={edit ? `Save product name ${enteredNameIsValid ? "" : " (disabled - product name too long)"}` : "Edit product name"}
         />
       </div>
       <div className={style["bottom-wrapper"]}>
@@ -121,6 +136,7 @@ export default function EditableProduct(props) {
             type="button"
             icon="fa-solid fa-trash-can"
             onClick={handleProductDelete}
+            aria-label={"Remove product " + props.name}
           />
           <input
             type="number"
@@ -130,13 +146,17 @@ export default function EditableProduct(props) {
             onChange={handleQtyChange}
             className={`${style.input} ${
               style["product-qty-input"]
-            } ${getClassNames("input")} ${!qtyInputValid && getClassNames("product-qty-input-invalid")}`}
+            } ${getClassNames("input")} ${
+              !qtyInputValid && getClassNames("product-qty-input-invalid")
+            }`}
+            aria-label={"Product quantity " + props.name}
           ></input>
           <Button
             className={style["product-qty-button"]}
             type="button"
             look="secondary"
             onClick={handleMinusClick}
+            aria-label={"Decrease product quantity " + props.name + " by 1"}
           >
             <i className="fa-solid fa-minus"></i>
           </Button>
@@ -145,6 +165,7 @@ export default function EditableProduct(props) {
             type="button"
             look="secondary"
             onClick={handlePlusClick}
+            aria-label={"Increase product quantity " + props.name + " by 1"}
           >
             <i className="fa-solid fa-plus"></i>
           </Button>
@@ -156,6 +177,7 @@ export default function EditableProduct(props) {
             props.done ? "fa-regular fa-square-check" : "fa-regular fa-square"
           }
           onClick={handleDoneStatusChange}
+          aria-label={`Mark product ${props.name} as ${props.done ? "not " : ""}done`}
         />
       </div>
     </div>

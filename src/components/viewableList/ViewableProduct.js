@@ -12,9 +12,8 @@ export default function ViewableProduct(props) {
 
   return (
     <div
-      className={`${style["product-container"]} ${getClassNames(
-        "product-container"
-      )}`}
+      className={style["product-container"]}
+      role="listitem"
     >
       <p className={style.qty}>{"x" + props.product.qty}</p>
       <p
@@ -24,22 +23,12 @@ export default function ViewableProduct(props) {
       >
         {props.product.name}
       </p>
-      {props.product.done && (
-        <Icon
+      <Icon
           type="button"
           onClick={handleProductStatusChange}
           className={style["icon"]}
-          icon={"fa-regular fa-square-check"}
+          icon={props.product.done ? "fa-regular fa-square-check" : "fa-regular fa-square"}
         />
-      )}
-      {!props.product.done && (
-        <Icon
-          type="button"
-          onClick={handleProductStatusChange}
-          className={style["icon"]}
-          icon={"fa-regular fa-square"}
-        />
-      )}
     </div>
   );
 }

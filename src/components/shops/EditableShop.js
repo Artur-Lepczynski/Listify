@@ -53,12 +53,13 @@ export default function EditableShop(props) {
   }
 
   return (
-    <Card nested={true} className={style.shop}>
+    <Card nested={true} className={style.shop} role="listitem">
       <Icon
         onClick={handleShopDelete}
         type="button"
         className={style["shop-icon"]}
         icon="fa-solid fa-trash-can"
+        aria-label={`Remove shop ${props.shopName}`}
       />
       <div className={style.content}>
         {editMode && (
@@ -88,6 +89,7 @@ export default function EditableShop(props) {
         type="button"
         className={style["shop-icon"]}
         icon={editMode ? "fa-solid fa-check" : "fa-solid fa-pen-to-square"}
+        aria-label={editMode ? "Save shop name" : `Edit shop ${props.shopName} name`}
       />
     </Card>
   );

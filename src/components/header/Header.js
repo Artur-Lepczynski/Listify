@@ -35,7 +35,7 @@ export default function Header() {
       >
         <div className={style["header-not-logged-in"]}>
           <Link to="/">
-            <img alt="Listyfy logo" src={logo}></img>
+            <img alt="Listyfy logo" height={48} width={48} src={logo}></img>
           </Link>
           <nav>
             <Button
@@ -75,18 +75,19 @@ export default function Header() {
           )}`}
         >
           {/* icon, type=link/menu, to, menu - {to, name}*/}
-          <HeaderButton type="link" to="/dash" icon="fa-house-chimney-window" />
-          <HeaderButton type="link" to="/lists" icon="fa-list-ul" />
-          <HeaderButton type="link" to="/add" icon="fa-plus" />
+          <HeaderButton type="link" to="/dash" icon="fa-house-chimney-window" aria-label="Dashboard"/>
+          <HeaderButton type="link" to="/lists" icon="fa-list-ul" aria-label="All lists"/>
+          <HeaderButton type="link" to="/add" icon="fa-plus" aria-label="Add new list"/>
           <HeaderButton
             type="menu"
             icon="fa-pen-to-square"
+            aria-label="Manage lists and shops"
             menu={[
               { to: "/edit/lists", name: "Manage lists" },
               { to: "/edit/shops", name: "Manage shops" },
             ]}
           />
-          <HeaderButton type="link" to="/account" icon="fa-user" />
+          <HeaderButton type="link" to="/account" icon="fa-user" aria-label="Settings, account and statistics"/>
         </nav>
       </CSSTransition>
     </header>

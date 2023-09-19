@@ -21,10 +21,12 @@ export default function DropdownMenu(props) {
       }}
     >
       <div
+        id={props.id}
         className={`${style.dropdown} ${getClassNames("dropdown")}`}
         onClick={props.onClick}
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
+        role="menu"
       >
         {props.menu.map((item) => {
           return (

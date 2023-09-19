@@ -21,6 +21,10 @@ export default function Button(props) {
           type={props.buttonType}
           disabled={props.disabled}
           onClick={props.onClick}
+          ref={props.buttonRef}
+          aria-haspopup={props["aria-haspopup"]}
+          aria-controls={props["aria-controls"]}
+          aria-label={props["aria-label"]}
         >
           {props.loading ? <Loader size="small"/> : props.children}
         </button>

@@ -7,7 +7,7 @@ import {
   TransitionGroup,
 } from "react-transition-group";
 import Card from "../UI/Card";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import {
   getDatabase,
   ref,
@@ -209,9 +209,14 @@ export default function EditableList(props) {
   const listNameValid =
     enteredListName.trim() !== "" && enteredListName.length <= 32;
 
+  const listNameInputRef = useRef(null);
+
   function handleListNameEdit() {
     if (!editingListName) {
       setEditingListName(true);
+      setTimeout(()=>{
+        listNameInputRef.current.focus();
+      }, 1)
     } else if (listNameValid) {
       setEditingListName(false);
       dispatchList({ type: "CHANGE_LIST_NAME", value: enteredListName });
@@ -220,6 +225,13 @@ export default function EditableList(props) {
 
   function handleListNameChange(event) {
     setEnteredListName(event.target.value);
+  }
+
+
+  function handleListNameEnterClick(event){
+    if(event.key === "Enter" && document.activeElement === listNameInputRef.current){
+      handleListNameEdit();
+    }
   }
 
   const [shopPromptShown, setShopPromptShown] = useState(false);
@@ -481,8 +493,8 @@ export default function EditableList(props) {
         in={shopDeleteModalShown}
         type="choice"
         title="Confirm shop removal"
-        message="Are you sure you want to remove this shop? All products in this shop will be deleted as well."
-        confirmText="Delete"
+        message="Are you sure you want to remove this shop? All products in this shop will be removed as well."
+        confirmText="Remove"
         cancelText="Cancel"
         onConfirm={handleShopDeleteModalConfirm}
         onCancel={handleShopDeleteModalCancel}
@@ -492,7 +504,7 @@ export default function EditableList(props) {
         type="choice"
         title="Confirm product removal"
         message="Are you sure you want to remove this product?"
-        confirmText="Delete"
+        confirmText="Remove"
         cancelText="Cancel"
         onConfirm={handleProductDeleteModalConfirm}
         onCancel={handleProductDeleteModalCancel}
@@ -527,12 +539,13 @@ export default function EditableList(props) {
                         icon="fa-solid fa-pen-to-square"
                         className={style["list-title-icon"]}
                         onClick={handleListNameEdit}
+                        aria-label="Edit list name"
                       />
                     </>
                   )}
                   {editingListName && (
                     <>
-                      <div>
+                      <div onKeyDown={handleListNameEnterClick}>
                         <input
                           className={`${
                             style["list-title-input"]
@@ -540,6 +553,8 @@ export default function EditableList(props) {
                           type="text"
                           value={enteredListName}
                           onChange={handleListNameChange}
+                          ref={listNameInputRef}
+                          placeholder="List name"
                         ></input>
                         {!listNameValid && (
                           <p
@@ -556,11 +571,12 @@ export default function EditableList(props) {
                         icon="fa-solid fa-check"
                         className={style["list-title-icon"]}
                         onClick={handleListNameEdit}
+                        aria-label={`Save list name ${listNameValid ? "" : " (disabled - list name too long)"}`}
                       />
                     </>
                   )}
                 </div>
-                <TransitionGroup>
+                <TransitionGroup role="list">
                   {list.items.map((shop) => {
                     const currentShop = shops.find((item) => {
                       return item.shopId === shop.shopId;
@@ -603,9 +619,24 @@ export default function EditableList(props) {
                   look="primary"
                   className={style.button}
                   onClick={handleAddShopButtonPress}
+                  aria-haspopup="menu"
+                  aria-controls="shop-prompt"
                 >
                   Add a new shop
                 </Button>
+
+                <Prompt
+                  id="shop-prompt"
+                  shown={shopPromptShown}
+                  setShown={setShopPromptShown}
+                  coordinates={clickCoordinates}
+                  options={shops
+                    .filter((item) => !item.used)
+                    .map((item) => item.shopName)}
+                  noOptionsText="There are no more shops to add"
+                  onBackgroundClick={handlePromptBackgroundClick}
+                  onSelect={handleAddShop}
+                />
 
                 <Card nested={true}>
                   <h3 className={style["note-header"]}>Note</h3>
@@ -613,6 +644,7 @@ export default function EditableList(props) {
                     className={`${style["note"]} ${getClassNames("note")}`}
                     value={list.note}
                     onChange={handleNoteChange}
+                    placeholder="Note"
                   ></textarea>
                   <div
                     className={`${style["note-footer"]} ${
@@ -628,17 +660,6 @@ export default function EditableList(props) {
                   </div>
                 </Card>
 
-                <Prompt
-                  shown={shopPromptShown}
-                  setShown={setShopPromptShown}
-                  coordinates={clickCoordinates}
-                  options={shops
-                    .filter((item) => !item.used)
-                    .map((item) => item.shopName)}
-                  noOptionsText="There are no more shops to add"
-                  onBackgroundClick={handlePromptBackgroundClick}
-                  onSelect={handleAddShop}
-                />
               </Card>
               <Button
                 className={style.button}

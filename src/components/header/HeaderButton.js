@@ -66,7 +66,7 @@ export default function HeaderButton(props) {
   return (
     <>
       {props.type === "link" ? (
-        <NavLink to={props.to} className={getLinkClassNames}>
+        <NavLink to={props.to} className={getLinkClassNames} aria-label={props["aria-label"]}>
           <i className={"fa-solid " + props.icon}></i>
         </NavLink>
       ) : (
@@ -78,11 +78,16 @@ export default function HeaderButton(props) {
           <button
             className={getButtonClassNames()}
             onClick={openDropdownHandler}
+            aria-haspopup="menu"
+            aria-expanded={menuShown}
+            aria-controls="dropdown-menu"
+            aria-label={props["aria-label"]}
           >
             <i className={"fa-solid " + props.icon}></i>
           </button>
           
             <DropdownMenu
+              id="dropdown-menu"
               menu={props.menu}
               shown={menuShown}
               onClick={handleDropdownClick}
