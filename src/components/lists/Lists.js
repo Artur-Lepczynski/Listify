@@ -69,37 +69,36 @@ export default function Lists(props) {
   }
 
   function handleListDeleteButtonClick(id, listName) {
-    setDeletedListName(listName);
-    setDeletedListId(id);
     if (askBeforeListDelete) {
       setDeleteModalShown(true);
+      setDeletedListName(listName);
+      setDeletedListId(id);
     } else {
-      handleListDelete();
+      handleListDelete(id, listName);
     }
   }
 
   function handleModalConfirm() {
     setDeleteModalShown(false);
-    handleListDelete();
+    handleListDelete(deletedListId, deletedListName);
   }
 
   function handleModalCancel() {
     setDeleteModalShown(false);
   }
 
-
-  function handleListDelete() {
+  function handleListDelete(listId, listName) {
     const auth = getAuth();
     const userId = auth.currentUser.uid;
     const db = getDatabase();
 
-    remove(ref(db, "users/" + userId + "/lists/" + deletedListId))
+    remove(ref(db, "users/" + userId + "/lists/" + listId))
       .then(() => {
         if (removeListNotification) {
           showNotification(
             "information",
             "List removed",
-            'The list "' + deletedListName + '" has been removed.'
+            'The list "' + listName + '" has been removed.'
           );
         }
       })
