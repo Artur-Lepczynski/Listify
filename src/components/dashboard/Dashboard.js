@@ -104,13 +104,13 @@ export default function Dashboard() {
           </div>
           <Separator />
           <p className={style["recent-lists-text"]}>
-            {noListsShownDashboard === 1
+            {lists.length !== 0 && (noListsShownDashboard === 1
               ? "Your most recent list:"
-              : `Your ${noListsShownDashboard} most recent lists:`}
+              : `Your ${noListsShownDashboard} most recent lists:`)}
           </p>
           <div className={style["lists-wrapper"]} role="list">
             {lists.length === 0 && (
-              <p>
+              <p className={style["recent-lists-text"]}>
                 {noListsShownDashboard === 1
                   ? "...and the most recent list will be displayed here!"
                   : `...and the ${noListsShownDashboard} most recent will be displayed
